@@ -1,59 +1,51 @@
 import express from 'express';
-import fetch from 'node-fetch';
 import cors from 'cors';
+import OpenAI from 'openai';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.')); // для фронтенда
+app.use(express.static('.')); // отдаём фронтенд
 
-const HF_TOKEN = process.env.HF_INFERENCE_API_KEY; // токен Hugging Face
-const MODEL = 'google/flan-t5-small'; // стабильная бесплатная модель
+// Берём ключ OpenAI из переменной окружения
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+if (!OPENAI_API_KEY) console.error("❌ OPENAI_API_KEY не установлен!");
+
+const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+
 const PORT = process.env.PORT || 3000;
 
 app.post('/api/build', async (req, res) => {
-    const { budget, gpu, cpu, tasks } = req.body;
+  const { budget, gpu, cpu, tasks } = req.body;
 
-    const prompt = `
+  const prompt = `
 Подбери оптимальную сборку ПК.
 Бюджет: ${budget} руб.
 Видеокарта: ${gpu}
 Процессор: ${cpu}
 Назначение: ${tasks}
 
-Выведи список всех комплектующих: CPU, GPU, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания.
-Примерные цены в рублях.
-Каждое полное предложение с новой строки.
+Выведи полный список комплектующих: процессор, видеокарта, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и др.
+Укажи примерные цены в рублях.
+Каждое предложение с новой строки.
 `;
 
-    try {
-        const response = await fetch(`https://api-inference.huggingface.co/models/${MODEL}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${HF_TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                inputs: prompt,
-                parameters: { max_new_tokens: 500, temperature: 0.7 }
-            })
-        });
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo", // можно заменить на "gpt-4o" если доступно
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.7,
+      max_tokens: 1500 // увеличиваем для полного списка
+    });
 
-        // HF иногда возвращает не JSON, поэтому проверяем
-        const text = await response.text();
-
-        if (!text || text.includes('error')) {
-            return res.status(500).json({ result: '❌ HF Router error или модель не вернула ответ.' });
-        }
-
-        res.json({ result: text });
-
-    } catch (err) {
-        console.error('Server error:', err);
-        res.status(500).json({ result: '❌ Ошибка сервера. Попробуйте позже.' });
-    }
+    const text = completion.choices[0].message.content;
+    res.json({ result: text });
+  } catch (err) {
+    console.error("❌ Server error:", err);
+    res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
+  }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
