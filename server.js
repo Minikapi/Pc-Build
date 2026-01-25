@@ -41,7 +41,7 @@ app.post('/api/build', async (req, res) => {
             body: JSON.stringify({
                 inputs: prompt,
                 parameters: {
-                    max_new_tokens: 1200,
+                    max_new_tokens: 700,
                     temperature: 0.7
                 }
             })
