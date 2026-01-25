@@ -5,43 +5,49 @@ import OpenAI from 'openai';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.')); // отдаём фронтенд
+app.use(express.static('.')); // статика фронтенда
 
-// Берём ключ OpenAI из переменной окружения
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-if (!OPENAI_API_KEY) console.error("❌ OPENAI_API_KEY не установлен!");
-
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+// Инициализация OpenAI с ключом из переменных окружения
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
 const PORT = process.env.PORT || 3000;
 
+// Endpoint для подбора ПК
 app.post('/api/build', async (req, res) => {
   const { budget, gpu, cpu, tasks } = req.body;
+
+  // Проверка бюджета
+  if (!budget || budget < 20000) {
+    return res.json({ result: "⚠️ Минимальный бюджет 20 000 руб." });
+  }
 
   const prompt = `
 Подбери оптимальную сборку ПК.
 Бюджет: ${budget} руб.
 Видеокарта: ${gpu}
 Процессор: ${cpu}
-Назначение: ${tasks}
+Задачи: ${tasks}
 
-Выведи полный список комплектующих: процессор, видеокарта, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и др.
-Укажи примерные цены в рублях.
-Каждое предложение с новой строки.
+Выведи полный список комплектующих: CPU, GPU, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и т.д.
+Укажи примерные цены в рублях для каждого компонента.
+Каждое полное предложение начинай с новой строки.
 `;
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // можно заменить на "gpt-4o" если доступно
+      model: "gpt-4o-mini", // бесплатная версия GPT-4o
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-      max_tokens: 1500 // увеличиваем для полного списка
+      max_tokens: 1200
     });
 
     const text = completion.choices[0].message.content;
     res.json({ result: text });
+
   } catch (err) {
-    console.error("❌ Server error:", err);
+    console.error('❌ Server error:', err);
     res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
   }
 });
