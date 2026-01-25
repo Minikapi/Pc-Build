@@ -1,58 +1,69 @@
-﻿import express from 'express';
+import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
+import { Configuration, OpenAIApi } from 'openai';
+import 'dotenv/config';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.')); // Чтобы отдавало index.html и style.css
+app.use(express.static('.'));
+
+const PORT = process.env.PORT || 3000;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+if (!OPENAI_API_KEY) {
+    console.error("⚠️ Установите OPENAI_API_KEY в переменных окружения!");
+    process.exit(1);
+}
+
+const configuration = new Configuration({ apiKey: OPENAI_API_KEY });
+const openai = new OpenAIApi(configuration);
 
 app.post('/api/build', async (req, res) => {
     const { budget, gpu, cpu, tasks } = req.body;
 
     const prompt = `
-Подбери комплектующие для ПК с бюджетом ${budget} рублей.
+Подбери оптимальную сборку ПК с учётом бюджета и предпочтений пользователя.
+
+Бюджет: ${budget} руб.
 Видеокарта: ${gpu}
 Процессор: ${cpu}
-Задачи: ${tasks}
-Сделай полный список всех необходимых комплектующих с ссылками на покупки.
-Ответь в формате JSON: { "completion": "текст" }.
+Назначение: ${tasks}
+
+Обязательные компоненты:
+- Процессор
+- Видеокарта
+- Материнская плата
+- Оперативная память
+- Накопитель (SSD/HDD)
+- Корпус
+- Блок питания
+- Кулер / система охлаждения
+
+Для каждого компонента укажи:
+- Название модели
+- Примерная цена в рублях
+
+Выведи в формате списка:
+1. Компонент — Модель — Цена ₽
+2. ...
 `;
 
     try {
-        const response = await fetch("http://localhost:11434/api/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model: "mistral",   // легкая модель для RTX 3050
-                prompt,
-                stream: false,
-                options: { temperature: 0.6 }
-            })
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.4,
+            max_tokens: 800
         });
 
-        const text = await response.text();
-        console.log("Сырой ответ Ollama:", text);
-
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch (err) {
-            console.error("Ошибка парсинга JSON:", err);
-            return res.status(500).json({ result: "❌ Ошибка сервера: некорректный JSON от Ollama" });
-        }
-
-        const resultText = data.completion || data.response || "❌ Нейросеть не вернула результат";
-        res.json({ result: resultText });
+        const text = completion.data.choices[0].message.content || "Нет ответа от модели";
+        res.json({ result: text });
 
     } catch (err) {
-        console.error("Ошибка при генерации сборки:", err);
-        res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
+        console.error("Ошибка OpenAI:", err.response?.data || err.message);
+        res.status(500).json({ result: "Ошибка сервера. Попробуйте позже." });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
