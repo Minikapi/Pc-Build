@@ -74,6 +74,8 @@
 </style>
 </head>
 
+<!-- …твой существующий <head> и стили остаются без изменений… -->
+
 <body>
 
 <div class="matrix left"></div>
@@ -94,19 +96,25 @@
             <p>Производитель видеокарты:</p>
             <div class="select" data-name="gpu">
                 <div class="select-btn">Авто</div>
-                <div class="select-list"><div>Авто</div><div>NVIDIA</div><div>AMD</div></div>
+                <div class="select-list">
+                    <div>Авто</div><div>NVIDIA</div><div>AMD</div>
+                </div>
             </div>
 
             <p>Производитель процессора:</p>
             <div class="select" data-name="cpu">
                 <div class="select-btn">Авто</div>
-                <div class="select-list"><div>Авто</div><div>Intel</div><div>AMD</div></div>
+                <div class="select-list">
+                    <div>Авто</div><div>Intel</div><div>AMD</div>
+                </div>
             </div>
 
             <p>Задачи ПК:</p>
             <div class="select" data-name="tasks">
                 <div class="select-btn">Авто</div>
-                <div class="select-list"><div>Авто</div><div>Игры</div><div>Работа</div><div>Игры и работа</div></div>
+                <div class="select-list">
+                    <div>Авто</div><div>Игры</div><div>Работа</div><div>Игры и работа</div>
+                </div>
             </div>
 
             <button id="generate">Подобрать комплектующие</button>
@@ -127,83 +135,92 @@
 <div class="footer">© 2026 MiniKapi. Все права защищены.</div>
 
 <script>
-    // MATRIX
-    document.querySelectorAll('.matrix').forEach(side => {
-        setInterval(() => {
-            const s = document.createElement('span');
-            s.textContent = Math.random() > .5 ? '1' : '0';
-            s.style.left = Math.random() * 100 + '%';
-            s.style.animationDuration = 3 + Math.random() * 4 + 's';
-            side.appendChild(s);
-            setTimeout(() => s.remove(), 7000);
-        }, 120);
-    });
+/* MATRIX */
+document.querySelectorAll('.matrix').forEach(side => {
+    setInterval(() => {
+        const s = document.createElement('span');
+        s.textContent = Math.random() > .5 ? '1' : '0';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.animationDuration = 3 + Math.random() * 4 + 's';
+        side.appendChild(s);
+        setTimeout(() => s.remove(), 7000);
+    }, 120);
+});
 
-    // SELECT
-    document.querySelectorAll('.select').forEach(sel => {
-        const btn = sel.querySelector('.select-btn');
-        const list = sel.querySelector('.select-list');
-        btn.onclick = () => {
-            document.querySelectorAll('.select').forEach(s => s !== sel && s.classList.remove('open'));
-            sel.classList.toggle('open');
+/* SELECT */
+document.querySelectorAll('.select').forEach(sel => {
+    const btn = sel.querySelector('.select-btn');
+    const list = sel.querySelector('.select-list');
+
+    btn.onclick = () => {
+        document.querySelectorAll('.select').forEach(s => s !== sel && s.classList.remove('open'));
+        sel.classList.toggle('open');
+    };
+
+    list.querySelectorAll('div').forEach(opt => {
+        opt.onclick = () => {
+            btn.textContent = opt.textContent;
+            sel.classList.remove('open');
         };
-        list.querySelectorAll('div').forEach(opt => {
-            opt.onclick = () => {
-                btn.textContent = opt.textContent;
-                sel.classList.remove('open');
-            };
-        });
     });
+});
 
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.select')) {
-            document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
-        }
-    });
+document.addEventListener('click', e => {
+    if (!e.target.closest('.select')) {
+        document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
+    }
+});
 
-    // LOADING + TYPING
-    async function typeText(el, text) {
-        el.textContent = "";
-        for (let i = 0; i < text.length; i++) {
-            el.textContent += text[i];
-            await new Promise(r => setTimeout(r, 15));
-        }
+/* LOADING + TYPING EFFECT */
+async function typeText(el, text) {
+    el.textContent = "";
+    for (let i = 0; i < text.length; i++) {
+        el.textContent += text[i];
+        await new Promise(r => setTimeout(r, 15));
+    }
+}
+
+function showLoading(el) {
+    el.textContent = "⌛ Подбираем комплектующие...";
+}
+
+/* GENERATE */
+document.getElementById('generate').onclick = async () => {
+    const result = document.getElementById('result');
+    const budgetInput = document.getElementById('budget');
+    const budget = parseInt(budgetInput.value);
+
+    if (isNaN(budget) || budget < 20000) {
+        result.textContent = "⚠️ Минимальный бюджет 20 000 руб.";
+        return;
     }
 
-    function showLoading(el) { el.textContent = "⌛ Подбираем комплектующие..."; }
-
-    // GENERATE
-    document.getElementById('generate').onclick = async () => {
-        const result = document.getElementById('result');
-        const budgetInput = document.getElementById('budget');
-        const budget = parseInt(budgetInput.value);
-        if (isNaN(budget) || budget < 20000) {
-            result.textContent = "⚠️ Минимальный бюджет 20 000 руб.";
-            return;
-        }
-
-        const values = {
-            gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
-            cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
-            tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
-        };
-
-        showLoading(result);
-
-        try {
-            const res = await fetch("/api/build", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks })
-            });
-            const data = await res.json();
-            await typeText(result, data.result);
-        } catch (err) {
-            console.error(err);
-            result.textContent = "❌ Ошибка сервера. Попробуйте позже.";
-        }
+    const values = {
+        gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
+        cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
+        tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
     };
+
+    showLoading(result);
+
+    try {
+        const res = await fetch("/api/build", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks })
+        });
+
+        const data = await res.json();
+        await typeText(result, data.result);
+
+    } catch (err) {
+        console.error(err);
+        result.textContent = "❌ Ошибка сервера. Попробуйте позже.";
+    }
+};
 </script>
 
 </body>
+</html>
+
 </html>
