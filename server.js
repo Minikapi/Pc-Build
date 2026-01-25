@@ -1,69 +1,56 @@
 import express from 'express';
 import cors from 'cors';
-import { Configuration, OpenAIApi } from 'openai';
-import 'dotenv/config';
+import OpenAI from 'openai';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.'));
+app.use(express.static('.')); // для статики фронтенда
 
-const PORT = process.env.PORT || 3000;
+// Берём ключ OpenAI из переменной окружения
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-if (!OPENAI_API_KEY) {
-    console.error("⚠️ Установите OPENAI_API_KEY в переменных окружения!");
-    process.exit(1);
-}
+// Инициализация клиента OpenAI
+const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
-const configuration = new Configuration({ apiKey: OPENAI_API_KEY });
-const openai = new OpenAIApi(configuration);
+// PORT для Render
+const PORT = process.env.PORT || 3000;
 
+// API endpoint для подбора ПК
 app.post('/api/build', async (req, res) => {
     const { budget, gpu, cpu, tasks } = req.body;
 
     const prompt = `
-Подбери оптимальную сборку ПК с учётом бюджета и предпочтений пользователя.
-
+Подбери оптимальную сборку ПК.
 Бюджет: ${budget} руб.
 Видеокарта: ${gpu}
 Процессор: ${cpu}
 Назначение: ${tasks}
 
-Обязательные компоненты:
-- Процессор
-- Видеокарта
-- Материнская плата
-- Оперативная память
-- Накопитель (SSD/HDD)
-- Корпус
-- Блок питания
-- Кулер / система охлаждения
-
-Для каждого компонента укажи:
-- Название модели
-- Примерная цена в рублях
-
-Выведи в формате списка:
-1. Компонент — Модель — Цена ₽
-2. ...
+Выведи список всех комплектующих: CPU, GPU, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и т.д.
+Укажи примерные цены в рублях для каждого компонента.
+Сделай текст удобным для чтения, чтобы каждое полное предложение с новой строки.
 `;
 
     try {
-        const completion = await openai.createChatCompletion({
+        // Запрос к модели OpenAI
+        const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: prompt }],
-            temperature: 0.4,
-            max_tokens: 800
+            temperature: 0.7,
+            max_tokens: 600
         });
 
-        const text = completion.data.choices[0].message.content || "Нет ответа от модели";
+        const text = completion.choices[0].message.content;
         res.json({ result: text });
 
     } catch (err) {
-        console.error("Ошибка OpenAI:", err.response?.data || err.message);
-        res.status(500).json({ result: "Ошибка сервера. Попробуйте позже." });
+        console.error(err);
+        res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
     }
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Запуск сервера
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
