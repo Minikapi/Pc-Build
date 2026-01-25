@@ -1,85 +1,63 @@
-import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static("."));
+app.use(express.static('.')); // для фронтенда
 
-const HF_TOKEN = process.env.HF_TOKEN;
+const HF_TOKEN = process.env.HF_TOKEN; // ключ берём из переменной окружения
+const MODEL = 'mistralai/Mistral-7B-Instruct-v0.2';
 const PORT = process.env.PORT || 3000;
 
-app.post("/api/build", async (req, res) => {
+app.post('/api/build', async (req, res) => {
     const { budget, gpu, cpu, tasks } = req.body;
 
     if (!budget || budget < 20000) {
-        return res.json({ result: "⚠️ Минимальный бюджет — 20 000 руб." });
+        return res.json({ result: "⚠️ Минимальный бюджет 20 000 руб." });
     }
 
     const prompt = `
 Подбери оптимальную сборку ПК.
-
-Бюджет: ${budget} руб
+Бюджет: ${budget} руб.
 Видеокарта: ${gpu}
 Процессор: ${cpu}
 Назначение: ${tasks}
-
-Обязательно выведи ВСЕ комплектующие:
-• Процессор
-• Видеокарта
-• Кулер
-• Материнская плата
-• Оперативная память
-• Накопитель
-• Блок питания
-• Корпус
-
-Для каждого компонента укажи примерную цену в рублях.
-Каждый компонент — с новой строки.
+Выведи все комплектующие: CPU, GPU, кулер, материнская плата, корпус, оперативка, накопитель, блок питания и т.д.
+Укажи примерные цены в рублях.
+Каждое предложение с новой строки.
 `;
 
     try {
-        const response = await fetch(
-            "https://router.huggingface.co/v1/chat/completions",
-            {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${HF_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "mistralai/Mistral-7B-Instruct-v0.2",
-                    messages: [
-                        { role: "user", content: prompt }
-                    ],
-                    max_tokens: 1200,
-                    temperature: 0.7
-                })
-            }
-        );
+        const response = await fetch(`https://api-inference.huggingface.co/models/${MODEL}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${HF_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                inputs: prompt,
+                parameters: { max_new_tokens: 800, temperature: 0.7 }
+            })
+        });
 
-        const data = await response.json();
-
-        if (data.error) {
-            console.error("HF ERROR:", data.error);
-            return res.json({ result: "❌ Ошибка нейросети" });
+        // проверка, что сервер HF вернул JSON
+        const text = await response.text();
+        try {
+            const data = JSON.parse(text);
+            const resultText = data[0]?.generated_text || "❌ Модель не вернула ответ";
+            res.json({ result: resultText });
+        } catch {
+            res.json({ result: "❌ HF Router вернул не JSON: " + text });
         }
-
-        const text = data.choices?.[0]?.message?.content;
-
-        if (!text) {
-            return res.json({ result: "❌ Пустой ответ от модели" });
-        }
-
-        res.json({ result: text });
 
     } catch (err) {
-        console.error("SERVER ERROR:", err);
-        res.json({ result: "❌ Ошибка сервера, попробуйте позже" });
+        console.error(err);
+        res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
     }
 });
 
 app.listen(PORT, () => {
-    console.log("🚀 Server started on port", PORT);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
