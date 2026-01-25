@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
-
+console.log("OPENAI_API_KEY =", process.env.OPENAI_API_KEY ? "OK" : "NOT SET");
 const app = express();
 app.use(cors());
 app.use(express.json());
