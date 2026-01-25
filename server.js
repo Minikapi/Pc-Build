@@ -1,42 +1,48 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import cors from 'cors';
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.')); // для фронтенда
+app.use(express.static("."));
 
-// Hugging Face token (созданный с разрешением Inference)
-const HF_TOKEN = process.env.HF_TOKEN; // В Render добавь переменную окружения HF_TOKEN
-
-// Модель Mistral 7B Instruct
-const MODEL = 'mistralai/Mistral-7B-Instruct-v0.2';
-const ROUTER_URL = `https://api-inference.huggingface.co/v1/models/${MODEL}`;
+const HF_TOKEN = process.env.HF_TOKEN;
+const MODEL = "google/flan-t5-large";
+const API_URL = `https://api-inference.huggingface.co/models/${MODEL}`;
 
 const PORT = process.env.PORT || 3000;
 
-app.post('/api/build', async (req, res) => {
+app.post("/api/build", async (req, res) => {
     const { budget, gpu, cpu, tasks } = req.body;
 
     const prompt = `
 Подбери оптимальную сборку ПК.
-Бюджет: ${budget} руб.
-Видеокарта: ${gpu}
-Процессор: ${cpu}
-Назначение: ${tasks}
 
-Выведи полный список комплектующих: CPU, GPU, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и т.д.
-Укажи примерные цены в рублях для каждого компонента.
-Сделай текст удобным для чтения, каждое предложение с новой строки.
+Бюджет: ${budget} рублей
+Производитель видеокарты: ${gpu}
+Производитель процессора: ${cpu}
+Назначение ПК: ${tasks}
+
+Обязательно выведи:
+Процессор — цена
+Видеокарта — цена
+Кулер — цена
+Материнская плата — цена
+Оперативная память — цена
+Накопитель — цена
+Блок питания — цена
+Корпус — цена
+
+Каждый пункт с новой строки.
 `;
 
     try {
-        const response = await fetch(ROUTER_URL, {
-            method: 'POST',
+        const response = await fetch(API_URL, {
+            method: "POST",
             headers: {
-                'Authorization': `Bearer ${HF_TOKEN}`,
-                'Content-Type': 'application/json'
+                "Authorization": `Bearer ${HF_TOKEN}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 inputs: prompt,
@@ -47,17 +53,21 @@ app.post('/api/build', async (req, res) => {
             })
         });
 
-        // HF Router может вернуть не JSON напрямую, поэтому проверяем
-        const data = await response.json().catch(() => null);
-        if (!data || !data.generated_text) {
-            return res.status(500).json({ result: "❌ HF Router не вернул ответ. Проверьте токен и разрешения." });
+        const data = await response.json();
+
+        if (!Array.isArray(data) || !data[0]?.generated_text) {
+            return res.json({
+                result: "❌ Модель не вернула ответ. Попробуйте ещё раз."
+            });
         }
 
-        res.json({ result: data.generated_text });
+        res.json({ result: data[0].generated_text });
 
     } catch (err) {
-        console.error("HF ERROR:", err);
-        res.status(500).json({ result: "❌ Ошибка сервера. Попробуйте позже." });
+        console.error("SERVER ERROR:", err);
+        res.status(500).json({
+            result: "❌ Ошибка сервера. Попробуйте позже."
+        });
     }
 });
 
