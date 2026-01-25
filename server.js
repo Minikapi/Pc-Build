@@ -7,8 +7,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.')); // для фронтенда
 
-const HF_TOKEN = process.env.HF_TOKEN; // токен Hugging Face
+// Hugging Face token (созданный с разрешением Inference)
+const HF_TOKEN = process.env.HF_TOKEN; // В Render добавь переменную окружения HF_TOKEN
+
+// Модель Mistral 7B Instruct
 const MODEL = 'mistralai/Mistral-7B-Instruct-v0.2';
+const ROUTER_URL = `https://api-inference.huggingface.co/v1/models/${MODEL}`;
+
 const PORT = process.env.PORT || 3000;
 
 app.post('/api/build', async (req, res) => {
@@ -21,13 +26,13 @@ app.post('/api/build', async (req, res) => {
 Процессор: ${cpu}
 Назначение: ${tasks}
 
-Выведи полный список комплектующих: процессор, видеокарта, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и т.д.
+Выведи полный список комплектующих: CPU, GPU, кулер, материнская плата, корпус, оперативная память, накопитель, блок питания и т.д.
 Укажи примерные цены в рублях для каждого компонента.
-Сделай текст удобным для чтения, каждое полное предложение с новой строки.
+Сделай текст удобным для чтения, каждое предложение с новой строки.
 `;
 
     try {
-        const response = await fetch(`https://api-inference.huggingface.co/models/${MODEL}`, {
+        const response = await fetch(ROUTER_URL, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${HF_TOKEN}`,
@@ -36,25 +41,19 @@ app.post('/api/build', async (req, res) => {
             body: JSON.stringify({
                 inputs: prompt,
                 parameters: {
-                    max_new_tokens: 700, // увеличено, чтобы ответ полностью влез
+                    max_new_tokens: 1200,
                     temperature: 0.7
                 }
             })
         });
 
-        const text = await response.text();
-
-        // Проверяем, JSON ли пришёл
-        let resultText = '';
-        try {
-            const data = JSON.parse(text);
-            resultText = data?.generated_text || '❌ Модель не вернула ответ.';
-        } catch {
-            // если не JSON, просто возвращаем текст
-            resultText = text.length > 0 ? text : '❌ Модель не вернула ответ.';
+        // HF Router может вернуть не JSON напрямую, поэтому проверяем
+        const data = await response.json().catch(() => null);
+        if (!data || !data.generated_text) {
+            return res.status(500).json({ result: "❌ HF Router не вернул ответ. Проверьте токен и разрешения." });
         }
 
-        res.json({ result: resultText });
+        res.json({ result: data.generated_text });
 
     } catch (err) {
         console.error("HF ERROR:", err);
