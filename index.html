@@ -1,200 +1,413 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ПК-Консультант</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПК-Консультант</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-<style>
-    /* ==== ВСЕ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ ==== */
-    :root {
-        --bg-main: #050008;
-        --bg-panel: rgba(30,10,50,.85);
-        --violet-main: #d400ff;
-        --violet-soft: #b98cff;
-        --text-main: #eadcff;
-        --border-violet: rgba(180,80,255,.6);
-    }
+    <style>
+        /* ==== ВСЕ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ ==== */
+        :root {
+            --bg-main: #050008;
+            --bg-panel: rgba(30,10,50,.85);
+            --violet-main: #d400ff;
+            --violet-soft: #b98cff;
+            --text-main: #eadcff;
+            --border-violet: rgba(180,80,255,.6);
+        }
 
-    * { box-sizing: border-box; }
-    body {
-        margin: 0; min-height: 100vh;
-        font-family: 'Orbitron', sans-serif;
-        color: var(--text-main);
-        background: radial-gradient(circle at 20% 20%, rgba(200,0,255,.18), transparent 45%),
-                    radial-gradient(circle at 80% 80%, rgba(120,0,255,.18), transparent 45%),
-                    linear-gradient(180deg,#050008,#120016);
-        animation: bgFlow 20s ease-in-out infinite alternate;
-        overflow-x: hidden;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    @keyframes bgFlow { 0% {background-position:0 0,100% 100%,0 0;} 100% {background-position:100% 100%,0 0,0 100%;} }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-main);
+            background: radial-gradient(circle at 20% 20%, rgba(200,0,255,.18), transparent 45%), radial-gradient(circle at 80% 80%, rgba(120,0,255,.18), transparent 45%), linear-gradient(180deg,#050008,#120016);
+            animation: bgFlow 20s ease-in-out infinite alternate;
+            overflow-x: hidden;
+        }
 
-    .matrix { position: fixed; top:0; bottom:0; width:15%; pointer-events:none; z-index:1; }
-    .matrix.left { left:0; }
-    .matrix.right { right:0; }
-    .matrix span { position:absolute; top:-20px; font-size:14px; opacity:.8; animation:fall linear infinite; }
-    @keyframes fall { to { transform: translateY(110vh); opacity:0; } }
+        @keyframes bgFlow {
+            0% {
+                background-position: 0 0,100% 100%,0 0;
+            }
 
-    .header { text-align:center; padding:50px 20px 30px; z-index:2; opacity:0; transform:translateY(-20px); animation:fadeDown 1.2s ease forwards; }
-    @keyframes fadeDown { to { opacity:1; transform:none; } }
-    .header h1 { font-size:64px; margin:0; letter-spacing:5px; position:relative; }
-    .header h1::before { content:"ПК-КОНСУЛЬТАНТ"; position:absolute; inset:0; text-shadow:0 0 25px rgba(200,0,255,.6),0 0 50px rgba(160,0,255,.45); filter:blur(6px); z-index:-1; animation:haloPulse 4s ease-in-out infinite; }
-    @keyframes haloPulse { 50% { text-shadow:0 0 35px rgba(220,0,255,.75),0 0 65px rgba(180,0,255,.55); } }
-    .subheading { margin-top:10px; font-size:13px; letter-spacing:2px; color:var(--violet-soft); }
+            100% {
+                background-position: 100% 100%,0 0,0 100%;
+            }
+        }
 
-    .container { width:85%; margin:20px auto 40px; padding:30px; background:var(--bg-panel); border-radius:16px; box-shadow:0 0 42px rgba(140,0,255,.28), inset 0 0 26px rgba(0,0,0,.7); z-index:2; opacity:0; transform:translateY(30px); animation:fadeUp 1.2s ease forwards; animation-delay:1s; }
-    @keyframes fadeUp { to { opacity:1; transform:none; } }
+        .matrix {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-    .main-layout { display:grid; grid-template-columns:330px 1fr; gap:30px; align-items:stretch; }
+            .matrix.left {
+                left: 0;
+            }
 
-    input { width:220px; padding:12px; margin-bottom:18px; background:rgba(10,5,20,.9); border:2px solid var(--border-violet); border-radius:10px; color:var(--text-main); font-family:'Orbitron'; }
-    input:focus { box-shadow:0 0 12px rgba(180,80,255,.9); outline:none; }
+            .matrix.right {
+                right: 0;
+            }
 
-    .select { position:relative; width:220px; margin-bottom:18px; }
-    .select-btn { padding:12px; background:rgba(10,5,20,.9); border:2px solid var(--border-violet); border-radius:10px; cursor:pointer; transition:.25s; }
-    .select-btn:hover { box-shadow:0 0 22px rgba(255,0,255,.75); }
-    .select-list { position:absolute; top:110%; left:0; right:0; background:rgba(20,10,40,.98); border-radius:10px; overflow:hidden; max-height:0; opacity:0; transform:translateY(-10px); transition:.35s ease; box-shadow:0 0 35px rgba(180,80,255,.5); z-index:10; }
-    .select.open .select-list { max-height:300px; opacity:1; transform:translateY(0); }
-    .select-list div { padding:12px; cursor:pointer; transition:.25s; }
-    .select-list div:hover { background:linear-gradient(90deg,#6a00cc,#a24dff); box-shadow: inset 0 0 12px rgba(180,80,255,.6); }
+            .matrix span {
+                position: absolute;
+                top: -20px;
+                font-size: 14px;
+                opacity: .8;
+                animation: fall linear infinite;
+            }
 
-    button { margin-top:10px; padding:12px 26px; background:linear-gradient(90deg,#ff00ff,#7f5bff); border:none; border-radius:10px; color:#fff; cursor:pointer; font-family:'Orbitron'; box-shadow:0 0 22px rgba(255,0,255,.6); transition:.3s; }
-    button:hover { box-shadow:0 0 34px rgba(255,0,255,.85); transform:scale(1.04); }
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+        }
 
-    .result-box { padding:25px; background:rgba(10,5,20,.9); border:2px solid var(--border-violet); border-radius:16px; box-shadow:0 0 32px rgba(180,80,255,.45), inset 0 0 18px rgba(0,0,0,.7); white-space:pre-wrap; overflow-y:auto; min-height:100%; }
+        .header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeDown 1.2s ease forwards;
+        }
 
-    .nav-buttons { display:flex; justify-content:center; gap:20px; margin-top:30px; }
-    .nav-btn { padding:12px 22px; background:rgba(10,5,20,.9); border:2px solid var(--border-violet); border-radius:10px; color:#fff; text-decoration:none; box-shadow:0 0 14px rgba(180,80,255,.35); transition:.25s; }
-    .nav-btn:hover { box-shadow:0 0 22px rgba(180,80,255,.65); transform:translateY(-1px); }
+        @keyframes fadeDown {
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
 
-    .footer { text-align:center; padding:15px; font-size:12px; color:var(--violet-soft); z-index:2; }
-</style>
+        .header h1 {
+            font-size: 64px;
+            margin: 0;
+            letter-spacing: 5px;
+            position: relative;
+        }
+
+            .header h1::before {
+                content: "ПК-КОНСУЛЬТАНТ";
+                position: absolute;
+                inset: 0;
+                text-shadow: 0 0 25px rgba(200,0,255,.6),0 0 50px rgba(160,0,255,.45);
+                filter: blur(6px);
+                z-index: -1;
+                animation: haloPulse 4s ease-in-out infinite;
+            }
+
+        @keyframes haloPulse {
+            50% {
+                text-shadow: 0 0 35px rgba(220,0,255,.75),0 0 65px rgba(180,0,255,.55);
+            }
+        }
+
+        .subheading {
+            margin-top: 10px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--violet-soft);
+        }
+
+        .container {
+            width: 85%;
+            margin: 20px auto 40px;
+            padding: 30px;
+            background: var(--bg-panel);
+            border-radius: 16px;
+            box-shadow: 0 0 42px rgba(140,0,255,.28), inset 0 0 26px rgba(0,0,0,.7);
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.2s ease forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 330px 1fr;
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        input {
+            width: 220px;
+            padding: 12px;
+            margin-bottom: 18px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-family: 'Orbitron';
+        }
+
+            input:focus {
+                box-shadow: 0 0 12px rgba(180,80,255,.9);
+                outline: none;
+            }
+
+        .select {
+            position: relative;
+            width: 220px;
+            margin-bottom: 18px;
+        }
+
+        .select-btn {
+            padding: 12px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+            .select-btn:hover {
+                box-shadow: 0 0 22px rgba(255,0,255,.75);
+            }
+
+        .select-list {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            right: 0;
+            background: rgba(20,10,40,.98);
+            border-radius: 10px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: .35s ease;
+            box-shadow: 0 0 35px rgba(180,80,255,.5);
+            z-index: 10;
+        }
+
+        .select.open .select-list {
+            max-height: 300px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .select-list div {
+            padding: 12px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+            .select-list div:hover {
+                background: linear-gradient(90deg,#6a00cc,#a24dff);
+                box-shadow: inset 0 0 12px rgba(180,80,255,.6);
+            }
+
+        button {
+            margin-top: 10px;
+            padding: 12px 26px;
+            background: linear-gradient(90deg,#ff00ff,#7f5bff);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Orbitron';
+            box-shadow: 0 0 22px rgba(255,0,255,.6);
+            transition: .3s;
+        }
+
+            button:hover {
+                box-shadow: 0 0 34px rgba(255,0,255,.85);
+                transform: scale(1.04);
+            }
+
+        .result-box {
+            padding: 25px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 16px;
+            box-shadow: 0 0 32px rgba(180,80,255,.45), inset 0 0 18px rgba(0,0,0,.7);
+            white-space: pre-wrap;
+            overflow-y: auto;
+            min-height: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 22px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 0 14px rgba(180,80,255,.35);
+            transition: .25s;
+        }
+
+            .nav-btn:hover {
+                box-shadow: 0 0 22px rgba(180,80,255,.65);
+                transform: translateY(-1px);
+            }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: var(--violet-soft);
+            z-index: 2;
+        }
+    </style>
 </head>
 
-<!-- …твой существующий <head> и стили остаются без изменений… -->
+<body>
 
-<div class="container">
-  <div class="main-layout">
+    <div class="matrix left"></div>
+    <div class="matrix right"></div>
 
-    <div>
-      <p>Ваш бюджет (мин. 20 000 руб.):</p>
-      <input type="number" id="budget" min="20000" placeholder="Введите сумму от 20 000">
-
-      <p>Производитель видеокарты:</p>
-      <div class="select" data-name="gpu">
-        <div class="select-btn">Авто</div>
-        <div class="select-list">
-          <div>Авто</div><div>NVIDIA</div><div>AMD</div>
-        </div>
-      </div>
-
-      <p>Производитель процессора:</p>
-      <div class="select" data-name="cpu">
-        <div class="select-btn">Авто</div>
-        <div class="select-list">
-          <div>Авто</div><div>Intel</div><div>AMD</div>
-        </div>
-      </div>
-
-      <p>Задачи ПК:</p>
-      <div class="select" data-name="tasks">
-        <div class="select-btn">Авто</div>
-        <div class="select-list">
-          <div>Авто</div><div>Игры</div><div>Работа</div><div>Игры и работа</div>
-        </div>
-      </div>
-
-      <button id="generate">Подобрать комплектующие</button>
+    <div class="header">
+        <h1>ПК-КОНСУЛЬТАНТ</h1>
+        <div class="subheading">Подбор комплектующих для ПК онлайн</div>
     </div>
 
-    <div class="result-box" id="result"></div>
+    <div class="container">
+        <div class="main-layout">
 
-  </div>
+            <div>
+                <p>Ваш бюджет (мин. 20 000 руб.):</p>
+                <input type="number" id="budget" min="20000" placeholder="Введите сумму от 20 000">
 
-  <div class="nav-buttons">
-    <a href="index.html" class="nav-btn">Сборка ПК</a>
-    <a href="about.html" class="nav-btn">Что такое ПК?</a>
-    <a href="tips.html" class="nav-btn">Советы по сборке</a>
-    <a href="top-components.html" class="nav-btn">Топ комплектующих</a>
-  </div>
-</div>
+                <p>Производитель видеокарты:</p>
+                <div class="select" data-name="gpu">
+                    <div class="select-btn">Авто</div>
+                    <div class="select-list"><div>Авто</div><div>NVIDIA</div><div>AMD</div></div>
+                </div>
 
-<script>
-  /* SELECT */
-  document.querySelectorAll('.select').forEach(sel => {
-    const btn = sel.querySelector('.select-btn');
-    const list = sel.querySelector('.select-list');
+                <p>Производитель процессора:</p>
+                <div class="select" data-name="cpu">
+                    <div class="select-btn">Авто</div>
+                    <div class="select-list"><div>Авто</div><div>Intel</div><div>AMD</div></div>
+                </div>
 
-    btn.onclick = () => {
-      document.querySelectorAll('.select').forEach(s => s !== sel && s.classList.remove('open'));
-      sel.classList.toggle('open');
-    };
+                <p>Задачи ПК:</p>
+                <div class="select" data-name="tasks">
+                    <div class="select-btn">Авто</div>
+                    <div class="select-list"><div>Авто</div><div>Игры</div><div>Работа</div><div>Игры и работа</div></div>
+                </div>
 
-    list.querySelectorAll('div').forEach(opt => {
-      opt.onclick = () => {
-        btn.textContent = opt.textContent;
-        sel.classList.remove('open');
-      };
-    });
-  });
+                <button id="generate">Подобрать комплектующие</button>
+            </div>
 
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.select')) {
-      document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
-    }
-  });
+            <div class="result-box" id="result"></div>
 
-  /* LOADING + TYPING EFFECT */
-  async function typeText(el, text) {
-    el.textContent = "";
-    for (let i = 0; i < text.length; i++) {
-      el.textContent += text[i];
-      await new Promise(r => setTimeout(r, 15));
-    }
-  }
+        </div>
 
-  function showLoading(el) {
-    el.textContent = "⌛ Подбираем комплектующие...";
-  }
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-btn">Сборка ПК</a>
+            <a href="about.html" class="nav-btn">Что такое ПК?</a>
+            <a href="tips.html" class="nav-btn">Советы по сборке</a>
+            <a href="top-components.html" class="nav-btn">Топ комплектующих</a>
+        </div>
+    </div>
 
-  /* GENERATE */
-  document.getElementById('generate').onclick = async () => {
-    const result = document.getElementById('result');
-    const budgetInput = document.getElementById('budget');
-    const budget = parseInt(budgetInput.value);
+    <div class="footer">© 2026 MiniKapi. Все права защищены.</div>
 
-    if (isNaN(budget) || budget < 20000) {
-      result.textContent = "⚠️ Минимальный бюджет 20 000 руб.";
-      return;
-    }
+    <script>
+        // MATRIX
+        document.querySelectorAll('.matrix').forEach(side => {
+            setInterval(() => {
+                const s = document.createElement('span');
+                s.textContent = Math.random() > .5 ? '1' : '0';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.animationDuration = 3 + Math.random() * 4 + 's';
+                side.appendChild(s);
+                setTimeout(() => s.remove(), 7000);
+            }, 120);
+        });
 
-    const values = {
-      gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
-      cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
-      tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
-    };
+        // SELECT
+        document.querySelectorAll('.select').forEach(sel => {
+            const btn = sel.querySelector('.select-btn');
+            const list = sel.querySelector('.select-list');
+            btn.onclick = () => {
+                document.querySelectorAll('.select').forEach(s => s !== sel && s.classList.remove('open'));
+                sel.classList.toggle('open');
+            };
+            list.querySelectorAll('div').forEach(opt => {
+                opt.onclick = () => {
+                    btn.textContent = opt.textContent;
+                    sel.classList.remove('open');
+                };
+            });
+        });
 
-    showLoading(result);
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.select')) {
+                document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
+            }
+        });
 
-    try {
-      const res = await fetch("/api/build", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks })
-      });
+        // LOADING + TYPING
+        async function typeText(el, text) {
+            el.textContent = "";
+            for (let i = 0; i < text.length; i++) {
+                el.textContent += text[i];
+                await new Promise(r => setTimeout(r, 15));
+            }
+        }
 
-      const data = await res.json();
-      await typeText(result, data.result);
+        function showLoading(el) { el.textContent = "⌛ Подбираем комплектующие..."; }
 
-    } catch (err) {
-      console.error(err);
-      result.textContent = "❌ Ошибка сервера. Попробуйте позже.";
-    }
-  };
-</script>
-</html>
+        // GENERATE
+        document.getElementById('generate').onclick = async () => {
+            const result = document.getElementById('result');
+            const budgetInput = document.getElementById('budget');
+            const budget = parseInt(budgetInput.value);
+            if (isNaN(budget) || budget < 20000) {
+                result.textContent = "⚠️ Минимальный бюджет 20 000 руб.";
+                return;
+            }
 
+            const values = {
+                gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
+                cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
+                tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
+            };
+
+            showLoading(result);
+
+            try {
+                const res = await fetch("/api/build", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks })
+                });
+                const data = await res.json();
+                await typeText(result, data.result);
+            } catch (err) {
+                console.error(err);
+                result.textContent = "❌ Ошибка сервера. Попробуйте позже.";
+            }
+        };
+    </script>
+
+</body>
 </html>
