@@ -11,6 +11,7 @@ const HF_TOKEN = process.env.HF_TOKEN;
 if (!HF_TOKEN) console.error("❌ HF_TOKEN не задан!");
 
 const MODEL = 'tiiuae/falcon-7b-instruct';
+const ROUTER_URL = `https://api-inference.huggingface.co/models/${MODEL}`;
 const PORT = process.env.PORT || 3000;
 
 app.post('/api/build', async (req, res) => {
@@ -33,7 +34,7 @@ app.post('/api/build', async (req, res) => {
 `;
 
     try {
-        const response = await fetch(`https://router.huggingface.co/models/${MODEL}`, {
+        const response = await fetch(ROUTER_URL, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${HF_TOKEN}`,
@@ -42,21 +43,27 @@ app.post('/api/build', async (req, res) => {
             body: JSON.stringify({
                 inputs: prompt,
                 parameters: {
-                    max_new_tokens: 800,
-                    temperature: 0.7,
+                    max_new_tokens: 1000,
+                    temperature: 0.7
                 }
             })
         });
 
-        const data = await response.json();
-
-        if (!data || data.error) {
-            console.error(data);
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            // HF вернул текст вместо JSON
+            const text = await response.text();
+            console.error("❌ HF Router вернул не JSON:", text);
             return res.status(500).json({ result: "❌ Модель не вернула ответ. Попробуйте позже." });
         }
 
-        // У Router API текст в data.generated_text
-        const text = data.generated_text || "❌ Модель вернула пустой ответ";
+        const data = await response.json();
+        if (!data || data.error) {
+            console.error("❌ HF Router error:", data);
+            return res.status(500).json({ result: "❌ Модель вернула ошибку. Попробуйте позже." });
+        }
+
+        const text = data.generated_text || data[0]?.generated_text || "❌ Модель вернула пустой ответ";
 
         res.json({ result: text });
 
