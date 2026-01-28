@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПК-Консультант</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
-
     <style>
-        /* ==== ВСЕ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ ==== */
         :root {
             --bg-main: #050008;
             --bg-panel: rgba(30,10,50,.85);
@@ -25,7 +22,7 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron',sans-serif;
             color: var(--text-main);
             background: radial-gradient(circle at 20% 20%, rgba(200,0,255,.18), transparent 45%), radial-gradient(circle at 80% 80%, rgba(120,0,255,.18), transparent 45%), linear-gradient(180deg,#050008,#120016);
             animation: bgFlow 20s ease-in-out infinite alternate;
@@ -77,6 +74,7 @@
         .header {
             text-align: center;
             padding: 50px 20px 30px;
+            position: relative;
             z-index: 2;
             opacity: 0;
             transform: translateY(-20px);
@@ -95,21 +93,19 @@
             margin: 0;
             letter-spacing: 5px;
             position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            border-radius: 10px;
+            animation: haloPulse 4s ease-in-out infinite;
         }
 
-            .header h1::before {
-                content: "ПК-КОНСУЛЬТАНТ";
-                position: absolute;
-                inset: 0;
-                text-shadow: 0 0 25px rgba(200,0,255,.6),0 0 50px rgba(160,0,255,.45);
-                filter: blur(6px);
-                z-index: -1;
-                animation: haloPulse 4s ease-in-out infinite;
+        @keyframes haloPulse {
+            0%,100% {
+                text-shadow: 0 0 35px rgba(220,0,255,.75),0 0 65px rgba(180,0,255,.55);
             }
 
-        @keyframes haloPulse {
             50% {
-                text-shadow: 0 0 35px rgba(220,0,255,.75),0 0 65px rgba(180,0,255,.55);
+                text-shadow: 0 0 45px rgba(255,0,255,.9),0 0 75px rgba(180,0,255,.7);
             }
         }
 
@@ -119,6 +115,24 @@
             letter-spacing: 2px;
             color: var(--violet-soft);
         }
+
+        .lang-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 18px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(180,80,255,.35);
+            transition: .25s;
+        }
+
+            .lang-btn:hover {
+                box-shadow: 0 0 22px rgba(180,80,255,.65);
+            }
 
         .container {
             width: 85%;
@@ -277,7 +291,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="matrix left"></div>
@@ -285,32 +298,46 @@
 
     <div class="header">
         <h1>ПК-КОНСУЛЬТАНТ</h1>
-        <div class="subheading">Подбор комплектующих для ПК онлайн</div>
+        <button class="lang-btn" id="langBtn">RU</button>
+        <div class="subheading" id="subheading">Подбор комплектующих для ПК онлайн</div>
     </div>
 
     <div class="container">
         <div class="main-layout">
 
             <div>
-                <p>Ваш бюджет (мин. 20 000 руб.):</p>
+                <p id="budgetLabel">Ваш бюджет (мин. 20 000 руб.):</p>
                 <input type="number" id="budget" min="20000" placeholder="Введите сумму от 20 000">
 
-                <p>Производитель видеокарты:</p>
+                <p id="gpuLabel">Производитель видеокарты:</p>
                 <div class="select" data-name="gpu">
                     <div class="select-btn">Авто</div>
-                    <div class="select-list"><div>Авто</div><div>NVIDIA</div><div>AMD</div></div>
+                    <div class="select-list">
+                        <div data-ru="Авто" data-en="Auto">Авто</div>
+                        <div data-ru="NVIDIA" data-en="NVIDIA">NVIDIA</div>
+                        <div data-ru="AMD" data-en="AMD">AMD</div>
+                    </div>
                 </div>
 
-                <p>Производитель процессора:</p>
+                <p id="cpuLabel">Производитель процессора:</p>
                 <div class="select" data-name="cpu">
                     <div class="select-btn">Авто</div>
-                    <div class="select-list"><div>Авто</div><div>Intel</div><div>AMD</div></div>
+                    <div class="select-list">
+                        <div data-ru="Авто" data-en="Auto">Авто</div>
+                        <div data-ru="Intel" data-en="Intel">Intel</div>
+                        <div data-ru="AMD" data-en="AMD">AMD</div>
+                    </div>
                 </div>
 
-                <p>Задачи ПК:</p>
+                <p id="tasksLabel">Задачи ПК:</p>
                 <div class="select" data-name="tasks">
                     <div class="select-btn">Авто</div>
-                    <div class="select-list"><div>Авто</div><div>Игры</div><div>Работа</div><div>Игры и работа</div></div>
+                    <div class="select-list">
+                        <div data-ru="Авто" data-en="Auto">Авто</div>
+                        <div data-ru="Игры" data-en="Gaming">Игры</div>
+                        <div data-ru="Работа" data-en="Work">Работа</div>
+                        <div data-ru="Игры и работа" data-en="Gaming & Work">Игры и работа</div>
+                    </div>
                 </div>
 
                 <button id="generate">Подобрать комплектующие</button>
@@ -321,14 +348,14 @@
         </div>
 
         <div class="nav-buttons">
-            <a href="index.html" class="nav-btn">Сборка ПК</a>
-            <a href="about.html" class="nav-btn">Что такое ПК?</a>
-            <a href="tips.html" class="nav-btn">Советы по сборке</a>
-            <a href="top-components.html" class="nav-btn">Топ комплектующих</a>
+            <a href="index.html" class="nav-btn" id="navBuild">Сборка ПК</a>
+            <a href="about.html" class="nav-btn" id="navAbout">Что такое ПК?</a>
+            <a href="tips.html" class="nav-btn" id="navTips">Советы по сборке</a>
+            <a href="top-components.html" class="nav-btn" id="navTop">Топ комплектующих</a>
         </div>
     </div>
 
-    <div class="footer">© 2026 MiniKapi. Все права защищены.</div>
+    <div class="footer" id="footer">© 2026 MiniKapi. Все права защищены.</div>
 
     <script>
         // MATRIX
@@ -343,7 +370,7 @@
             }, 120);
         });
 
-        // SELECT
+        // SELECTS
         document.querySelectorAll('.select').forEach(sel => {
             const btn = sel.querySelector('.select-btn');
             const list = sel.querySelector('.select-list');
@@ -358,53 +385,107 @@
                 };
             });
         });
-
         document.addEventListener('click', e => {
             if (!e.target.closest('.select')) {
                 document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
             }
         });
 
-        // LOADING + TYPING
+        // LANG
+        let lang = localStorage.getItem('lang') || 'ru';
+        const dict = {
+            ru: {
+                title: "ПК-КОНСУЛЬТАНТ",
+                subheading: "Подбор комплектующих для ПК онлайн",
+                budgetLabel: "Ваш бюджет (мин. 20 000 руб.):",
+                budgetPlaceholder: "Введите сумму от 20 000",
+                generate: "Подобрать комплектующие",
+                navBuild: "Сборка ПК",
+                navAbout: "Что такое ПК?",
+                navTips: "Советы по сборке",
+                navTop: "Топ комплектующих",
+                select: {
+                    gpu: ["Авто", "NVIDIA", "AMD"],
+                    cpu: ["Авто", "Intel", "AMD"],
+                    tasks: ["Авто", "Игры", "Работа", "Игры и работа"]
+                },
+                minBudget: 20000
+            },
+            en: {
+                title: "PC CONSULTANT",
+                subheading: "Online PC parts selection",
+                budgetLabel: "Your budget (min. $250):",
+                budgetPlaceholder: "Enter amount from $250",
+                generate: "Build PC",
+                navBuild: "Build PC",
+                navAbout: "What is a PC?",
+                navTips: "Assembly Tips",
+                navTop: "Top Components",
+                select: {
+                    gpu: ["Auto", "NVIDIA", "AMD"],
+                    cpu: ["Auto", "Intel", "AMD"],
+                    tasks: ["Auto", "Gaming", "Work", "Gaming & Work"]
+                },
+                minBudget: 250
+            }
+        };
+
+        const langBtn = document.getElementById('langBtn');
+        function applyLang() {
+            const d = dict[lang];
+            document.querySelector('.header h1').textContent = d.title;
+            document.getElementById('subheading').textContent = d.subheading;
+            document.getElementById('budgetLabel').textContent = d.budgetLabel;
+            document.getElementById('budget').placeholder = d.budgetPlaceholder;
+            document.getElementById('generate').textContent = d.generate;
+            document.getElementById('navBuild').textContent = d.navBuild;
+            document.getElementById('navAbout').textContent = d.navAbout;
+            document.getElementById('navTips').textContent = d.navTips;
+            document.getElementById('navTop').textContent = d.navTop;
+            document.querySelectorAll('.select').forEach(sel => {
+                const name = sel.getAttribute('data-name');
+                const opts = sel.querySelectorAll('.select-list div');
+                opts.forEach((opt, i) => opt.textContent = d.select[name][i]);
+                sel.querySelector('.select-btn').textContent = d.select[name][0];
+            });
+            langBtn.textContent = lang.toUpperCase();
+            localStorage.setItem('lang', lang);
+        }
+        langBtn.onclick = () => { lang = (lang === 'ru') ? 'en' : 'ru'; applyLang(); }
+        applyLang();
+
+        // LOADING + GENERATE
         async function typeText(el, text) {
             el.textContent = "";
-            for (let i = 0; i < text.length; i++) {
-                el.textContent += text[i];
-                await new Promise(r => setTimeout(r, 15));
-            }
+            for (let i = 0; i < text.length; i++) { el.textContent += text[i]; await new Promise(r => setTimeout(r, 15)); }
         }
+        function showLoading(el) { el.textContent = lang === 'ru' ? "⌛ Подбираем комплектующие..." : "⌛ Building parts..."; }
 
-        function showLoading(el) { el.textContent = "⌛ Подбираем комплектующие..."; }
-
-        // GENERATE
         document.getElementById('generate').onclick = async () => {
             const result = document.getElementById('result');
             const budgetInput = document.getElementById('budget');
             const budget = parseInt(budgetInput.value);
-            if (isNaN(budget) || budget < 20000) {
-                result.textContent = "⚠️ Минимальный бюджет 20 000 руб.";
+            if (isNaN(budget) || budget < dict[lang].minBudget) {
+                result.textContent = lang === 'ru' ? "Минимальный бюджет 20 000 руб." : "Minimum budget $250";
                 return;
             }
-
             const values = {
                 gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
                 cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
                 tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
             };
-
             showLoading(result);
-
             try {
                 const res = await fetch("/api/build", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks })
+                    body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks, lang })
                 });
                 const data = await res.json();
                 await typeText(result, data.result);
             } catch (err) {
                 console.error(err);
-                result.textContent = "❌ Ошибка сервера. Попробуйте позже.";
+                result.textContent = lang === 'ru' ? "❌ Ошибка сервера. Попробуйте позже." : "❌ Server error. Try later.";
             }
         };
     </script>
