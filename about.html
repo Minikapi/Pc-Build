@@ -83,18 +83,59 @@ body {
     letter-spacing:4px;
     color:#f3d6ff;
     position:relative;
+    display:inline-block;
 }
 
-.header h1::before {
-    content:"ЧТО ТАКОЕ ПК?";
-    position:absolute;
-    inset:0;
-    color:transparent;
+/* Glow из-за букв */
+.header h1 {
     text-shadow:
-        0 0 25px rgba(200,0,255,.6),
-        0 0 50px rgba(160,0,255,.45);
-    filter:blur(6px);
-    z-index:-1;
+        0 0 8px rgba(212,0,255,.8),
+        0 0 15px rgba(212,0,255,.6),
+        0 0 25px rgba(212,0,255,.5),
+        0 0 35px rgba(212,0,255,.4),
+        0 0 50px rgba(212,0,255,.3);
+    animation: glowAnim 3s ease-in-out infinite;
+}
+
+@keyframes glowAnim {
+    0%,100% {
+        text-shadow:
+        0 0 8px rgba(212,0,255,.8),
+        0 0 15px rgba(212,0,255,.6),
+        0 0 25px rgba(212,0,255,.5),
+        0 0 35px rgba(212,0,255,.4),
+        0 0 50px rgba(212,0,255,.3);
+    }
+    50% {
+        text-shadow:
+        0 0 12px rgba(255,0,255,.9),
+        0 0 25px rgba(255,0,255,.7),
+        0 0 35px rgba(255,0,255,.6),
+        0 0 50px rgba(255,0,255,.5),
+        0 0 70px rgba(255,0,255,.4);
+    }
+}
+
+/* LANGUAGE BUTTON */
+.lang-btn {
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    padding:10px 18px;
+    background:rgba(10,5,20,.9);
+    border:2px solid var(--border-violet);
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 0 14px rgba(180,80,255,.35);
+    font-weight:600;
+    transition: all .3s ease;
+    color:#fff;
+}
+
+.lang-btn:hover {
+    box-shadow:0 0 28px rgba(180,80,255,.7);
+    transform:translateY(-2px) scale(1.05);
 }
 
 /* CONTENT */
@@ -164,37 +205,33 @@ body {
 <div class="matrix right"></div>
 
 <div class="header">
-    <h1>ЧТО ТАКОЕ ПК?</h1>
+    <h1 id="mainTitle">ЧТО ТАКОЕ ПК?</h1>
+    <button class="lang-btn" id="langBtn">RU</button>
 </div>
 
 <div class="content">
-    <h2>Персональный компьютер</h2>
-    <p>
-        Персональный компьютер (ПК) — это универсальное устройство, предназначенное
-        для работы, обучения, игр и творчества. Он состоит из набора комплектующих,
-        каждая из которых влияет на производительность и комфорт использования.
+    <h2 data-ru="Персональный компьютер" data-en="Personal Computer">Персональный компьютер</h2>
+    <p data-ru="Персональный компьютер (ПК) — это универсальное устройство, предназначенное для работы, обучения, игр и творчества. Он состоит из набора комплектующих, каждая из которых влияет на производительность и комфорт использования." data-en="A personal computer (PC) is a versatile device designed for work, learning, gaming, and creativity. It consists of a set of components, each affecting performance and user comfort.">
+        Персональный компьютер (ПК) — это универсальное устройство, предназначенное для работы, обучения, игр и творчества. Он состоит из набора комплектующих, каждая из которых влияет на производительность и комфорт использования.
     </p>
 
-    <h2>Почему важно правильно подбирать комплектующие</h2>
-    <p>
-        Неправильно подобранные компоненты могут привести к низкой производительности,
-        перегреву, шуму и переплате. Грамотный подбор позволяет получить максимум
-        возможностей за свой бюджет.
+    <h2 data-ru="Почему важно правильно подбирать комплектующие" data-en="Why proper component selection matters">Почему важно правильно подбирать комплектующие</h2>
+    <p data-ru="Неправильно подобранные компоненты могут привести к низкой производительности, перегреву, шуму и переплате. Грамотный подбор позволяет получить максимум возможностей за свой бюджет." data-en="Incorrectly selected components can lead to low performance, overheating, noise, and overspending. Proper selection maximizes capabilities within your budget.">
+        Неправильно подобранные компоненты могут привести к низкой производительности, перегреву, шуму и переплате. Грамотный подбор позволяет получить максимум возможностей за свой бюджет.
     </p>
 
-    <h2>Основные компоненты ПК</h2>
-    <p>
-        Процессор отвечает за вычисления, видеокарта — за графику, оперативная память —
-        за скорость работы, а накопитель — за хранение данных. Все компоненты должны
-        быть сбалансированы между собой.
+    <h2 data-ru="Основные компоненты ПК" data-en="Main PC Components">Основные компоненты ПК</h2>
+    <p data-ru="Процессор отвечает за вычисления, видеокарта — за графику, оперативная память — за скорость работы, а накопитель — за хранение данных. Все компоненты должны быть сбалансированы между собой." data-en="The CPU handles calculations, the GPU handles graphics, RAM handles speed, and storage handles data. All components must be balanced.">
+        Процессор отвечает за вычисления, видеокарта — за графику, оперативная память — за скорость работы, а накопитель — за хранение данных. Все компоненты должны быть сбалансированы между собой.
     </p>
 
     <div class="nav-buttons">
-        <a href="index.html" class="nav-btn">← Назад к подбору</a>
+        <a href="index.html" class="nav-btn" data-ru="← Назад к подбору" data-en="← Back to Selection">← Назад к подбору</a>
     </div>
 </div>
 
 <script>
+// MATRIX
 document.querySelectorAll('.matrix').forEach(side=>{
     setInterval(()=>{
         const s=document.createElement('span');
@@ -205,6 +242,29 @@ document.querySelectorAll('.matrix').forEach(side=>{
         setTimeout(()=>s.remove(),7000);
     },120);
 });
+
+// LANGUAGE SWITCH
+let lang = localStorage.getItem('lang') || 'ru';
+const langBtn = document.getElementById('langBtn');
+
+function applyLang() {
+    langBtn.textContent = lang==='ru' ? "RU" : "EN";
+    document.getElementById('mainTitle').textContent = lang==='ru' ? "ЧТО ТАКОЕ ПК?" : "WHAT IS A PC?";
+    
+    document.querySelectorAll('.content [data-ru]').forEach(el=>{
+        el.textContent = el.getAttribute('data-'+lang);
+    });
+
+    document.querySelectorAll('.nav-btn[data-ru]').forEach(el=>{
+        el.textContent = el.getAttribute('data-'+lang);
+    });
+}
+langBtn.onclick = ()=>{
+    lang = lang==='ru' ? 'en' : 'ru';
+    localStorage.setItem('lang', lang);
+    applyLang();
+}
+applyLang();
 </script>
 
 </body>
