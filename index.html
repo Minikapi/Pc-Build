@@ -39,6 +39,7 @@
             }
         }
 
+        /* MATRIX */
         .matrix {
             position: fixed;
             top: 0;
@@ -71,6 +72,7 @@
             }
         }
 
+        /* HEADER */
         .header {
             text-align: center;
             padding: 50px 20px 30px;
@@ -92,30 +94,24 @@
             font-size: 64px;
             margin: 0;
             letter-spacing: 5px;
+            color: #f3d6ff;
             position: relative;
             display: inline-block;
-            padding: 0 10px;
-            border-radius: 10px;
-            animation: haloPulse 4s ease-in-out infinite;
+            text-shadow: 0 0 8px rgba(212,0,255,.8), 0 0 15px rgba(212,0,255,.6), 0 0 25px rgba(212,0,255,.5), 0 0 35px rgba(212,0,255,.4), 0 0 50px rgba(212,0,255,.3);
+            animation: glowAnim 3s ease-in-out infinite;
         }
 
-        @keyframes haloPulse {
+        @keyframes glowAnim {
             0%,100% {
-                text-shadow: 0 0 35px rgba(220,0,255,.75),0 0 65px rgba(180,0,255,.55);
+                text-shadow: 0 0 8px rgba(212,0,255,.8), 0 0 15px rgba(212,0,255,.6), 0 0 25px rgba(212,0,255,.5), 0 0 35px rgba(212,0,255,.4), 0 0 50px rgba(212,0,255,.3);
             }
 
             50% {
-                text-shadow: 0 0 45px rgba(255,0,255,.9),0 0 75px rgba(180,0,255,.7);
+                text-shadow: 0 0 12px rgba(255,0,255,.9), 0 0 25px rgba(255,0,255,.7), 0 0 35px rgba(255,0,255,.6), 0 0 50px rgba(255,0,255,.5), 0 0 70px rgba(255,0,255,.4);
             }
         }
 
-        .subheading {
-            margin-top: 10px;
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--violet-soft);
-        }
-
+        /* LANGUAGE BUTTON */
         .lang-btn {
             position: absolute;
             right: 20px;
@@ -127,11 +123,14 @@
             border-radius: 10px;
             cursor: pointer;
             box-shadow: 0 0 14px rgba(180,80,255,.35);
-            transition: .25s;
+            font-weight: 600;
+            transition: all .3s ease;
+            color: #fff;
         }
 
             .lang-btn:hover {
-                box-shadow: 0 0 22px rgba(180,80,255,.65);
+                box-shadow: 0 0 28px rgba(180,80,255,.7);
+                transform: translateY(-2px) scale(1.05);
             }
 
         .container {
@@ -291,6 +290,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="matrix left"></div>
@@ -355,7 +355,7 @@
         </div>
     </div>
 
-    <div class="footer" id="footer">© 2026 MiniKapi. Все права защищены.</div>
+    <div class="footer">© 2026 MiniKapi. Все права защищены.</div>
 
     <script>
         // MATRIX
@@ -370,7 +370,7 @@
             }, 120);
         });
 
-        // SELECTS
+        // SELECT
         document.querySelectorAll('.select').forEach(sel => {
             const btn = sel.querySelector('.select-btn');
             const list = sel.querySelector('.select-list');
@@ -380,7 +380,7 @@
             };
             list.querySelectorAll('div').forEach(opt => {
                 opt.onclick = () => {
-                    btn.textContent = opt.textContent;
+                    btn.textContent = opt.getAttribute('data-' + lang);
                     sel.classList.remove('open');
                 };
             });
@@ -391,76 +391,64 @@
             }
         });
 
-        // LANG
         let lang = localStorage.getItem('lang') || 'ru';
         const dict = {
             ru: {
-                title: "ПК-КОНСУЛЬТАНТ",
-                subheading: "Подбор комплектующих для ПК онлайн",
-                budgetLabel: "Ваш бюджет (мин. 20 000 руб.):",
-                budgetPlaceholder: "Введите сумму от 20 000",
-                generate: "Подобрать комплектующие",
-                navBuild: "Сборка ПК",
-                navAbout: "Что такое ПК?",
-                navTips: "Советы по сборке",
-                navTop: "Топ комплектующих",
-                select: {
-                    gpu: ["Авто", "NVIDIA", "AMD"],
-                    cpu: ["Авто", "Intel", "AMD"],
-                    tasks: ["Авто", "Игры", "Работа", "Игры и работа"]
-                },
+                subheading: 'Подбор комплектующих для ПК онлайн',
+                budgetLabel: 'Ваш бюджет (мин. 20 000 руб.):',
+                budgetPlaceholder: 'Введите сумму от 20 000',
+                generate: 'Подобрать комплектующие',
+                navBuild: 'Сборка ПК',
+                navAbout: 'Что такое ПК?',
+                navTips: 'Советы по сборке',
+                navTop: 'Топ комплектующих',
                 minBudget: 20000
             },
             en: {
-                title: "PC CONSULTANT",
-                subheading: "Online PC parts selection",
-                budgetLabel: "Your budget (min. $250):",
-                budgetPlaceholder: "Enter amount from $250",
-                generate: "Build PC",
-                navBuild: "Build PC",
-                navAbout: "What is a PC?",
-                navTips: "Assembly Tips",
-                navTop: "Top Components",
-                select: {
-                    gpu: ["Auto", "NVIDIA", "AMD"],
-                    cpu: ["Auto", "Intel", "AMD"],
-                    tasks: ["Auto", "Gaming", "Work", "Gaming & Work"]
-                },
+                subheading: 'Online PC parts selection',
+                budgetLabel: 'Your budget (min. $250):',
+                budgetPlaceholder: 'Enter amount from $250',
+                generate: 'Build PC',
+                navBuild: 'Build PC',
+                navAbout: 'What is a PC?',
+                navTips: 'Assembly Tips',
+                navTop: 'Top Components',
                 minBudget: 250
             }
         };
-
         const langBtn = document.getElementById('langBtn');
         function applyLang() {
-            const d = dict[lang];
-            document.querySelector('.header h1').textContent = d.title;
-            document.getElementById('subheading').textContent = d.subheading;
-            document.getElementById('budgetLabel').textContent = d.budgetLabel;
-            document.getElementById('budget').placeholder = d.budgetPlaceholder;
-            document.getElementById('generate').textContent = d.generate;
-            document.getElementById('navBuild').textContent = d.navBuild;
-            document.getElementById('navAbout').textContent = d.navAbout;
-            document.getElementById('navTips').textContent = d.navTips;
-            document.getElementById('navTop').textContent = d.navTop;
-            document.querySelectorAll('.select').forEach(sel => {
-                const name = sel.getAttribute('data-name');
-                const opts = sel.querySelectorAll('.select-list div');
-                opts.forEach((opt, i) => opt.textContent = d.select[name][i]);
-                sel.querySelector('.select-btn').textContent = d.select[name][0];
-            });
+            document.getElementById('subheading').textContent = dict[lang].subheading;
+            document.getElementById('budgetLabel').textContent = dict[lang].budgetLabel;
+            document.getElementById('budget').placeholder = dict[lang].budgetPlaceholder;
+            document.getElementById('generate').textContent = dict[lang].generate;
+            document.getElementById('navBuild').textContent = dict[lang].navBuild;
+            document.getElementById('navAbout').textContent = dict[lang].navAbout;
+            document.getElementById('navTips').textContent = dict[lang].navTips;
+            document.getElementById('navTop').textContent = dict[lang].navTop;
             langBtn.textContent = lang.toUpperCase();
+            document.querySelectorAll('.select').forEach(sel => {
+                sel.querySelectorAll('.select-list div').forEach(opt => {
+                    opt.textContent = opt.getAttribute('data-' + lang);
+                });
+                sel.querySelector('.select-btn').textContent = sel.querySelector('.select-list div:first-child').getAttribute('data-' + lang);
+            });
             localStorage.setItem('lang', lang);
         }
-        langBtn.onclick = () => { lang = (lang === 'ru') ? 'en' : 'ru'; applyLang(); }
+        langBtn.onclick = () => {
+            lang = (lang === 'ru') ? 'en' : 'ru';
+            applyLang();
+        };
         applyLang();
 
-        // LOADING + GENERATE
+        // LOADING + TYPING
         async function typeText(el, text) {
             el.textContent = "";
             for (let i = 0; i < text.length; i++) { el.textContent += text[i]; await new Promise(r => setTimeout(r, 15)); }
         }
         function showLoading(el) { el.textContent = lang === 'ru' ? "⌛ Подбираем комплектующие..." : "⌛ Building parts..."; }
 
+        // GENERATE
         document.getElementById('generate').onclick = async () => {
             const result = document.getElementById('result');
             const budgetInput = document.getElementById('budget');
