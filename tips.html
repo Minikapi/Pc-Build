@@ -95,16 +95,40 @@
             letter-spacing: 4px;
             color: #f3d6ff;
             position: relative;
+            display: inline-block;
+            text-shadow: 0 0 8px rgba(212,0,255,.8), 0 0 15px rgba(212,0,255,.6), 0 0 25px rgba(212,0,255,.5), 0 0 35px rgba(212,0,255,.4), 0 0 50px rgba(212,0,255,.3);
+            animation: glowAnim 3s ease-in-out infinite;
         }
 
-            .header h1::before {
-                content: "СОВЕТЫ ПО СБОРКЕ ПК";
-                position: absolute;
-                inset: 0;
-                color: transparent;
-                text-shadow: 0 0 25px rgba(200,0,255,.6),0 0 50px rgba(160,0,255,.45);
-                filter: blur(6px);
-                z-index: -1;
+        @keyframes glowAnim {
+            0%,100% {
+                text-shadow: 0 0 8px rgba(212,0,255,.8), 0 0 15px rgba(212,0,255,.6), 0 0 25px rgba(212,0,255,.5), 0 0 35px rgba(212,0,255,.4), 0 0 50px rgba(212,0,255,.3);
+            }
+
+            50% {
+                text-shadow: 0 0 12px rgba(255,0,255,.9), 0 0 25px rgba(255,0,255,.7), 0 0 35px rgba(255,0,255,.6), 0 0 50px rgba(255,0,255,.5), 0 0 70px rgba(255,0,255,.4);
+            }
+        }
+
+        .lang-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 18px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(180,80,255,.35);
+            font-weight: 600;
+            transition: all .3s ease;
+            color: #fff;
+        }
+
+            .lang-btn:hover {
+                box-shadow: 0 0 28px rgba(180,80,255,.7);
+                transform: translateY(-50%) scale(1.05);
             }
 
         .content {
@@ -118,17 +142,14 @@
             min-height: 400px;
             font-size: 16px;
             line-height: 1.9;
-            overflow-y: auto;
         }
 
             .content h2 {
                 color: var(--violet-main);
                 font-size: 22px;
                 margin-top: 20px;
-                margin-bottom: 10px;
             }
 
-        /* NAV */
         .nav-buttons {
             display: flex;
             justify-content: center;
@@ -149,29 +170,30 @@
         }
 
             .nav-btn:hover {
-                box-shadow: 0 0 20px rgba(180,80,255,.65),0 0 35px rgba(140,0,255,.45);
+                box-shadow: 0 0 20px rgba(180,80,255,.65), 0 0 35px rgba(140,0,255,.45);
                 transform: translateY(-1px);
             }
     </style>
 </head>
+
 <body>
 
     <div class="matrix left"></div>
     <div class="matrix right"></div>
 
     <div class="header">
-        <h1>СОВЕТЫ ПО СБОРКЕ ПК</h1>
+        <h1 id="mainTitle">СОВЕТЫ ПО СБОРКЕ ПК</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
     </div>
 
     <div class="content" id="content"></div>
 
     <div class="nav-buttons">
-        <a href="index.html" class="nav-btn">← Назад к подбору</a>
-        <a href="top-components.html" class="nav-btn">Топ комплектующих</a>
+        <a href="index.html" class="nav-btn" data-ru="← Назад к подбору" data-en="← Back to Selection">← Назад к подбору</a>
+        <a href="top-components.html" class="nav-btn" data-ru="Топ комплектующих" data-en="Top Components">Топ комплектующих</a>
     </div>
 
     <script>
-        /* MATRIX */
         document.querySelectorAll('.matrix').forEach(side => {
             setInterval(() => {
                 const s = document.createElement('span');
@@ -183,35 +205,53 @@
             }, 120);
         });
 
-        /* Плавный набор текста с минизаголовками и расширенной информацией */
-        const sections = [
-            { title: "Главное при сборке", text: "При сборке ПК важно быть внимательным и аккуратным. Следуйте инструкциям производителей материнских плат и компонентов. Ошибки при установке могут повредить материнскую плату, видеокарту или другие комплектующие. Старайтесь не торопиться, проверяйте совместимость деталей" },
-            { title: "Проверяйте совместимость", text: "Убедитесь, что все компоненты совместимы между собой: сокет процессора, разъемы оперативной памяти и видеокарты. Если планируете апгрейд, заранее проверяйте поддерживаемые стандарты и размеры корпуса." },
-            { title: "Охлаждение и вентиляция", text: "Собирайте ПК так, чтобы поток воздуха был оптимальным. Используйте качественные вентиляторы, термопасту и проверяйте направление воздушного потока. Это предотвратит перегрев и продлит срок службы комплектующих." },
-            { title: "Источник питания", text: "Выбирайте блок питания с запасом мощности, соответствующий вашей сборке, и сертификацией 80 Plus. Это обеспечит стабильную работу всей системы и защиту от скачков напряжения." },
-            { title: "Сборка и тестирование", text: "После сборки проверьте работу всех компонентов, обновите BIOS и драйверы. Тестируйте систему на стабильность и мониторьте температуры. Не забывайте про регулярное обновление программного обеспечения и антивирус." },
-            { title: "Уход и чистка", text: "Регулярно очищайте ПК от пыли, особенно радиаторы и вентиляторы. Это повышает эффективность охлаждения и продлевает срок службы комплектующих." }
-        ];
+        const sections = {
+            ru: [
+                { title: "Главное при сборке", text: "При сборке ПК важно быть внимательным и аккуратным. Следуйте инструкциям производителей материнских плат и компонентов." },
+                { title: "Проверяйте совместимость", text: "Убедитесь, что все компоненты совместимы между собой." },
+                { title: "Охлаждение и вентиляция", text: "Собирайте ПК так, чтобы поток воздуха был оптимальным." },
+                { title: "Источник питания", text: "Выбирайте блок питания с запасом мощности и сертификацией 80 Plus." },
+                { title: "Сборка и тестирование", text: "После сборки проверьте работу всех компонентов." },
+                { title: "Уход и чистка", text: "Регулярно очищайте ПК от пыли." }
+            ],
+            en: [
+                { title: "Main Assembly Tips", text: "When assembling a PC, be careful and follow manufacturer instructions." },
+                { title: "Check Compatibility", text: "Make sure all components are compatible." },
+                { title: "Cooling and Ventilation", text: "Ensure optimal airflow inside the case." },
+                { title: "Power Supply", text: "Choose a power supply with sufficient wattage and 80 Plus certification." },
+                { title: "Assembly and Testing", text: "After assembly, test all components." },
+                { title: "Maintenance", text: "Clean your PC regularly from dust." }
+            ]
+        };
 
-        async function typeSections(el, sections) {
-            el.innerHTML = "";
-            for (const sec of sections) {
+        let lang = localStorage.getItem('lang') || 'ru';
+        const langBtn = document.getElementById('langBtn');
+        const content = document.getElementById('content');
+
+        function render() {
+            content.innerHTML = '';
+            sections[lang].forEach(sec => {
                 const h2 = document.createElement('h2');
-                el.appendChild(h2);
-                for (let i = 0; i < sec.title.length; i++) {
-                    h2.innerHTML += sec.title[i];
-                    await new Promise(r => setTimeout(r, 15));
-                }
+                h2.textContent = sec.title;
                 const p = document.createElement('p');
-                el.appendChild(p);
-                for (let i = 0; i < sec.text.length; i++) {
-                    p.innerHTML += sec.text[i];
-                    await new Promise(r => setTimeout(r, 15));
-                }
-            }
+                p.textContent = sec.text;
+                content.appendChild(h2);
+                content.appendChild(p);
+            });
+            document.getElementById('mainTitle').textContent = lang === 'ru' ? 'СОВЕТЫ ПО СБОРКЕ ПК' : 'PC BUILDING TIPS';
+            langBtn.textContent = lang === 'ru' ? 'RU' : 'EN';
+            document.querySelectorAll('[data-ru]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
         }
 
-        typeSections(document.getElementById('content'), sections);
+        langBtn.onclick = () => {
+            lang = lang === 'ru' ? 'en' : 'ru';
+            localStorage.setItem('lang', lang);
+            render();
+        };
+
+        render();
     </script>
 
 </body>
