@@ -347,60 +347,7 @@
             border-radius: 16px;
         }
 
-            /* основная линия */
-            .container::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                border-radius: 16px;
-                padding: 2px;
-                background: linear-gradient( 120deg, transparent 0%, transparent 40%, rgba(180, 0, 255, 0.0) 45%, rgba(210, 0, 255, 0.9) 48%, rgba(255, 255, 255, 1) 50%, rgba(210, 0, 255, 0.9) 52%, rgba(180, 0, 255, 0.0) 55%, transparent 60%, transparent 100% );
-                background-size: 250% 250%;
-                background-position: -200% 0;
-                opacity: 0;
-                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-                -webkit-mask-composite: xor;
-                mask-composite: exclude;
-                pointer-events: none;
-            }
-
-            /* мягкое внешнее свечение */
-            .container::after {
-                content: "";
-                position: absolute;
-                inset: -5px;
-                border-radius: 22px;
-                background: linear-gradient( 120deg, transparent 0%, transparent 40%, rgba(180, 0, 255, 0.0) 45%, rgba(210, 0, 255, 0.8) 48%, rgba(255, 255, 255, 0.9) 50%, rgba(210, 0, 255, 0.8) 52%, rgba(180, 0, 255, 0.0) 55%, transparent 60%, transparent 100% );
-                background-size: 250% 250%;
-                background-position: -200% 0;
-                filter: blur(18px);
-                opacity: 0;
-                z-index: -1;
-                pointer-events: none;
-            }
-
-            /* запуск один раз */
-            .container:hover::before,
-            .container:hover::after {
-                animation: neonOnce 3.5s ease forwards;
-            }
-
-        @keyframes neonOnce {
-
-            0% {
-                background-position: -200% 0;
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 1;
-            }
-
-            100% {
-                background-position: 200% 0;
-                opacity: 0; /* плавное исчезновение */
-            }
-        }
+            
     </style>
 </head>
 
@@ -577,7 +524,7 @@
 5. Нажмите «Подобрать комплектующие» и дождитесь результата.
 
 Остальные страницы сайта носят информационный характер и помогают лучше разобраться в теме.
-                        `,
+                            `,
                 minBudget: 20000
             },
 
@@ -604,7 +551,7 @@
 5. Click “Build PC” and wait for the result.
 
 Other pages on the site are informational and help you better understand PC components.
-                        `,
+                            `,
                 minBudget: 250
             }
         };
