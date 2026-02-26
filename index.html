@@ -39,7 +39,6 @@
             }
         }
 
-        /* MATRIX */
         .matrix {
             position: fixed;
             top: 0;
@@ -59,10 +58,11 @@
 
             .matrix span {
                 position: absolute;
-                top: -20px;
+                top: 0;
                 font-size: 14px;
-                opacity: .8;
-                animation: fall linear infinite;
+                pointer-events: none;
+                will-change: transform;
+                transform: translateZ(0);
             }
 
         @keyframes fall {
@@ -72,7 +72,6 @@
             }
         }
 
-        /* HEADER */
         .header {
             text-align: center;
             padding: 50px 20px 30px;
@@ -111,7 +110,6 @@
             }
         }
 
-        /* LANGUAGE BUTTON */
         .lang-btn {
             position: absolute;
             right: 20px;
@@ -288,6 +286,121 @@
             color: var(--violet-soft);
             z-index: 2;
         }
+
+        /* ===== ДОБАВЛЕНО (не влияет на остальные кнопки) ===== */
+
+        .how-toggle {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .how-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .5s ease, opacity .4s ease;
+            opacity: 0;
+        }
+
+            .how-content.active {
+                max-height: 600px;
+                opacity: 1;
+                margin-bottom: 20px;
+            }
+
+        .how-inner {
+            padding: 20px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 16px;
+            box-shadow: 0 0 32px rgba(180,80,255,.45), inset 0 0 18px rgba(0,0,0,.7);
+        }
+
+        .how-toggle {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .how-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .5s ease, opacity .4s ease;
+            opacity: 0;
+        }
+
+            .how-content.active {
+                max-height: 500px;
+                opacity: 1;
+                margin-bottom: 20px;
+            }
+
+        .how-inner {
+            padding: 20px;
+            background: rgba(10,5,20,.9);
+            border: 2px solid var(--border-violet);
+            border-radius: 16px;
+            box-shadow: 0 0 32px rgba(180,80,255,.45), inset 0 0 18px rgba(0,0,0,.7);
+        }
+        /* ===== ОДНОРАЗОВЫЙ ФИОЛЕТОВЫЙ БЛИК С ПЛАВНЫМ ЗАТУХАНИЕМ ===== */
+
+        .container {
+            position: relative;
+            border-radius: 16px;
+        }
+
+            /* основная линия */
+            .container::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                padding: 2px;
+                background: linear-gradient( 120deg, transparent 0%, transparent 40%, rgba(180, 0, 255, 0.0) 45%, rgba(210, 0, 255, 0.9) 48%, rgba(255, 255, 255, 1) 50%, rgba(210, 0, 255, 0.9) 52%, rgba(180, 0, 255, 0.0) 55%, transparent 60%, transparent 100% );
+                background-size: 250% 250%;
+                background-position: -200% 0;
+                opacity: 0;
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            /* мягкое внешнее свечение */
+            .container::after {
+                content: "";
+                position: absolute;
+                inset: -5px;
+                border-radius: 22px;
+                background: linear-gradient( 120deg, transparent 0%, transparent 40%, rgba(180, 0, 255, 0.0) 45%, rgba(210, 0, 255, 0.8) 48%, rgba(255, 255, 255, 0.9) 50%, rgba(210, 0, 255, 0.8) 52%, rgba(180, 0, 255, 0.0) 55%, transparent 60%, transparent 100% );
+                background-size: 250% 250%;
+                background-position: -200% 0;
+                filter: blur(18px);
+                opacity: 0;
+                z-index: -1;
+                pointer-events: none;
+            }
+
+            /* запуск один раз */
+            .container:hover::before,
+            .container:hover::after {
+                animation: neonOnce 3.5s ease forwards;
+            }
+
+        @keyframes neonOnce {
+
+            0% {
+                background-position: -200% 0;
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                background-position: 200% 0;
+                opacity: 0; /* плавное исчезновение */
+            }
+        }
     </style>
 </head>
 
@@ -303,6 +416,20 @@
     </div>
 
     <div class="container">
+
+        <button class="how-toggle" id="howToggle">Как пользоваться сайтом</button>
+
+        <div class="how-content" id="howContent">
+            <div class="how-inner">
+                <p><strong>1.</strong> Введите бюджет который предпочитаете для сборки, учитывайте то что это сборка только системного блока без монитора!</p>
+                <p><strong>2.</strong> Выберите производителя видеокарты или оставьте «Авто».</p>
+                <p><strong>3.</strong> Выберите производителя процессора или оставьте «Авто».</p>
+                <p><strong>4.</strong> Укажите задачи ПК — игры, работа или универсальный вариант.</p>
+                <p><strong>5.</strong> Нажмите «Подобрать комплектующие» и дождитесь результата.</p>
+                <p>Остальные страницы сайта носят информационный характер и помогают лучше разобраться в теме.</p>
+            </div>
+        </div>
+
         <div class="main-layout">
 
             <div>
@@ -360,14 +487,46 @@
     <script>
         // MATRIX
         document.querySelectorAll('.matrix').forEach(side => {
-            setInterval(() => {
-                const s = document.createElement('span');
-                s.textContent = Math.random() > .5 ? '1' : '0';
-                s.style.left = Math.random() * 100 + '%';
-                s.style.animationDuration = 3 + Math.random() * 4 + 's';
-                side.appendChild(s);
-                setTimeout(() => s.remove(), 7000);
-            }, 120);
+
+            const SYMBOL_COUNT = 40; // оптимально для слабых ПК
+            const symbols = [];
+
+            for (let i = 0; i < SYMBOL_COUNT; i++) {
+
+                const span = document.createElement('span');
+                span.textContent = Math.random() > 0.5 ? '1' : '0';
+
+                span.style.left = Math.random() * 100 + '%';
+                span.style.transform = `translateY(${Math.random() * 100}vh)`;
+                span.style.opacity = 0.6 + Math.random() * 0.3;
+
+                side.appendChild(span);
+
+                symbols.push({
+                    el: span,
+                    speed: 0.2 + Math.random() * 0.3,
+                    y: Math.random() * 110
+                });
+            }
+
+            function animate() {
+                for (let s of symbols) {
+
+                    s.y += s.speed;
+
+                    if (s.y > 110) {
+                        s.y = -5;
+                        s.el.textContent = Math.random() > 0.5 ? '1' : '0';
+                        s.el.style.left = Math.random() * 100 + '%';
+                    }
+
+                    s.el.style.transform = `translateY(${s.y}vh)`;
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            requestAnimationFrame(animate);
         });
 
         // SELECT
@@ -385,6 +544,7 @@
                 };
             });
         });
+
         document.addEventListener('click', e => {
             if (!e.target.closest('.select')) {
                 document.querySelectorAll('.select').forEach(s => s.classList.remove('open'));
@@ -392,6 +552,7 @@
         });
 
         let lang = localStorage.getItem('lang') || 'ru';
+
         const dict = {
             ru: {
                 h1: 'ПК-КОНСУЛЬТАНТ',
@@ -403,8 +564,23 @@
                 navAbout: 'Что такое ПК?',
                 navTips: 'Советы по сборке',
                 navTop: 'Топ комплектующих',
+                howBtn: 'Как пользоваться сайтом',
+                howText: `
+1. Введите бюджет который предпочитаете для сборки. Это сборка только системного блока без монитора.
+
+2. Выберите производителя видеокарты или оставьте «Авто».
+
+3. Выберите производителя процессора или оставьте «Авто».
+
+4. Укажите задачи ПК — игры, работа или универсальный вариант.
+
+5. Нажмите «Подобрать комплектующие» и дождитесь результата.
+
+Остальные страницы сайта носят информационный характер и помогают лучше разобраться в теме.
+                        `,
                 minBudget: 20000
             },
+
             en: {
                 h1: 'PC CONSULTANT',
                 subheading: 'Online PC parts selection',
@@ -415,19 +591,31 @@
                 navAbout: 'What is a PC?',
                 navTips: 'Assembly Tips',
                 navTop: 'Top Components',
+                howBtn: 'How to use the site',
+                howText: `
+1. Enter the budget you prefer for the build. This is for the system unit only (no monitor).
+
+2. Choose a GPU manufacturer or leave it on “Auto”.
+
+3. Choose a CPU manufacturer or leave it on “Auto”.
+
+4. Select the PC purpose — gaming, work or universal.
+
+5. Click “Build PC” and wait for the result.
+
+Other pages on the site are informational and help you better understand PC components.
+                        `,
                 minBudget: 250
             }
         };
 
         const langBtn = document.getElementById('langBtn');
+        const howToggle = document.getElementById('howToggle');
+        const howContent = document.getElementById('howContent');
+
         function applyLang() {
-            // перевод заголовка
             document.querySelector('.header h1').textContent = dict[lang].h1;
-
-            // перевод подзаголовка
             document.getElementById('subheading').textContent = dict[lang].subheading;
-
-            // перевод остальных элементов
             document.getElementById('budgetLabel').textContent = dict[lang].budgetLabel;
             document.getElementById('budget').placeholder = dict[lang].budgetPlaceholder;
             document.getElementById('generate').textContent = dict[lang].generate;
@@ -436,15 +624,19 @@
             document.getElementById('navTips').textContent = dict[lang].navTips;
             document.getElementById('navTop').textContent = dict[lang].navTop;
 
-            // текст на кнопке языка
+            // ПЕРЕВОД КНОПКИ И ТЕКСТА
+            howToggle.textContent = dict[lang].howBtn;
+            howContent.querySelector('.how-inner').innerText = dict[lang].howText;
+
             langBtn.textContent = lang.toUpperCase();
 
-            // перевод селектов
             document.querySelectorAll('.select').forEach(sel => {
                 sel.querySelectorAll('.select-list div').forEach(opt => {
                     opt.textContent = opt.getAttribute('data-' + lang);
                 });
-                sel.querySelector('.select-btn').textContent = sel.querySelector('.select-list div:first-child').getAttribute('data-' + lang);
+                sel.querySelector('.select-btn').textContent =
+                    sel.querySelector('.select-list div:first-child')
+                        .getAttribute('data-' + lang);
             });
 
             localStorage.setItem('lang', lang);
@@ -457,40 +649,62 @@
 
         applyLang();
 
+        // TOGGLE HOW SECTION
+        howToggle.addEventListener('click', () => {
+            howContent.classList.toggle('active');
+        });
 
         // LOADING + TYPING
         async function typeText(el, text) {
             el.textContent = "";
-            for (let i = 0; i < text.length; i++) { el.textContent += text[i]; await new Promise(r => setTimeout(r, 15)); }
+            for (let i = 0; i < text.length; i++) {
+                el.textContent += text[i];
+                await new Promise(r => setTimeout(r, 15));
+            }
         }
-        function showLoading(el) { el.textContent = lang === 'ru' ? "⌛ Подбираем комплектующие..." : "⌛ Building parts..."; }
+
+        function showLoading(el) {
+            el.textContent = lang === 'ru'
+                ? "⌛ Подбираем комплектующие..."
+                : "⌛ Building parts...";
+        }
 
         // GENERATE
         document.getElementById('generate').onclick = async () => {
             const result = document.getElementById('result');
             const budgetInput = document.getElementById('budget');
             const budget = parseInt(budgetInput.value);
+
             if (isNaN(budget) || budget < dict[lang].minBudget) {
-                result.textContent = lang === 'ru' ? "Минимальный бюджет 20 000 руб." : "Minimum budget $250";
+                result.textContent = lang === 'ru'
+                    ? "Минимальный бюджет 20 000 руб."
+                    : "Minimum budget $250";
                 return;
             }
+
             const values = {
                 gpu: document.querySelector('.select[data-name="gpu"] .select-btn').textContent,
                 cpu: document.querySelector('.select[data-name="cpu"] .select-btn').textContent,
                 tasks: document.querySelector('.select[data-name="tasks"] .select-btn').textContent
             };
+
             showLoading(result);
+
             try {
                 const res = await fetch("/api/build", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ budget, gpu: values.gpu, cpu: values.cpu, tasks: values.tasks, lang })
                 });
+
                 const data = await res.json();
                 await typeText(result, data.result);
+
             } catch (err) {
                 console.error(err);
-                result.textContent = lang === 'ru' ? "❌ Ошибка сервера. Попробуйте позже." : "❌ Server error. Try later.";
+                result.textContent = lang === 'ru'
+                    ? "❌ Ошибка сервера. Попробуйте позже."
+                    : "❌ Server error. Try later.";
             }
         };
     </script>
