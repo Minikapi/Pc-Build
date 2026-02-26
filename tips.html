@@ -228,21 +228,64 @@
         const langBtn = document.getElementById('langBtn');
         const content = document.getElementById('content');
 
+        function typeWriterEffect(element, text, speed = 10, callback) {
+            let i = 0;
+            element.textContent = '';
+            function typing() {
+                if (i < text.length) {
+                    element.textContent += text[i];
+                    i++;
+                    setTimeout(typing, speed);
+                } else if (callback) callback();
+            }
+            typing();
+        }
+
         function render() {
             content.innerHTML = '';
-            sections[lang].forEach(sec => {
+            const firstVisit = !localStorage.getItem('tipsVisited');
+
+            sections[lang].forEach((sec, idx) => {
                 const h2 = document.createElement('h2');
-                h2.textContent = sec.title;
                 const p = document.createElement('p');
-                p.textContent = sec.text;
+
+                h2.style.opacity = '0';
+                h2.style.transform = 'translateY(30px)';
+                p.style.opacity = '0';
+                p.style.transform = 'translateY(30px)';
+
                 content.appendChild(h2);
                 content.appendChild(p);
+
+                // Плавная анимация появления
+                setTimeout(() => {
+                    h2.style.transition = 'all 0.6s ease';
+                    p.style.transition = 'all 0.6s ease';
+                    h2.style.opacity = '1';
+                    h2.style.transform = 'translateY(0)';
+                    p.style.opacity = '1';
+                    p.style.transform = 'translateY(0)';
+                }, idx * 150);
+
+                // Если первый визит — применяем эффект печати
+                if (firstVisit) {
+                    setTimeout(() => {
+                        typeWriterEffect(h2, sec.title, 15);
+                        setTimeout(() => typeWriterEffect(p, sec.text, 5), sec.title.length * 15);
+                    }, idx * 150);
+                } else {
+                    h2.textContent = sec.title;
+                    p.textContent = sec.text;
+                }
             });
+
             document.getElementById('mainTitle').textContent = lang === 'ru' ? 'СОВЕТЫ ПО СБОРКЕ ПК' : 'PC BUILDING TIPS';
             langBtn.textContent = lang === 'ru' ? 'RU' : 'EN';
             document.querySelectorAll('[data-ru]').forEach(el => {
                 el.textContent = el.getAttribute('data-' + lang);
             });
+
+            if (firstVisit) localStorage.setItem('tipsVisited', '1');
         }
 
         langBtn.onclick = () => {
