@@ -39,7 +39,6 @@ body {
     100% { background-position:100% 100%,0 0,0 100%; }
 }
 
-/* MATRIX */
 .matrix {
     position:fixed;
     top:0; bottom:0;
@@ -62,7 +61,6 @@ body {
     to { transform:translateY(110vh); opacity:0; }
 }
 
-/* HEADER */
 .header {
     text-align:center;
     padding:50px 20px 30px;
@@ -84,10 +82,6 @@ body {
     color:#f3d6ff;
     position:relative;
     display:inline-block;
-}
-
-/* Glow из-за букв */
-.header h1 {
     text-shadow:
         0 0 8px rgba(212,0,255,.8),
         0 0 15px rgba(212,0,255,.6),
@@ -116,7 +110,6 @@ body {
     }
 }
 
-/* LANGUAGE BUTTON */
 .lang-btn {
     position:absolute;
     right:20px;
@@ -138,7 +131,6 @@ body {
     transform:translateY(-2px) scale(1.05);
 }
 
-/* CONTENT */
 .content {
     width:80%;
     margin:30px auto 40px;
@@ -161,7 +153,7 @@ body {
 
 .content h2 {
     color:var(--violet-main);
-    margin-top:0;
+    margin-top:25px;
 }
 
 .content p {
@@ -170,7 +162,6 @@ body {
     margin-bottom:16px;
 }
 
-/* NAV */
 .nav-buttons {
     display:flex;
     justify-content:center;
@@ -210,19 +201,41 @@ body {
 </div>
 
 <div class="content">
+
     <h2 data-ru="Персональный компьютер" data-en="Personal Computer">Персональный компьютер</h2>
-    <p data-ru="Персональный компьютер (ПК) — это универсальное устройство, предназначенное для работы, обучения, игр и творчества. Он состоит из набора комплектующих, каждая из которых влияет на производительность и комфорт использования." data-en="A personal computer (PC) is a versatile device designed for work, learning, gaming, and creativity. It consists of a set of components, each affecting performance and user comfort.">
-        Персональный компьютер (ПК) — это универсальное устройство, предназначенное для работы, обучения, игр и творчества. Он состоит из набора комплектующих, каждая из которых влияет на производительность и комфорт использования.
+    <p data-ru="Персональный компьютер (ПК) — это универсальное электронное устройство, предназначенное для обработки информации. Современные ПК используются для работы, учёбы, развлечений, программирования, создания контента и управления различными цифровыми процессами."
+       data-en="A personal computer (PC) is a versatile electronic device designed to process information. Modern PCs are used for work, education, entertainment, programming, content creation, and managing digital processes.">
+       Персональный компьютер (ПК) — это универсальное электронное устройство, предназначенное для обработки информации.
     </p>
 
-    <h2 data-ru="Почему важно правильно подбирать комплектующие" data-en="Why proper component selection matters">Почему важно правильно подбирать комплектующие</h2>
-    <p data-ru="Неправильно подобранные компоненты могут привести к низкой производительности, перегреву, шуму и переплате. Грамотный подбор позволяет получить максимум возможностей за свой бюджет." data-en="Incorrectly selected components can lead to low performance, overheating, noise, and overspending. Proper selection maximizes capabilities within your budget.">
-        Неправильно подобранные компоненты могут привести к низкой производительности, перегреву, шуму и переплате. Грамотный подбор позволяет получить максимум возможностей за свой бюджет.
+    <h2 data-ru="Из чего состоит ПК" data-en="What a PC Consists Of">Из чего состоит ПК</h2>
+    <p data-ru="Любой компьютер состоит из аппаратной и программной части. Аппаратная часть включает физические компоненты: процессор, видеокарту, оперативную память, накопители, материнскую плату и блок питания. Программная часть — это операционная система и установленные программы."
+       data-en="Every computer consists of hardware and software. Hardware includes physical components: CPU, GPU, RAM, storage, motherboard, and power supply. Software includes the operating system and installed programs.">
     </p>
 
-    <h2 data-ru="Основные компоненты ПК" data-en="Main PC Components">Основные компоненты ПК</h2>
-    <p data-ru="Процессор отвечает за вычисления, видеокарта — за графику, оперативная память — за скорость работы, а накопитель — за хранение данных. Все компоненты должны быть сбалансированы между собой." data-en="The CPU handles calculations, the GPU handles graphics, RAM handles speed, and storage handles data. All components must be balanced.">
-        Процессор отвечает за вычисления, видеокарта — за графику, оперативная память — за скорость работы, а накопитель — за хранение данных. Все компоненты должны быть сбалансированы между собой.
+    <h2 data-ru="Процессор (CPU)" data-en="Processor (CPU)">Процессор (CPU)</h2>
+    <p data-ru="Процессор — это 'мозг' компьютера. Он выполняет вычисления и управляет всеми процессами. От его мощности зависит скорость работы программ, игр и системы в целом."
+       data-en="The CPU is the 'brain' of the computer. It performs calculations and manages all processes. Its power determines overall system performance.">
+    </p>
+
+    <h2 data-ru="Видеокарта (GPU)" data-en="Graphics Card (GPU)">Видеокарта (GPU)</h2>
+    <p data-ru="Видеокарта отвечает за обработку графики. Она особенно важна для игр, 3D-моделирования, монтажа видео и работы с графикой."
+       data-en="The GPU handles graphics processing. It is crucial for gaming, 3D modeling, video editing, and graphic design.">
+    </p>
+
+    <h2 data-ru="Оперативная память (RAM)" data-en="RAM (Memory)">Оперативная память (RAM)</h2>
+    <p data-ru="Оперативная память хранит временные данные, необходимые для работы программ. Чем больше RAM, тем больше задач компьютер может выполнять одновременно."
+       data-en="RAM stores temporary data required for running applications. More RAM allows smoother multitasking.">
+    </p>
+
+    <h2 data-ru="Накопитель (SSD / HDD)" data-en="Storage (SSD / HDD)">Накопитель (SSD / HDD)</h2>
+    <p data-ru="Накопитель используется для хранения операционной системы, программ и файлов. SSD значительно быстрее HDD и обеспечивает быструю загрузку системы."
+       data-en="Storage holds the operating system, programs, and files. SSD drives are much faster than HDDs and provide quicker system loading.">
+    </p>
+
+    <h2 data-ru="Почему важен баланс" data-en="Why Balance Is Important">Почему важен баланс</h2>
+    <p data-ru="Важно, чтобы все компоненты были сбалансированы. Слишком мощная видеокарта при слабом процессоре не даст максимальной производительности."
+       data-en="All components must be balanced. A powerful GPU paired with a weak CPU will not deliver full performance.">
     </p>
 
     <div class="nav-buttons">
@@ -231,7 +244,6 @@ body {
 </div>
 
 <script>
-// MATRIX
 document.querySelectorAll('.matrix').forEach(side=>{
     setInterval(()=>{
         const s=document.createElement('span');
@@ -243,13 +255,13 @@ document.querySelectorAll('.matrix').forEach(side=>{
     },120);
 });
 
-// LANGUAGE SWITCH
 let lang = localStorage.getItem('lang') || 'ru';
 const langBtn = document.getElementById('langBtn');
 
 function applyLang() {
     langBtn.textContent = lang==='ru' ? "RU" : "EN";
-    document.getElementById('mainTitle').textContent = lang==='ru' ? "ЧТО ТАКОЕ ПК?" : "WHAT IS A PC?";
+    document.getElementById('mainTitle').textContent =
+        lang==='ru' ? "ЧТО ТАКОЕ ПК?" : "WHAT IS A PC?";
     
     document.querySelectorAll('.content [data-ru]').forEach(el=>{
         el.textContent = el.getAttribute('data-'+lang);
@@ -259,11 +271,13 @@ function applyLang() {
         el.textContent = el.getAttribute('data-'+lang);
     });
 }
+
 langBtn.onclick = ()=>{
     lang = lang==='ru' ? 'en' : 'ru';
     localStorage.setItem('lang', lang);
     applyLang();
 }
+
 applyLang();
 </script>
 
