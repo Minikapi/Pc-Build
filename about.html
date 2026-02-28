@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Что такое ПК — ПК-Консультант</title>
-<link rel="stylesheet" href="css/aboutstyle.css">
+<link rel="stylesheet" href="./css/aboutstyle.css">
 </head>
 
 <body>
@@ -64,95 +64,83 @@ langBtn.onclick=()=>{
 
 const components = [
   {
-    img: "https://pngaura.com/free-png-image-25764", // ПК корпус / системный блок
+    img: "https://dlcdnwebimgs.asus.com/gain/9E7DCC3E-8F18-4E45-9E35-3D6F4A43CBB7/w1000",
     ru: {
-      name: "Персональный компьютер",
-      desc: "Системный блок — центральная часть ПК, в которой располагаются все основные компоненты."
+      name: "ROG Hyperion GR701",
+      desc: "Корпус системного блока. В него устанавливаются все комплектующие. Обеспечивает охлаждение и внешний вид ПК."
     },
     en: {
-      name: "Personal Computer",
-      desc: "The system unit — the main part of a PC housing all core components."
+      name: "ROG Hyperion GR701",
+      desc: "PC case that houses all components and provides airflow and aesthetics."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/CPU-Free-Download-PNG.png", // процессор
+    img: "https://dlcdnwebimgs.asus.com/gain/3F3F94F5-0B9A-4A3F-91C4-7D6CFA23A4D3/w1000",
     ru: {
-      name: "Процессор (CPU)",
-      desc: "Процессор — мозг ПК, выполняет вычисления и обрабатывает инструкции."
+      name: "ROG Maximus Z790 Hero",
+      desc: "Материнская плата соединяет все компоненты компьютера и обеспечивает их совместную работу."
     },
     en: {
-      name: "Processor (CPU)",
-      desc: "The CPU is the brain of the PC, performing calculations and managing instructions."
+      name: "ROG Maximus Z790 Hero",
+      desc: "The motherboard connects and powers communication between all PC components."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Motherboard-PNG.png", // материнская плата
+    img: "https://dlcdnwebimgs.asus.com/gain/4F49C3B7-8C16-44D5-87ED-1D1A69A6B6B7/w1000",
     ru: {
-      name: "Материнская плата",
-      desc: "Материнская плата соединяет все компоненты ПК и обеспечивает их работу."
+      name: "Intel Core i9",
+      desc: "Процессор — мозг компьютера. Выполняет вычисления и управляет всей системой."
     },
     en: {
-      name: "Motherboard",
-      desc: "The motherboard connects all PC components and enables them to work together."
+      name: "Intel Core i9",
+      desc: "The CPU is the brain of the PC, handling calculations and system tasks."
     }
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/GPU_front.png", // видеокарта (пример)
+    img: "https://dlcdnwebimgs.asus.com/gain/9AFA3A7F-8D32-4F1B-A6E6-87BDF1B8F4F3/w1000",
     ru: {
-      name: "Видеокарта (GPU)",
-      desc: "Видеокарта отвечает за обработку графики в играх и приложениях."
+      name: "ROG Strix GeForce RTX 4080",
+      desc: "Видеокарта отвечает за графику в играх, 3D и работе с видео."
     },
     en: {
-      name: "Graphics Card (GPU)",
-      desc: "The GPU handles graphics processing for games and applications."
+      name: "ROG Strix GeForce RTX 4080",
+      desc: "The graphics card processes visuals for gaming, 3D, and video workloads."
     }
   },
   {
-    img: "https://www.crucial.com/media/catalog/product/cache/1/image/1200x/602f0fa2c1f0d1ba5e241f914e856ff9/c/r/crucial_t705_ssd_2.png", // SSD накопитель
+    img: "https://dlcdnwebimgs.asus.com/gain/0F5F3A2E-1E7F-4A3D-A0E5-64F3F8EBC9E7/w1000",
     ru: {
-      name: "SSD накопитель",
-      desc: "SSD используется для быстрого хранения системы и файлов."
+      name: "ROG Thor 1200W Platinum",
+      desc: "Блок питания обеспечивает стабильное питание всех комплектующих."
     },
     en: {
-      name: "SSD Storage",
-      desc: "SSD is used for fast storage of the operating system and files."
+      name: "ROG Thor 1200W Platinum",
+      desc: "Power supply that delivers stable electricity to all components."
     }
   },
   {
-    img: "https://png.pngtree.com/png-clipart/20190616/ourmid/pngtree-power-supply-unit-png-image_1515144.jpg", // БП PSU
+    img: "https://dlcdnwebimgs.asus.com/gain/DFD0F44C-0D1F-4B1A-8E8D-3D8D64B6B8F5/w1000",
     ru: {
-      name: "Блок питания (PSU)",
-      desc: "Блок питания обеспечивает питание всех компонентов ПК."
+      name: "ROG Ryujin III 360",
+      desc: "Система жидкостного охлаждения для процессора."
     },
     en: {
-      name: "Power Supply Unit (PSU)",
-      desc: "The PSU supplies power to all PC components."
+      name: "ROG Ryujin III 360",
+      desc: "Liquid cooling system for keeping the CPU temperature low."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/RAM-PNG.png", // оперативная память
+    img: "https://dlcdnwebimgs.asus.com/gain/6A5B8D2F-9C1D-4A7F-9E63-5C3F3E2D4B1F/w1000",
     ru: {
-      name: "Оперативная память (RAM)",
-      desc: "ОЗУ хранит временные данные для работы программ."
+      name: "ROG Strix RGB RAM",
+      desc: "Оперативная память хранит временные данные для работы программ."
     },
     en: {
-      name: "RAM (Memory)",
-      desc: "RAM stores temporary data needed to run applications."
-    }
-  },
-  {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Cooling-Fan-PNG.png", // система охлаждения
-    ru: {
-      name: "Система охлаждения",
-      desc: "Охлаждение удерживает температуру компонентов на безопасном уровне."
-    },
-    en: {
-      name: "Cooling System",
-      desc: "Cooling keeps PC components at a safe operating temperature."
+      name: "ROG Strix RGB RAM",
+      desc: "RAM stores temporary data used by applications."
     }
   }
 ];
-
 const track=document.getElementById("sliderTrack");
 let currentIndex=0;
 
