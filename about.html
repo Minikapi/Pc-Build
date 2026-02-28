@@ -64,91 +64,91 @@ langBtn.onclick=()=>{
 
 const components = [
   {
-    img: "https://pngaura.com/free-png-image-25764", // ПК корпус / системный блок
+    img: "https://pngaura.com/free-png-image-25775.png",
     ru: {
-      name: "Персональный компьютер",
-      desc: "Системный блок — центральная часть ПК, в которой располагаются все основные компоненты."
+      name: "Системный блок (PC Case)",
+      desc: "Корпус — основная «коробка», куда устанавливаются все комплектующие."
     },
     en: {
-      name: "Personal Computer",
-      desc: "The system unit — the main part of a PC housing all core components."
+      name: "PC Case",
+      desc: "The case houses all computer parts and provides airflow."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/CPU-Free-Download-PNG.png", // процессор
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/CPU-Free-Download-PNG.png",
     ru: {
       name: "Процессор (CPU)",
-      desc: "Процессор — мозг ПК, выполняет вычисления и обрабатывает инструкции."
+      desc: "Центральный процессор выполняет вычисления и управляет системой."
     },
     en: {
       name: "Processor (CPU)",
-      desc: "The CPU is the brain of the PC, performing calculations and managing instructions."
+      desc: "The CPU performs calculations and manages system tasks."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Motherboard-PNG.png", // материнская плата
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/Motherboard-PNG.png",
     ru: {
       name: "Материнская плата",
-      desc: "Материнская плата соединяет все компоненты ПК и обеспечивает их работу."
+      desc: "Соединяет все компоненты и обеспечивает работу ПК."
     },
     en: {
       name: "Motherboard",
-      desc: "The motherboard connects all PC components and enables them to work together."
+      desc: "The motherboard connects all parts and enables system operation."
     }
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/GPU_front.png", // видеокарта (пример)
-    ru: {
-      name: "Видеокарта (GPU)",
-      desc: "Видеокарта отвечает за обработку графики в играх и приложениях."
-    },
-    en: {
-      name: "Graphics Card (GPU)",
-      desc: "The GPU handles graphics processing for games and applications."
-    }
-  },
-  {
-    img: "https://www.crucial.com/media/catalog/product/cache/1/image/1200x/602f0fa2c1f0d1ba5e241f914e856ff9/c/r/crucial_t705_ssd_2.png", // SSD накопитель
-    ru: {
-      name: "SSD накопитель",
-      desc: "SSD используется для быстрого хранения системы и файлов."
-    },
-    en: {
-      name: "SSD Storage",
-      desc: "SSD is used for fast storage of the operating system and files."
-    }
-  },
-  {
-    img: "https://png.pngtree.com/png-clipart/20190616/ourmid/pngtree-power-supply-unit-png-image_1515144.jpg", // БП PSU
-    ru: {
-      name: "Блок питания (PSU)",
-      desc: "Блок питания обеспечивает питание всех компонентов ПК."
-    },
-    en: {
-      name: "Power Supply Unit (PSU)",
-      desc: "The PSU supplies power to all PC components."
-    }
-  },
-  {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/RAM-PNG.png", // оперативная память
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/RAM-PNG.png",
     ru: {
       name: "Оперативная память (RAM)",
-      desc: "ОЗУ хранит временные данные для работы программ."
+      desc: "ОЗУ хранит временные данные, необходимые для работы программ."
     },
     en: {
       name: "RAM (Memory)",
-      desc: "RAM stores temporary data needed to run applications."
+      desc: "RAM stores temporary data required by applications."
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Cooling-Fan-PNG.png", // система охлаждения
+    img: "https://pngdownload.io/wp-content/uploads/2018/01/ddr-pc-component-computer-memory-hardware-technology-png.png",
     ru: {
-      name: "Система охлаждения",
-      desc: "Охлаждение удерживает температуру компонентов на безопасном уровне."
+      name: "Оперативная память (RAM) 2",
+      desc: "Дополнительный модуль памяти для многозадачности."
     },
     en: {
-      name: "Cooling System",
-      desc: "Cooling keeps PC components at a safe operating temperature."
+      name: "RAM (Memory) 2",
+      desc: "An additional RAM module for multitasking performance."
+    }
+  },
+  {
+    img: "https://www.crucial.com/media/catalog/product/cache/1/image/1200x/602f0fa2c1f0d1ba5e241f914e856ff9/c/r/crucial_t705_ssd_2.png",
+    ru: {
+      name: "SSD накопитель",
+      desc: "SSD — быстрый накопитель для системы и файлов."
+    },
+    en: {
+      name: "SSD Storage",
+      desc: "SSD is a fast storage device for OS and files."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/Computer-CPU-Component-PNG-Clipart.png",
+    ru: {
+      name: "Видеокарта (GPU)",
+      desc: "GPU отвечает за обработку графики в играх и приложениях."
+    },
+    en: {
+      name: "Graphics Card (GPU)",
+      desc: "The GPU processes visuals for games and apps."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/Power-Supply-Unit-PNG.png",
+    ru: {
+      name: "Блок питания (PSU)",
+      desc: "БП питает все компоненты компьютера."
+    },
+    en: {
+      name: "Power Supply Unit (PSU)",
+      desc: "The PSU powers all computer parts."
     }
   }
 ];
