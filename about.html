@@ -2,281 +2,188 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Что такое ПК — ПК-Консультант</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-    --bg-main:#050008;
-    --bg-panel:rgba(30,10,50,.85);
-    --violet-main:#d400ff;
-    --violet-soft:#b98cff;
-    --text-main:#eadcff;
-    --border-violet:rgba(180,80,255,.6);
-}
-
-* { box-sizing:border-box; }
-
-body {
-    margin:0;
-    min-height:100vh;
-    font-family:'Orbitron',sans-serif;
-    color:var(--text-main);
-    background:
-        radial-gradient(circle at 20% 20%, rgba(200,0,255,.18), transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(120,0,255,.18), transparent 45%),
-        linear-gradient(180deg,#050008,#120016);
-    animation:bgFlow 20s ease-in-out infinite alternate;
-    overflow-x:hidden;
-}
-
-@keyframes bgFlow {
-    0% { background-position:0 0,100% 100%,0 0; }
-    100% { background-position:100% 100%,0 0,0 100%; }
-}
-
-.matrix {
-    position:fixed;
-    top:0; bottom:0;
-    width:15%;
-    pointer-events:none;
-    z-index:1;
-}
-.matrix.left { left:0; }
-.matrix.right { right:0; }
-
-.matrix span {
-    position:absolute;
-    top:-20px;
-    font-size:14px;
-    opacity:.8;
-    animation:fall linear infinite;
-}
-
-@keyframes fall {
-    to { transform:translateY(110vh); opacity:0; }
-}
-
-.header {
-    text-align:center;
-    padding:50px 20px 30px;
-    position:relative;
-    z-index:2;
-    opacity:0;
-    transform:translateY(-20px);
-    animation:fadeDown 1.2s ease forwards;
-}
-
-@keyframes fadeDown {
-    to { opacity:1; transform:none; }
-}
-
-.header h1 {
-    font-size:56px;
-    margin:0;
-    letter-spacing:4px;
-    color:#f3d6ff;
-    position:relative;
-    display:inline-block;
-    text-shadow:
-        0 0 8px rgba(212,0,255,.8),
-        0 0 15px rgba(212,0,255,.6),
-        0 0 25px rgba(212,0,255,.5),
-        0 0 35px rgba(212,0,255,.4),
-        0 0 50px rgba(212,0,255,.3);
-    animation: glowAnim 3s ease-in-out infinite;
-}
-
-@keyframes glowAnim {
-    0%,100% {
-        text-shadow:
-        0 0 8px rgba(212,0,255,.8),
-        0 0 15px rgba(212,0,255,.6),
-        0 0 25px rgba(212,0,255,.5),
-        0 0 35px rgba(212,0,255,.4),
-        0 0 50px rgba(212,0,255,.3);
-    }
-    50% {
-        text-shadow:
-        0 0 12px rgba(255,0,255,.9),
-        0 0 25px rgba(255,0,255,.7),
-        0 0 35px rgba(255,0,255,.6),
-        0 0 50px rgba(255,0,255,.5),
-        0 0 70px rgba(255,0,255,.4);
-    }
-}
-
-.lang-btn {
-    position:absolute;
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
-    padding:10px 18px;
-    background:rgba(10,5,20,.9);
-    border:2px solid var(--border-violet);
-    border-radius:10px;
-    cursor:pointer;
-    box-shadow:0 0 14px rgba(180,80,255,.35);
-    font-weight:600;
-    transition: all .3s ease;
-    color:#fff;
-}
-
-.lang-btn:hover {
-    box-shadow:0 0 28px rgba(180,80,255,.7);
-    transform:translateY(-2px) scale(1.05);
-}
-
-.content {
-    width:80%;
-    margin:30px auto 40px;
-    padding:35px;
-    background:var(--bg-panel);
-    border-radius:16px;
-    box-shadow:
-        0 0 42px rgba(140,0,255,.28),
-        inset 0 0 26px rgba(0,0,0,.7);
-    z-index:2;
-    opacity:0;
-    transform:translateY(30px);
-    animation:fadeUp 1.2s ease forwards;
-    animation-delay:.8s;
-}
-
-@keyframes fadeUp {
-    to { opacity:1; transform:none; }
-}
-
-.content h2 {
-    color:var(--violet-main);
-    margin-top:25px;
-}
-
-.content p {
-    font-size:14px;
-    line-height:1.7;
-    margin-bottom:16px;
-}
-
-.nav-buttons {
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin-top:30px;
-}
-
-.nav-btn {
-    padding:10px 22px;
-    font-size:13px;
-    text-decoration:none;
-    color:#fff;
-    border-radius:10px;
-    background:rgba(20,10,40,.9);
-    border:2px solid var(--border-violet);
-    box-shadow:0 0 14px rgba(180,80,255,.35);
-    transition:box-shadow .25s ease, transform .15s ease;
-}
-
-.nav-btn:hover {
-    box-shadow:
-        0 0 20px rgba(180,80,255,.65),
-        0 0 35px rgba(140,0,255,.45);
-    transform:translateY(-1px);
-}
-</style>
+<link rel="stylesheet" href="css/aboutstyle.css">
 </head>
 
 <body>
-
-<div class="matrix left"></div>
-<div class="matrix right"></div>
 
 <div class="header">
     <h1 id="mainTitle">ЧТО ТАКОЕ ПК?</h1>
     <button class="lang-btn" id="langBtn">RU</button>
 </div>
 
-<div class="content">
+<div class="pc-slider">
+    <h2 id="pcTitle"
+        data-ru="Персональный компьютер"
+        data-en="Personal Computer">
+        Персональный компьютер
+    </h2>
 
-    <h2 data-ru="Персональный компьютер" data-en="Personal Computer">Персональный компьютер</h2>
-    <p data-ru="Персональный компьютер (ПК) — это универсальное электронное устройство, предназначенное для обработки информации. Современные ПК используются для работы, учёбы, развлечений, программирования, создания контента и управления различными цифровыми процессами."
-       data-en="A personal computer (PC) is a versatile electronic device designed to process information. Modern PCs are used for work, education, entertainment, programming, content creation, and managing digital processes.">
-       Персональный компьютер (ПК) — это универсальное электронное устройство, предназначенное для обработки информации.
-    </p>
+    <div class="slider-wrapper">
+        <button class="slide-btn" id="prevBtn">←</button>
 
-    <h2 data-ru="Из чего состоит ПК" data-en="What a PC Consists Of">Из чего состоит ПК</h2>
-    <p data-ru="Любой компьютер состоит из аппаратной и программной части. Аппаратная часть включает физические компоненты: процессор, видеокарту, оперативную память, накопители, материнскую плату и блок питания. Программная часть — это операционная система и установленные программы."
-       data-en="Every computer consists of hardware and software. Hardware includes physical components: CPU, GPU, RAM, storage, motherboard, and power supply. Software includes the operating system and installed programs.">
-    </p>
+        <div class="slider-track" id="sliderTrack">
+            <!-- Slides inserted by JS -->
+        </div>
 
-    <h2 data-ru="Процессор (CPU)" data-en="Processor (CPU)">Процессор (CPU)</h2>
-    <p data-ru="Процессор — это 'мозг' компьютера. Он выполняет вычисления и управляет всеми процессами. От его мощности зависит скорость работы программ, игр и системы в целом."
-       data-en="The CPU is the 'brain' of the computer. It performs calculations and manages all processes. Its power determines overall system performance.">
-    </p>
-
-    <h2 data-ru="Видеокарта (GPU)" data-en="Graphics Card (GPU)">Видеокарта (GPU)</h2>
-    <p data-ru="Видеокарта отвечает за обработку графики. Она особенно важна для игр, 3D-моделирования, монтажа видео и работы с графикой."
-       data-en="The GPU handles graphics processing. It is crucial for gaming, 3D modeling, video editing, and graphic design.">
-    </p>
-
-    <h2 data-ru="Оперативная память (RAM)" data-en="RAM (Memory)">Оперативная память (RAM)</h2>
-    <p data-ru="Оперативная память хранит временные данные, необходимые для работы программ. Чем больше RAM, тем больше задач компьютер может выполнять одновременно."
-       data-en="RAM stores temporary data required for running applications. More RAM allows smoother multitasking.">
-    </p>
-
-    <h2 data-ru="Накопитель (SSD / HDD)" data-en="Storage (SSD / HDD)">Накопитель (SSD / HDD)</h2>
-    <p data-ru="Накопитель используется для хранения операционной системы, программ и файлов. SSD значительно быстрее HDD и обеспечивает быструю загрузку системы."
-       data-en="Storage holds the operating system, programs, and files. SSD drives are much faster than HDDs and provide quicker system loading.">
-    </p>
-
-    <h2 data-ru="Почему важен баланс" data-en="Why Balance Is Important">Почему важен баланс</h2>
-    <p data-ru="Важно, чтобы все компоненты были сбалансированы. Слишком мощная видеокарта при слабом процессоре не даст максимальной производительности."
-       data-en="All components must be balanced. A powerful GPU paired with a weak CPU will not deliver full performance.">
-    </p>
-
-    <div class="nav-buttons">
-        <a href="index.html" class="nav-btn" data-ru="← Назад к подбору" data-en="← Back to Selection">← Назад к подбору</a>
+        <button class="slide-btn" id="nextBtn">→</button>
     </div>
 </div>
 
-<script>
-document.querySelectorAll('.matrix').forEach(side=>{
-    setInterval(()=>{
-        const s=document.createElement('span');
-        s.textContent=Math.random()>.5?'1':'0';
-        s.style.left=Math.random()*100+'%';
-        s.style.animationDuration=3+Math.random()*4+'s';
-        side.appendChild(s);
-        setTimeout(()=>s.remove(),7000);
-    },120);
-});
+<div class="nav-buttons">
+    <a href="index.html" class="nav-btn"
+       data-ru="← Назад к подбору"
+       data-en="← Back to Selection">← Назад к подбору</a>
+</div>
 
+<script>
 let lang = localStorage.getItem('lang') || 'ru';
 const langBtn = document.getElementById('langBtn');
 
-function applyLang() {
-    langBtn.textContent = lang==='ru' ? "RU" : "EN";
+function applyLang(){
+    langBtn.textContent = lang==='ru'?'RU':'EN';
     document.getElementById('mainTitle').textContent =
-        lang==='ru' ? "ЧТО ТАКОЕ ПК?" : "WHAT IS A PC?";
+        lang==='ru'?'ЧТО ТАКОЕ ПК?':'WHAT IS A PC?';
+
+    document.querySelectorAll('[data-ru]').forEach(el=>{
+        el.textContent = el.getAttribute('data-'+lang);
+    });
+
+    buildSlides();
+}
     
-    document.querySelectorAll('.content [data-ru]').forEach(el=>{
-        el.textContent = el.getAttribute('data-'+lang);
-    });
-
-    document.querySelectorAll('.nav-btn[data-ru]').forEach(el=>{
-        el.textContent = el.getAttribute('data-'+lang);
-    });
-}
-
-langBtn.onclick = ()=>{
-    lang = lang==='ru' ? 'en' : 'ru';
-    localStorage.setItem('lang', lang);
+langBtn.onclick=()=>{
+    lang = lang==='ru'?'en':'ru';
+    localStorage.setItem('lang',lang);
     applyLang();
+};
+
+/* COMPONENTS */
+
+const components = [
+  {
+    img: "https://pngaura.com/free-png-image-25764", // ПК корпус / системный блок
+    ru: {
+      name: "Персональный компьютер",
+      desc: "Системный блок — центральная часть ПК, в которой располагаются все основные компоненты."
+    },
+    en: {
+      name: "Personal Computer",
+      desc: "The system unit — the main part of a PC housing all core components."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/CPU-Free-Download-PNG.png", // процессор
+    ru: {
+      name: "Процессор (CPU)",
+      desc: "Процессор — мозг ПК, выполняет вычисления и обрабатывает инструкции."
+    },
+    en: {
+      name: "Processor (CPU)",
+      desc: "The CPU is the brain of the PC, performing calculations and managing instructions."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/Motherboard-PNG.png", // материнская плата
+    ru: {
+      name: "Материнская плата",
+      desc: "Материнская плата соединяет все компоненты ПК и обеспечивает их работу."
+    },
+    en: {
+      name: "Motherboard",
+      desc: "The motherboard connects all PC components and enables them to work together."
+    }
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/GPU_front.png", // видеокарта (пример)
+    ru: {
+      name: "Видеокарта (GPU)",
+      desc: "Видеокарта отвечает за обработку графики в играх и приложениях."
+    },
+    en: {
+      name: "Graphics Card (GPU)",
+      desc: "The GPU handles graphics processing for games and applications."
+    }
+  },
+  {
+    img: "https://www.crucial.com/media/catalog/product/cache/1/image/1200x/602f0fa2c1f0d1ba5e241f914e856ff9/c/r/crucial_t705_ssd_2.png", // SSD накопитель
+    ru: {
+      name: "SSD накопитель",
+      desc: "SSD используется для быстрого хранения системы и файлов."
+    },
+    en: {
+      name: "SSD Storage",
+      desc: "SSD is used for fast storage of the operating system and files."
+    }
+  },
+  {
+    img: "https://png.pngtree.com/png-clipart/20190616/ourmid/pngtree-power-supply-unit-png-image_1515144.jpg", // БП PSU
+    ru: {
+      name: "Блок питания (PSU)",
+      desc: "Блок питания обеспечивает питание всех компонентов ПК."
+    },
+    en: {
+      name: "Power Supply Unit (PSU)",
+      desc: "The PSU supplies power to all PC components."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/RAM-PNG.png", // оперативная память
+    ru: {
+      name: "Оперативная память (RAM)",
+      desc: "ОЗУ хранит временные данные для работы программ."
+    },
+    en: {
+      name: "RAM (Memory)",
+      desc: "RAM stores temporary data needed to run applications."
+    }
+  },
+  {
+    img: "https://www.pngall.com/wp-content/uploads/2016/04/Cooling-Fan-PNG.png", // система охлаждения
+    ru: {
+      name: "Система охлаждения",
+      desc: "Охлаждение удерживает температуру компонентов на безопасном уровне."
+    },
+    en: {
+      name: "Cooling System",
+      desc: "Cooling keeps PC components at a safe operating temperature."
+    }
+  }
+];
+
+const track=document.getElementById("sliderTrack");
+let currentIndex=0;
+
+function buildSlides(){
+    track.innerHTML="";
+    components.forEach(comp=>{
+        const slide=document.createElement("div");
+        slide.className="slide";
+        slide.innerHTML=`
+            <img src="${comp.img}">
+            <h3>${comp[lang].name}</h3>
+            <p>${comp[lang].desc}</p>
+        `;
+        track.appendChild(slide);
+    });
+    moveSlider();
 }
+
+function moveSlider(){
+    track.style.transform=`translateX(-${currentIndex*100}%)`;
+}
+
+document.getElementById("nextBtn").onclick=()=>{
+    currentIndex=(currentIndex+1)%components.length;
+    moveSlider();
+};
+
+document.getElementById("prevBtn").onclick=()=>{
+    currentIndex=(currentIndex-1+components.length)%components.length;
+    moveSlider();
+};
 
 applyLang();
 </script>
