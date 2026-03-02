@@ -3,24 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Что такое ПК — ПК-Консультант</title>
-<link rel="stylesheet" href="./aboutstyle.css">
+<title>Из чего состоит Системный Блок — ПК-Консультант</title>
+<link rel="stylesheet" href="./css/aboutstyle.css">
 </head>
 
 <body>
 
 <div class="header">
-    <h1 id="mainTitle">ЧТО ТАКОЕ ПК?</h1>
+    <h1 id="mainTitle">Из чего состоит Системный Блок</h1>
     <button class="lang-btn" id="langBtn">RU</button>
 </div>
 
 <div class="pc-slider">
-    <h2 id="pcTitle"
-        data-ru="Персональный компьютер"
-        data-en="Personal Computer">
-        Персональный компьютер
-    </h2>
-
     <div class="slider-wrapper">
         <button class="slide-btn" id="prevBtn">←</button>
 
@@ -45,7 +39,7 @@ const langBtn = document.getElementById('langBtn');
 function applyLang(){
     langBtn.textContent = lang==='ru'?'RU':'EN';
     document.getElementById('mainTitle').textContent =
-        lang==='ru'?'ЧТО ТАКОЕ ПК?':'WHAT IS A PC?';
+        lang==='ru'?'Из чего состоит ПК':'What does a PC consist of';
 
     document.querySelectorAll('[data-ru]').forEach(el=>{
         el.textContent = el.getAttribute('data-'+lang);
@@ -64,18 +58,19 @@ langBtn.onclick=()=>{
 
 const components = [
   {
-    img: "https://pngaura.com/free-png-image-25775.png",
+    img: "https://i.ibb.co/B52hr3qc/korpus-Photoroom.png",
     ru: {
-      name: "Системный блок (PC Case)",
-      desc: "Корпус — основная «коробка», куда устанавливаются все комплектующие."
+      name: "Корпус",
+      desc: "Основной каркас ПК, в который устанавливаются все комплектующие."
     },
     en: {
       name: "PC Case",
-      desc: "The case houses all computer parts and provides airflow."
+      desc: "The main chassis of the PC, where all components are installed."
     }
   },
+
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/CPU-Free-Download-PNG.png",
+    img: "https://i.ibb.co/YTdw7NNm/images-Photoroom.png",
     ru: {
       name: "Процессор (CPU)",
       desc: "Центральный процессор выполняет вычисления и управляет системой."
@@ -86,7 +81,7 @@ const components = [
     }
   },
   {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Motherboard-PNG.png",
+    img: "https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png",
     ru: {
       name: "Материнская плата",
       desc: "Соединяет все компоненты и обеспечивает работу ПК."
@@ -96,8 +91,9 @@ const components = [
       desc: "The motherboard connects all parts and enables system operation."
     }
   },
-  {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/RAM-PNG.png",
+
+   {
+    img: "https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png",
     ru: {
       name: "Оперативная память (RAM)",
       desc: "ОЗУ хранит временные данные, необходимые для работы программ."
@@ -107,48 +103,52 @@ const components = [
       desc: "RAM stores temporary data required by applications."
     }
   },
-  {
-    img: "https://pngdownload.io/wp-content/uploads/2018/01/ddr-pc-component-computer-memory-hardware-technology-png.png",
+
+    {
+    img: "https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png",
     ru: {
-      name: "Оперативная память (RAM) 2",
-      desc: "Дополнительный модуль памяти для многозадачности."
+      name: "Жесткий диск (HDD)",
+      desc: "HDD — классический накопитель для хранения больших объемов информации и файлов."
     },
     en: {
-      name: "RAM (Memory) 2",
-      desc: "An additional RAM module for multitasking performance."
+      name: "Hard Disk Drive (HDD)",
+      desc: "HDD is a traditional storage device for keeping large amounts of data and files."
     }
   },
-  {
-    img: "https://www.crucial.com/media/catalog/product/cache/1/image/1200x/602f0fa2c1f0d1ba5e241f914e856ff9/c/r/crucial_t705_ssd_2.png",
+
+   {
+    img: "https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png",
     ru: {
-      name: "SSD накопитель",
-      desc: "SSD — быстрый накопитель для системы и файлов."
+      name: "SSD M.2 Накопитель",
+      desc: "Сверхбыстрый и компактный накопитель, который устанавливается напрямую в материнскую плату."
     },
     en: {
-      name: "SSD Storage",
-      desc: "SSD is a fast storage device for OS and files."
+      name: "SSD M.2 Storage",
+      desc: "Ultrafast and compact storage that plugs directly into the motherboard."
     }
   },
-  {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Computer-CPU-Component-PNG-Clipart.png",
+
+   {
+    img: "https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png",
     ru: {
       name: "Видеокарта (GPU)",
-      desc: "GPU отвечает за обработку графики в играх и приложениях."
+      desc: "Мощный графический процессор для обработки сложной графики, рендеринга и плавной работы игр."
     },
     en: {
       name: "Graphics Card (GPU)",
-      desc: "The GPU processes visuals for games and apps."
+      desc: "A powerful graphics unit designed for complex visual processing, rendering, and smooth gaming."
     }
   },
-  {
-    img: "https://www.pngall.com/wp-content/uploads/2016/04/Power-Supply-Unit-PNG.png",
+
+   {
+    img: "https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png",
     ru: {
       name: "Блок питания (PSU)",
-      desc: "БП питает все компоненты компьютера."
+      desc: "Обеспечивает стабильное питание всех компонентов компьютера необходимой энергией."
     },
     en: {
       name: "Power Supply Unit (PSU)",
-      desc: "The PSU powers all computer parts."
+      desc: "Provides stable power to all computer components with the necessary energy."
     }
   }
 ];
@@ -185,6 +185,23 @@ document.getElementById("prevBtn").onclick=()=>{
 };
 
 applyLang();
+
+function showSlide(direction) {
+  const slide = document.querySelector(".slide");
+
+  slide.classList.remove("animate-next", "animate-prev");
+
+  if (direction === "next") {
+    slide.classList.add("animate-next");
+  } else {
+    slide.classList.add("animate-prev");
+  }
+
+  setTimeout(() => {
+    slide.classList.remove("animate-next", "animate-prev");
+    updateContent(); // твоя функция обновления текста и фото
+  }, 400);
+}
 </script>
 
 </body>
