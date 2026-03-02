@@ -6,6 +6,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// 1. Добавлено: Обработчик для главной страницы, чтобы не было ошибки "Cannot GET /"
+app.get('/', (req, res) => {
+    res.send('PC Build API Service is running...');
+});
+
 // Идеальный промпт для сборки ПК
 function buildPrompt({ budget, gpu, cpu, tasks, currency }) {
     return `
@@ -38,7 +43,8 @@ app.post('/api/build', async (req, res) => {
     const prompt = buildPrompt({ budget, gpu, cpu, tasks, currency });
 
     try {
-        // Отправка запроса к LLM (DeepSeek / Llama 3 через Ollama)
+        // ВНИМАНИЕ: localhost не будет работать на Render. 
+        // Здесь должен быть URL внешнего API (OpenAI, DeepSeek Cloud и т.д.)
         const response = await fetch('http://localhost:11434/api/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -50,13 +56,13 @@ app.post('/api/build', async (req, res) => {
         });
 
         const data = await response.json();
-
-        // Возвращаем фронту результат
         res.json({ result: data.response });
 
     } catch (err) {
         console.error(err);
-        res.json({ result: lang === 'ru' ? '❌ Ошибка сервера. Попробуйте позже.' : '❌ Server error. Try later.' });
+        res.status(500).json({ 
+            result: lang === 'ru' ? '❌ Ошибка сервера. Попробуйте позже.' : '❌ Server error. Try later.' 
+        });
     }
 });
 
