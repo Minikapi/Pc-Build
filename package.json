@@ -1,5 +1,5 @@
 {
-  "name": "pc-build-app",
+  "name": "pc-site",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -7,10 +7,6 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "openai": "^4.12.0"
-  },
-  "engines": {
-    "node": "18.x"
+    "express": "^4.18.2"
   }
 }
