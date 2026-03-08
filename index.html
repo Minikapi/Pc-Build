@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПК-Консультант</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -163,9 +163,10 @@
                 budgetLabel: 'Ваш бюджет (мин. 20 000 руб.):',
                 budgetPlaceholder: 'Введите сумму от 20 000',
                 generate: 'Подобрать комплектующие',
+                navBuild: 'Сборка ПК',
                 navAbout: 'Из чего состоит ПК',
                 navTips: 'Советы по сборке',
-                navTop: 'Топ сборок ПК',
+                navTop: 'Топ комплектующих',
                 howBtn: 'Как пользоваться сайтом',
                 howText: `
 1. Введите бюджет который предпочитаете для сборки. Это сборка только системного блока без монитора.
@@ -179,7 +180,7 @@
 5. Нажмите «Подобрать комплектующие» и дождитесь результата.
 
 Остальные страницы сайта носят информационный характер и помогают лучше разобраться в теме.
-                            `,
+                                    `,
                 minBudget: 20000
             },
 
@@ -189,9 +190,10 @@
                 budgetLabel: 'Your budget (min. $250):',
                 budgetPlaceholder: 'Enter amount from $250',
                 generate: 'Build PC',
+                navBuild: 'Build PC',
                 navAbout: 'What does a PC consist of?',
                 navTips: 'Assembly Tips',
-                navTop: 'Top PC builds',
+                navTop: 'Top Components',
                 howBtn: 'How to use the site',
                 howText: `
 1. Enter the budget you prefer for the build. This is for the system unit only (no monitor).
@@ -205,7 +207,7 @@
 5. Click “Build PC” and wait for the result.
 
 Other pages on the site are informational and help you better understand PC components.
-                            `,
+                                    `,
                 minBudget: 250
             }
         };
@@ -220,7 +222,6 @@ Other pages on the site are informational and help you better understand PC comp
             document.getElementById('budgetLabel').textContent = dict[lang].budgetLabel;
             document.getElementById('budget').placeholder = dict[lang].budgetPlaceholder;
             document.getElementById('generate').textContent = dict[lang].generate;
-            document.getElementById('navBuild').textContent = dict[lang].navBuild;
             document.getElementById('navAbout').textContent = dict[lang].navAbout;
             document.getElementById('navTips').textContent = dict[lang].navTips;
             document.getElementById('navTop').textContent = dict[lang].navTop;
