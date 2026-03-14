@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О себе — ПК Консультант</title>
+    <link rel="stylesheet" href="css/osebe.css">
+    <style>
+        /* Фиксируем кнопку в верхнем правом углу */
+        .lang-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Кнопка перевода -->
+    <button class="lang-btn" id="langBtn">RU</button>
+
+    <div class="profile-section">
+
+        <div class="avatar">👨‍💻</div>
+
+        <div class="about-text" id="aboutText">
+            <p>Меня зовут <span>Данир Шакиров</span>, мне <span>16 лет</span>.</p>
+            <p>Программированием я начал увлекаться примерно с <span>11 лет</span>.</p>
+            <p>Мне очень нравится тема <span>компьютерных сборок</span>, комплектующих и всего, что связано с ПК.</p>
+            <p>Этот сайт — мой личный проект. Я старался сделать его максимально полезным для людей, которые хотят разобраться в комплектующих и собрать компьютер.</p>
+            <p>Сейчас я студент <span>ЛНТ</span>, <span>1 курс</span>, группа <span>ИС-1-25</span>.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">5+</div>
+                <div class="stat-label" id="stat1">лет интереса к программированию</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">1</div>
+                <div class="stat-label" id="stat2">год изучения Python</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">3</div>
+                <div class="stat-label" id="stat3">языка изучаю</div>
+            </div>
+        </div>
+
+        <div class="skills">
+            <div class="skills-title" id="skillsTitle">Навыки</div>
+            <div class="skill-cards">
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <div class="skill-name">Python</div>
+                    <div class="skill-desc" id="skillDesc1">изучал около года, писал программы и изучал основы</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <div class="skill-name">HTML</div>
+                    <div class="skill-desc" id="skillDesc2">создание структуры сайтов</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">👾</div>
+                    <div class="skill-name">JavaScript</div>
+                    <div class="skill-desc" id="skillDesc3">логика сайта и интерактивность</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back">
+            <a href="index.html" id="backLink">← Вернуться на главную</a>
+        </div>
+
+    </div>
+
+    <script>
+        let lang = localStorage.getItem('lang') || 'ru';
+
+        const dict = {
+            ru: {
+                title: 'О себе — ПК Консультант',
+                about: [
+                    'Меня зовут <span>Данир Шакиров</span>, мне <span>16 лет</span>.',
+                    'Программированием я начал увлекаться примерно с <span>11 лет</span>.',
+                    'Мне очень нравится тема <span>компьютерных сборок</span>, комплектующих и всего, что связано с ПК.',
+                    'Этот сайт — мой личный проект. Я старался сделать его максимально полезным для людей, которые хотят разобраться в комплектующих и собрать компьютер.',
+                    'Сейчас я студент <span>ЛНТ</span>, <span>1 курс</span>, группа <span>ИС-1-25</span>.'
+                ],
+                stats: [
+                    'лет интереса к программированию',
+                    'год изучения Python',
+                    'языка изучаю'
+                ],
+                skillsTitle: 'Навыки',
+                skillDesc: [
+                    'изучал около года, писал программы и изучал основы',
+                    'создание структуры сайтов',
+                    'логика сайта и интерактивность'
+                ],
+                backLink: '← Вернуться на главную'
+            },
+            en: {
+                title: 'About Me — PC Consultant',
+                about: [
+                    'My name is <span>Danir Shakirov</span>, I am <span>16 years old</span>.',
+                    'I started programming around <span>11 years old</span>.',
+                    'I really like <span>PC building</span>, components, and everything related to computers.',
+                    'This website is my personal project. I tried to make it as useful as possible for people who want to learn about components and build a PC.',
+                    'Currently, I am a student at <span>LNT</span>, <span>1st year</span>, group <span>IS-1-25</span>.'
+                ],
+                stats: [
+                    'years of interest in programming',
+                    'year learning Python',
+                    'languages I study'
+                ],
+                skillsTitle: 'Skills',
+                skillDesc: [
+                    'studied about a year, wrote programs and learned basics',
+                    'creating website structure',
+                    'website logic and interactivity'
+                ],
+                backLink: '← Back to Home'
+            }
+        };
+
+        function applyLang() {
+            document.title = dict[lang].title;
+
+            const aboutText = document.getElementById('aboutText');
+            aboutText.innerHTML = dict[lang].about.map(p => `<p>${p}</p>`).join('');
+
+            document.getElementById('stat1').textContent = dict[lang].stats[0];
+            document.getElementById('stat2').textContent = dict[lang].stats[1];
+            document.getElementById('stat3').textContent = dict[lang].stats[2];
+
+            document.getElementById('skillsTitle').textContent = dict[lang].skillsTitle;
+            document.getElementById('skillDesc1').textContent = dict[lang].skillDesc[0];
+            document.getElementById('skillDesc2').textContent = dict[lang].skillDesc[1];
+            document.getElementById('skillDesc3').textContent = dict[lang].skillDesc[2];
+
+            document.getElementById('backLink').textContent = dict[lang].backLink;
+
+            document.getElementById('langBtn').textContent = lang.toUpperCase();
+            localStorage.setItem('lang', lang);
+        }
+
+        document.getElementById('langBtn').onclick = () => {
+            lang = (lang === 'ru') ? 'en' : 'ru';
+            applyLang();
+        };
+
+        applyLang();
+    </script>
+
+</body>
+</html>
