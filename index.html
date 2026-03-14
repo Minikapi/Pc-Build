@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПК-Консультант</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -77,21 +77,21 @@
             <div class="result-box" id="result"></div>
 
         </div>
-
         <div class="nav-buttons">
             <a href="about.html" class="nav-btn" id="navAbout">Из чего состоит ПК</a>
             <a href="tips.html" class="nav-btn" id="navTips">Советы по сборке</a>
             <a href="top-components.html" class="nav-btn" id="navTop">Топ сборок ПК</a>
+            <a href="osebe.html" class="nav-btn" id="navAboutMe">О себе</a> 
         </div>
     </div>
 
     <div class="footer">© 2026 MiniKapi. Все права защищены.</div>
 
     <script>
-        // MATRIX
+        // эффект матрицы(1 0)
         document.querySelectorAll('.matrix').forEach(side => {
 
-            const SYMBOL_COUNT = 40; // оптимально для слабых ПК
+            const SYMBOL_COUNT = 40;
             const symbols = [];
 
             for (let i = 0; i < SYMBOL_COUNT; i++) {
@@ -132,7 +132,7 @@
             requestAnimationFrame(animate);
         });
 
-        // SELECT
+        // кнопки выбора
         document.querySelectorAll('.select').forEach(sel => {
             const btn = sel.querySelector('.select-btn');
             const list = sel.querySelector('.select-list');
@@ -166,8 +166,9 @@
                 navBuild: 'Сборка ПК',
                 navAbout: 'Из чего состоит ПК',
                 navTips: 'Советы по сборке',
-                navTop: 'Топ комплектующих',
+                navTop: 'Топ Сборок ПК',
                 howBtn: 'Как пользоваться сайтом',
+                navAboutMe: 'О себе',
                 howText: `
 1. Введите бюджет который предпочитаете для сборки. Это сборка только системного блока без монитора.
 
@@ -193,8 +194,9 @@
                 navBuild: 'Build PC',
                 navAbout: 'What does a PC consist of?',
                 navTips: 'Assembly Tips',
-                navTop: 'Top Components',
+                navTop: 'Top PC Builds',
                 howBtn: 'How to use the site',
+                navAboutMe: 'About Me',
                 howText: `
 1. Enter the budget you prefer for the build. This is for the system unit only (no monitor).
 
@@ -226,7 +228,12 @@ Other pages on the site are informational and help you better understand PC comp
             document.getElementById('navTips').textContent = dict[lang].navTips;
             document.getElementById('navTop').textContent = dict[lang].navTop;
 
-            // ПЕРЕВОД КНОПКИ И ТЕКСТА
+            const aboutMeBtn = document.getElementById('navAboutMe');
+            if (aboutMeBtn) {
+                aboutMeBtn.textContent = dict[lang].navAboutMe;
+            }
+
+            // перевод страниц
             howToggle.textContent = dict[lang].howBtn;
             howContent.querySelector('.how-inner').innerText = dict[lang].howText;
 
@@ -236,6 +243,7 @@ Other pages on the site are informational and help you better understand PC comp
                 sel.querySelectorAll('.select-list div').forEach(opt => {
                     opt.textContent = opt.getAttribute('data-' + lang);
                 });
+
                 sel.querySelector('.select-btn').textContent =
                     sel.querySelector('.select-list div:first-child')
                         .getAttribute('data-' + lang);
@@ -243,7 +251,6 @@ Other pages on the site are informational and help you better understand PC comp
 
             localStorage.setItem('lang', lang);
         }
-
         langBtn.onclick = () => {
             lang = (lang === 'ru') ? 'en' : 'ru';
             applyLang();
@@ -251,12 +258,12 @@ Other pages on the site are informational and help you better understand PC comp
 
         applyLang();
 
-        // TOGGLE HOW SECTION
+        // как пользоваться сайтом активация кнопки
         howToggle.addEventListener('click', () => {
             howContent.classList.toggle('active');
         });
 
-        // LOADING + TYPING
+        // Загрузка + тайинг эффект
         async function typeText(el, text) {
             el.textContent = "";
             for (let i = 0; i < text.length; i++) {
@@ -271,7 +278,7 @@ Other pages on the site are informational and help you better understand PC comp
                 : "⌛ Building parts...";
         }
 
-        // GENERATE
+        // Создание сборки
         document.getElementById('generate').onclick = async () => {
             const result = document.getElementById('result');
             const budgetInput = document.getElementById('budget');
