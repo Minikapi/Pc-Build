@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Из чего состоит Системный Блок — ПК-Консультант</title>
-<link rel="stylesheet" href="aboutstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Из чего состоит Системный Блок</title>
+    <link rel="stylesheet" href="aboutstyle.css">
 </head>
 
 <body>
 
-<div class="header">
-    <h1 id="mainTitle">Из чего состоит Системный Блок</h1>
-    <button class="lang-btn" id="langBtn">RU</button>
-</div>
-
-<div class="pc-slider">
-    <div class="slider-wrapper">
-        <button class="slide-btn" id="prevBtn">←</button>
-
-        <div class="slider-track" id="sliderTrack">
-            <!-- Slides inserted by JS -->
-        </div>
-
-        <button class="slide-btn" id="nextBtn">→</button>
+    <div class="header">
+        <h1 id="mainTitle">Из чего состоит Системный Блок</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
     </div>
-</div>
 
-<div class="nav-buttons">
-    <a href="index.html" class="nav-btn"
-       data-ru="← Назад к подбору"
-       data-en="← Back to Selection">← Назад к подбору</a>
-</div>
+    <div class="pc-slider">
+        <div class="slider-wrapper">
+            <button class="slide-btn" id="prevBtn">←</button>
+            <div class="slider-track" id="sliderTrack"></div>
+            <button class="slide-btn" id="nextBtn">→</button>
+        </div>
+    </div>
 
-<script>
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-btn"
+           data-ru="← Назад к подбору"
+           data-en="← Back to Selection">
+            ← Назад к подбору
+        </a>
+    </div>
+
+    <!-- MODAL (галерея) -->
+    <div id="modal" class="modal">
+        <span id="closeModal">&times;</span>
+        <button class="modal-btn" id="modalPrev">←</button>
+        <img id="modalImg">
+        <button class="modal-btn" id="modalNext">→</button>
+    </div>
+
+    <script>
 let lang = localStorage.getItem('lang') || 'ru';
 const langBtn = document.getElementById('langBtn');
 
+/* ================== ЯЗЫК ================== */
 function applyLang(){
     langBtn.textContent = lang==='ru'?'RU':'EN';
+
     document.getElementById('mainTitle').textContent =
-        lang==='ru'?'Из чего состоит ПК':'What does a PC consist of';
+        lang==='ru'
+        ?'Из чего состоит ПК'
+        :'What does a PC consist of';
 
     document.querySelectorAll('[data-ru]').forEach(el=>{
         el.textContent = el.getAttribute('data-'+lang);
@@ -47,162 +57,179 @@ function applyLang(){
 
     buildSlides();
 }
-    
+
 langBtn.onclick=()=>{
     lang = lang==='ru'?'en':'ru';
     localStorage.setItem('lang',lang);
     applyLang();
 };
 
-/* COMPONENTS */
-
+/* ДАННЫЕ */
 const components = [
-  {
-    img: "https://i.ibb.co/B52hr3qc/korpus-Photoroom.png",
-    ru: {
-      name: "Корпус",
-      desc: "Основной каркас ПК, в который устанавливаются все комплектующие."
-    },
-    en: {
-      name: "PC Case",
-      desc: "The main chassis of the PC, where all components are installed."
-    }
-  },
 
-  {
-    img: "https://i.ibb.co/YTdw7NNm/images-Photoroom.png",
-    ru: {
-      name: "Процессор (CPU)",
-      desc: "Центральный процессор выполняет вычисления и управляет системой."
-    },
-    en: {
-      name: "Processor (CPU)",
-      desc: "The CPU performs calculations and manages system tasks."
-    }
-  },
-  {
-    img: "https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png",
-    ru: {
-      name: "Материнская плата",
-      desc: "Соединяет все компоненты и обеспечивает работу ПК."
-    },
-    en: {
-      name: "Motherboard",
-      desc: "The motherboard connects all parts and enables system operation."
-    }
-  },
+{
+  images: [
+    "https://i.ibb.co/B52hr3qc/korpus-Photoroom.png",
+    "https://i.ibb.co/4xMQqQt/ec0fc1bcf5fa2fa93e93946a7bc05b94918ffbc6-Photoroom.png",
+    "https://i.ibb.co/hRg9pqRS/7075834569-Photoroom.png"
 
-   {
-    img: "https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png",
-    ru: {
-      name: "Оперативная память (RAM)",
-      desc: "ОЗУ хранит временные данные, необходимые для работы программ."
-    },
-    en: {
-      name: "RAM (Memory)",
-      desc: "RAM stores temporary data required by applications."
-    }
-  },
+  ],
+  ru: { name:"Корпус", desc:"Основной каркас ПК." },
+  en: { name:"PC Case", desc:"Main computer chassis." }
+},
 
-    {
-    img: "https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png",
-    ru: {
-      name: "Жесткий диск (HDD)",
-      desc: "HDD — классический накопитель для хранения больших объемов информации и файлов."
-    },
-    en: {
-      name: "Hard Disk Drive (HDD)",
-      desc: "HDD is a traditional storage device for keeping large amounts of data and files."
-    }
-  },
+{
+  images: [
+    "https://i.ibb.co/YTdw7NNm/images-Photoroom.png",
+    "https://i.ibb.co/qLDXCBTJ/ryzen-Photoroom.png",
+    "https://i.ibb.co/tpFdV6Zf/zeon-Photoroom.png",
+    "https://i.ibb.co/BHbjf63J/intel-Photoroom.png"
+  ],
+  ru: { name:"Процессор (CPU)", desc:"Центральный процессор." },
+  en: { name:"CPU", desc:"Central processing unit." }
+},
 
-   {
-    img: "https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png",
-    ru: {
-      name: "SSD M.2 Накопитель",
-      desc: "Сверхбыстрый и компактный накопитель, который устанавливается напрямую в материнскую плату."
-    },
-    en: {
-      name: "SSD M.2 Storage",
-      desc: "Ultrafast and compact storage that plugs directly into the motherboard."
-    }
-  },
+{
+  images: [
+    "https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png",
+    "https://i.ibb.co/1GyK4q7x/asrock-z690-taichi-Photoroom-1.png"
+  ],
+  ru: { name:"Материнская плата", desc:"Соединяет все компоненты." },
+  en: { name:"Motherboard", desc:"Connects all components." }
+},
 
-   {
-    img: "https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png",
-    ru: {
-      name: "Видеокарта (GPU)",
-      desc: "Мощный графический процессор для обработки сложной графики, рендеринга и плавной работы игр."
-    },
-    en: {
-      name: "Graphics Card (GPU)",
-      desc: "A powerful graphics unit designed for complex visual processing, rendering, and smooth gaming."
-    }
-  },
+{
+  images: [
+    "https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png",
+    "https://i.ibb.co/gMxqrsVd/2-Photoroom.png"
+  ],
+  ru: { name:"ОЗУ (RAM)", desc:"Временная память." },
+  en: { name:"RAM", desc:"Temporary memory." }
+},
 
-   {
-    img: "https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png",
-    ru: {
-      name: "Блок питания (PSU)",
-      desc: "Обеспечивает стабильное питание всех компонентов компьютера необходимой энергией."
-    },
-    en: {
-      name: "Power Supply Unit (PSU)",
-      desc: "Provides stable power to all computer components with the necessary energy."
-    }
-  }
+{
+  images: [
+    "https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png",
+    "https://i.ibb.co/hJ8kDsTX/1235855-Photoroom.png"
+  ],
+  ru: { name:"Жесткий диск (HDD)", desc:"Хранение данных." },
+  en: { name:"HDD", desc:"Data storage." }
+},
+
+{
+  images: [
+    "https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png",
+    "https://i.ibb.co/F4X1jtVY/1599747675-1576657-Photoroom.png"
+  ],
+  ru: { name:"SSD M.2", desc:"Быстрый накопитель." },
+  en: { name:"SSD M.2", desc:"Fast storage." }
+},
+
+{
+  images: [
+    "https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png",
+    "https://i.ibb.co/TBLJNdzr/100064046389b3-Photoroom.png",
+    "https://i.ibb.co/JwXsz8Nc/video2-Photoroom.png"
+  ],
+  ru: { name:"Видеокарта (GPU)", desc:"Графика и игры." },
+  en: { name:"GPU", desc:"Graphics processing." }
+},
+
+{
+    images: [
+      "https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png",
+      "https://i.ibb.co/V0T8yqPC/block-Photoroom.png"
+  ],
+  ru: { name:"Блок питания", desc:"Питание ПК." },
+  en: { name:"PSU", desc:"Power supply." }
+}
+
 ];
-const track=document.getElementById("sliderTrack");
-let currentIndex=0;
+
+/* ================== СЛАЙДЕР ================== */
+const track = document.getElementById("sliderTrack");
+let currentIndex = 0;
 
 function buildSlides(){
-    track.innerHTML="";
+    track.innerHTML = "";
+
     components.forEach(comp=>{
-        const slide=document.createElement("div");
-        slide.className="slide";
-        slide.innerHTML=`
-            <img src="${comp.img}">
+        const slide = document.createElement("div");
+        slide.className = "slide";
+
+        slide.innerHTML = `
+            <img src="${comp.images[0]}">
             <h3>${comp[lang].name}</h3>
             <p>${comp[lang].desc}</p>
         `;
+
+        // 👇 ВАЖНО: клик открывает галерею
+        slide.querySelector("img").onclick = ()=>{
+            openModal(comp.images);
+        };
+
         track.appendChild(slide);
     });
+
     moveSlider();
 }
 
 function moveSlider(){
-    track.style.transform=`translateX(-${currentIndex*100}%)`;
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
-document.getElementById("nextBtn").onclick=()=>{
-    currentIndex=(currentIndex+1)%components.length;
+document.getElementById("nextBtn").onclick = ()=>{
+    currentIndex = (currentIndex + 1) % components.length;
     moveSlider();
 };
 
-document.getElementById("prevBtn").onclick=()=>{
-    currentIndex=(currentIndex-1+components.length)%components.length;
+document.getElementById("prevBtn").onclick = ()=>{
+    currentIndex = (currentIndex - 1 + components.length) % components.length;
     moveSlider();
+};
+
+/* ================== МОДАЛКА ================== */
+
+let currentGallery = [];
+let currentImgIndex = 0;
+
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+
+function openModal(images){
+    currentGallery = images;
+    currentImgIndex = 0;
+    modal.style.display = "flex";
+    updateModal();
+}
+
+function updateModal(){
+    modalImg.src = currentGallery[currentImgIndex];
+}
+
+document.getElementById("modalNext").onclick = ()=>{
+    currentImgIndex = (currentImgIndex + 1) % currentGallery.length;
+    updateModal();
+};
+
+document.getElementById("modalPrev").onclick = ()=>{
+    currentImgIndex = (currentImgIndex - 1 + currentGallery.length) % currentGallery.length;
+    updateModal();
+};
+
+document.getElementById("closeModal").onclick = ()=>{
+    modal.style.display = "none";
+};
+
+// закрытие по клику вне картинки
+modal.onclick = (e)=>{
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
 };
 
 applyLang();
-
-function showSlide(direction) {
-  const slide = document.querySelector(".slide");
-
-  slide.classList.remove("animate-next", "animate-prev");
-
-  if (direction === "next") {
-    slide.classList.add("animate-next");
-  } else {
-    slide.classList.add("animate-prev");
-  }
-
-  setTimeout(() => {
-    slide.classList.remove("animate-next", "animate-prev");
-    updateContent(); // твоя функция обновления текста и фото
-  }, 400);
-}
-</script>
+    </script>
 
 </body>
 </html>
