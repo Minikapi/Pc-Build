@@ -2,11 +2,21 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fetch from 'node-fetch';
+
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(cors());
+app.use(express.json());
+
+app.use(express.static(__dirname));
 
 const userCooldowns = {};
 const COOLDOWN = 20000;
 
-app.post("/api/build", async (req, res) => {
+function checkCooldown(req, res) {
     const ip = req.ip;
     const now = Date.now();
 
@@ -15,22 +25,21 @@ app.post("/api/build", async (req, res) => {
             result: "⏳ Too many requests. Wait 20 seconds."
         });
     }
+
     userCooldowns[ip] = now;
-});
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(__dirname));
-
+    return false;
+}
 
 app.post("/api/build", async (req, res) => {
+
+    // Проверка cooldown
+    const cooldownResponse = checkCooldown(req, res);
+    if (cooldownResponse) return;
+
     const { budget, gpu, cpu, tasks, lang } = req.body;
 
     try {
-
+        // Генерация промпта для нейронки
         const prompt = `
 You are a professional PC builder.
 
@@ -61,6 +70,7 @@ Total price:
 Language: ${lang === "ru" ? "Russian" : "English"}
         `;
 
+        // Запрос к Deepseek API
         const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -77,16 +87,21 @@ Language: ${lang === "ru" ? "Russian" : "English"}
         });
 
         const data = await response.json();
-
-        const text = data.choices?.[0]?.message?.content || "Ошибка генерации";
+        const text = data.choices?.[0]?.message?.content || (lang === "ru" ? "Ошибка генерации" : "Generation error");
 
         res.json({ result: text });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ result: "Server error" });
+        res.status(500).json({ result: lang === "ru" ? "Ошибка сервера" : "Server error" });
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
