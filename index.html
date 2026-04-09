@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПК-Консультант</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -263,7 +263,7 @@ Other pages on the site are informational and help you better understand PC comp
             howContent.classList.toggle('active');
         });
 
-        // Загрузка + тайинг эффект
+        // Загрузка + тайпинг эффект
         async function typeText(el, text) {
             el.textContent = "";
             for (let i = 0; i < text.length; i++) {
@@ -278,9 +278,57 @@ Other pages on the site are informational and help you better understand PC comp
                 : "⌛ Building parts...";
         }
 
-        // Создание сборки
+        // Создание сборки + антиспам
+        let lastRequestTime = 0;
+        let isLoading = false;
+        const COOLDOWN = 20000; // 20 секунд
+
         document.getElementById('generate').onclick = async () => {
+
             const result = document.getElementById('result');
+            const btn = document.getElementById('generate');
+
+            const now = Date.now();
+
+            // если уже идёт запрос
+            if (isLoading) {
+                result.textContent = lang === 'ru'
+                    ? "⏳ Подождите завершения предыдущего запроса"
+                    : "⏳ Wait for the previous request to finish";
+                return;
+            }
+
+            // кулдаун
+            if (now - lastRequestTime < COOLDOWN) {
+                const seconds = Math.ceil((COOLDOWN - (now - lastRequestTime)) / 1000);
+
+                result.textContent = lang === 'ru'
+                    ? `⏳ Подождите ${seconds} сек`
+                    : `⏳ Wait ${seconds}s`;
+
+                return;
+            }
+
+            lastRequestTime = now;
+            isLoading = true;
+            btn.disabled = true;
+
+            // запуск таймера на кнопке
+            let remaining = COOLDOWN / 1000;
+            const originalText = dict[lang].generate;
+
+            const timer = setInterval(() => {
+                remaining--;
+
+                if (remaining > 0) {
+                    btn.textContent = `${remaining}s`;
+                } else {
+                    clearInterval(timer);
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            }, 1000);
+
             const budgetInput = document.getElementById('budget');
             const budget = parseInt(budgetInput.value);
 
@@ -288,6 +336,11 @@ Other pages on the site are informational and help you better understand PC comp
                 result.textContent = lang === 'ru'
                     ? "Минимальный бюджет 20 000 руб."
                     : "Minimum budget $250";
+
+                isLoading = false;
+                btn.disabled = false;
+                btn.textContent = originalText;
+                clearInterval(timer);
                 return;
             }
 
@@ -315,6 +368,8 @@ Other pages on the site are informational and help you better understand PC comp
                     ? "❌ Ошибка сервера. Попробуйте позже."
                     : "❌ Server error. Try later.";
             }
+
+            isLoading = false;
         };
     </script>
 
