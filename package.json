@@ -1,16 +1,14 @@
 {
-  "name": "pc-builder",
+  "name": "pc-build",
   "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
-    "node-fetch": "^3.3.2",
-    "object-assign": "^4.1.1"
+    "object-assign": "^4.1.1",
+    "node-fetch": "^3.3.2"
   }
-}
- "dependencies": {
-  "express": "^4.18.2",
-  "cors": "^2.8.5",
-  "node-fetch": "^3.3.2",
-  "object-assign": "^4.1.1"
 }
