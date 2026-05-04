@@ -169,7 +169,6 @@ body {
     }
 }
 
-/* MATRIX */
 
 .matrix {
     position: fixed;
@@ -195,8 +194,6 @@ body {
         pointer-events: none;
         will-change: transform;
     }
-
-/* HEADER */
 
 .header {
     text-align: center;
@@ -235,10 +232,10 @@ body {
 
 .lang-btn {
     position: absolute;
-    right: 10px;
-    top: 80px; /* увеличили, чтобы кнопка ниже */
-    transform: translateY(0); /* убрали сдвиг вверх */
-    padding: 16px 24px; /* увеличили размер кнопки */
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 18px;
     background: rgba(10,5,20,.9);
     border: 2px solid var(--border-violet);
     border-radius: 10px;
@@ -252,8 +249,6 @@ body {
         box-shadow: 0 0 28px rgba(180,80,255,.7);
         transform: translateY(-2px) scale(1.05);
     }
-
-/* CONTAINER */
 
 .container {
     width: 85%;
@@ -275,16 +270,11 @@ body {
         transform: none;
     }
 }
-
-/* LAYOUT */
-
 .main-layout {
     display: grid;
     grid-template-columns: 330px 1fr;
     gap: 30px;
 }
-
-/* INPUTS */
 
 input {
     width: 220px;
@@ -302,7 +292,6 @@ input {
         outline: none;
     }
 
-/* BUTTONS */
 
 button {
     padding: 12px 26px;
@@ -321,8 +310,6 @@ button {
         transform: scale(1.04);
     }
 
-/* RESULT BOX */
-
 .result-box {
     padding: 25px;
     background: rgba(10,5,20,.9);
@@ -333,7 +320,6 @@ button {
     overflow-y: auto;
 }
 
-/* NAVIGATION */
 
 .nav-buttons {
     display: flex;
@@ -358,7 +344,6 @@ button {
         transform: translateY(-1px);
     }
 
-/* FOOTER */
 
 .footer {
     text-align: center;
@@ -383,7 +368,6 @@ button {
     transition: .3s;
 }
 
-/* СПИСОК */
 
 .select-list {
     position: absolute;
@@ -401,8 +385,6 @@ button {
     overflow: hidden;
 }
 
-/* АКТИВНОЕ СОСТОЯНИЕ */
-
 .select.open .select-list {
     opacity: 1;
     transform: translateY(0);
@@ -418,8 +400,6 @@ button {
     .select-list div:hover {
         background: rgba(180,80,255,.2);
     }
-/* ================= HOW SECTION ================= */
-
 .how-toggle {
     width: 100%;
     margin-bottom: 15px;
@@ -448,8 +428,6 @@ button {
     line-height: 1.6;
 }
 
-/* ================= SUBHEADING ================= */
-
 .subheading {
     margin-top: 10px;
     font-size: 14px;
@@ -477,4 +455,20 @@ button,
     font-weight: 400;
     src: url(https://fonts.gstatic.com/s/orbitron/v35/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWgz.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+.profile-section {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: profileFadeIn 1.2s ease forwards;
+}
+
+.profile-section {
+    animation-delay: 0.3s;
+}
+
+@keyframes profileFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
