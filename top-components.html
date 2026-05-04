@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ТОП СБОРОК ПК — ПК-Консультант</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="top.css">
+<link rel="stylesheet" href="css/top.css">
 <style>
-/* ================= HEADER ================= */
 .header {
     text-align: center;
     padding: 50px 20px 10px;
@@ -45,7 +43,6 @@
 }
 .lang-btn:hover { transform: translateY(-50%) scale(1.05); }
 
-/* ================= SLIDER ================= */
 .pc-slider {
     width: 100%;
     margin-top: 40px;
@@ -105,7 +102,7 @@
 #nextBtn { right: 40px; }
 .slide-btn:hover { color: var(--violet-main); transform: translateY(-50%) scale(1.2); }
 
-/* ================= NAV BUTTONS ================= */
+/* навигация */
 .nav-buttons {
     text-align: center;
     margin-top: 20px;
@@ -135,7 +132,6 @@
     <div class="slider-wrapper">
         <button class="slide-btn" id="prevBtn">←</button>
         <div class="slider-track" id="sliderTrack">
-            <!-- Слайды будут вставлены через JS -->
         </div>
         <button class="slide-btn" id="nextBtn">→</button>
     </div>
@@ -151,7 +147,6 @@ const langBtn = document.getElementById('langBtn');
 const track = document.getElementById('sliderTrack');
 let currentIndex = 0;
 
-// Массив сборок с полным комплектом комплектующих
 const builds = [
   {
     img:"https://i.ibb.co/DD4DLL6V/deepcool-Photoroom.png",
@@ -161,18 +156,18 @@ const builds = [
         "Процессор: Ryzen 5 3600",
         "Видеокарта: RX 5700",
         "ОЗУ: 16GB DDR4",
-        "Накопитель: 1TB NVMe",
+        "Накопитель: 512GB NVMe",
         "Блок питания: 650W",
         "Корпус: Deepcool Matrexx"
       ]
     },
     en: {
-      price:"Price: $630",
+      price:"Price: $600",
       components:[
         "CPU: Ryzen 5 3600",
         "GPU: RX 5700 XT",
         "RAM: 16GB DDR4",
-        "Storage: 1TB NVMe",
+        "Storage: 512GB NVMe",
         "PSU: 650W",
         "Case: Deepcool Matrexx"
       ]
@@ -192,7 +187,7 @@ const builds = [
       ]
     },
     en: {
-      price:"Price: $1260",
+      price:"Price: $1250",
       components:[
         "CPU: Ryzen 5 7600",
         "GPU: RTX 5060",
@@ -217,7 +212,7 @@ const builds = [
       ]
     },
     en: {
-      price:"Price: $1890",
+      price:"Price: $2000",
       components:[
         "CPU: Ryzen 7 7700",
         "GPU: RTX 4070",
@@ -242,7 +237,7 @@ const builds = [
       ]
     },
     en: {
-      price:"Price: $2520",
+      price:"Price: $2500",
       components:[
         "CPU: Ryzen 7 7800X3D",
         "GPU: RTX 5070Ti",
@@ -267,7 +262,7 @@ const builds = [
       ]
     },
     en: {
-      price:"Price: $6300",
+      price:"Price: $6000",
       components:[
         "CPU: Ryzen 7 9800X3D",
         "GPU: RTX 5090",
@@ -280,7 +275,6 @@ const builds = [
   }
 ];
 
-// Создаем слайды
 function buildSlides() {
   track.innerHTML = '';
   builds.forEach(build => {
