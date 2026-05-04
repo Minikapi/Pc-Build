@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Из чего состоит Системный Блок</title>
-    <link rel="stylesheet" href="aboutstyle.css">
+    <link rel="stylesheet" href="css/aboutstyle.css">
 </head>
 
 <body>
@@ -30,205 +30,185 @@
         </a>
     </div>
 
-    <!-- MODAL (галерея) -->
-    <div id="modal" class="modal">
-        <span id="closeModal">&times;</span>
-        <button class="modal-btn" id="modalPrev">←</button>
-        <img id="modalImg">
-        <button class="modal-btn" id="modalNext">→</button>
-    </div>
-
     <script>
-let lang = localStorage.getItem('lang') || 'ru';
-const langBtn = document.getElementById('langBtn');
+        let lang = localStorage.getItem('lang') || 'ru';
+        const langBtn = document.getElementById('langBtn');
 
-/* ================== ЯЗЫК ================== */
-function applyLang(){
-    langBtn.textContent = lang==='ru'?'RU':'EN';
+        /* смена языка */
+        function applyLang() {
+            langBtn.textContent = lang === 'ru' ? 'RU' : 'EN';
 
-    document.getElementById('mainTitle').textContent =
-        lang==='ru'
-        ?'Из чего состоит ПК'
-        :'What does a PC consist of';
+            document.getElementById('mainTitle').textContent =
+                lang === 'ru'
+                    ? 'Из чего состоит ПК'
+                    : 'What does a PC consist of';
 
-    document.querySelectorAll('[data-ru]').forEach(el=>{
-        el.textContent = el.getAttribute('data-'+lang);
-    });
+            document.querySelectorAll('[data-ru]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
 
-    buildSlides();
-}
+            buildSlides();
+        }
 
-langBtn.onclick=()=>{
-    lang = lang==='ru'?'en':'ru';
-    localStorage.setItem('lang',lang);
-    applyLang();
-};
-
-/* ДАННЫЕ */
-const components = [
-
-{
-  images: [
-    "https://i.ibb.co/B52hr3qc/korpus-Photoroom.png",
-    "https://i.ibb.co/4xMQqQt/ec0fc1bcf5fa2fa93e93946a7bc05b94918ffbc6-Photoroom.png",
-    "https://i.ibb.co/hRg9pqRS/7075834569-Photoroom.png"
-
-  ],
-  ru: { name:"Корпус", desc:"Основной каркас ПК." },
-  en: { name:"PC Case", desc:"Main computer chassis." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/YTdw7NNm/images-Photoroom.png",
-    "https://i.ibb.co/qLDXCBTJ/ryzen-Photoroom.png",
-    "https://i.ibb.co/tpFdV6Zf/zeon-Photoroom.png",
-    "https://i.ibb.co/BHbjf63J/intel-Photoroom.png"
-  ],
-  ru: { name:"Процессор (CPU)", desc:"Центральный процессор." },
-  en: { name:"CPU", desc:"Central processing unit." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png",
-    "https://i.ibb.co/1GyK4q7x/asrock-z690-taichi-Photoroom-1.png"
-  ],
-  ru: { name:"Материнская плата", desc:"Соединяет все компоненты." },
-  en: { name:"Motherboard", desc:"Connects all components." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png",
-    "https://i.ibb.co/gMxqrsVd/2-Photoroom.png"
-  ],
-  ru: { name:"ОЗУ (RAM)", desc:"Временная память." },
-  en: { name:"RAM", desc:"Temporary memory." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png",
-    "https://i.ibb.co/hJ8kDsTX/1235855-Photoroom.png"
-  ],
-  ru: { name:"Жесткий диск (HDD)", desc:"Хранение данных." },
-  en: { name:"HDD", desc:"Data storage." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png",
-    "https://i.ibb.co/F4X1jtVY/1599747675-1576657-Photoroom.png"
-  ],
-  ru: { name:"SSD M.2", desc:"Быстрый накопитель." },
-  en: { name:"SSD M.2", desc:"Fast storage." }
-},
-
-{
-  images: [
-    "https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png",
-    "https://i.ibb.co/TBLJNdzr/100064046389b3-Photoroom.png",
-    "https://i.ibb.co/JwXsz8Nc/video2-Photoroom.png"
-  ],
-  ru: { name:"Видеокарта (GPU)", desc:"Графика и игры." },
-  en: { name:"GPU", desc:"Graphics processing." }
-},
-
-{
-    images: [
-      "https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png",
-      "https://i.ibb.co/V0T8yqPC/block-Photoroom.png"
-  ],
-  ru: { name:"Блок питания", desc:"Питание ПК." },
-  en: { name:"PSU", desc:"Power supply." }
-}
-
-];
-
-/* ================== СЛАЙДЕР ================== */
-const track = document.getElementById("sliderTrack");
-let currentIndex = 0;
-
-function buildSlides(){
-    track.innerHTML = "";
-
-    components.forEach(comp=>{
-        const slide = document.createElement("div");
-        slide.className = "slide";
-
-        slide.innerHTML = `
-            <img src="${comp.images[0]}">
-            <h3>${comp[lang].name}</h3>
-            <p>${comp[lang].desc}</p>
-        `;
-
-        // 👇 ВАЖНО: клик открывает галерею
-        slide.querySelector("img").onclick = ()=>{
-            openModal(comp.images);
+        langBtn.onclick = () => {
+            lang = lang === 'ru' ? 'en' : 'ru';
+            localStorage.setItem('lang', lang);
+            applyLang();
         };
 
-        track.appendChild(slide);
-    });
+        /* фотки */
+        const components = [
 
-    moveSlider();
-}
+            {
+                images: [
+                    "https://i.ibb.co/B52hr3qc/korpus-Photoroom.png",
+                    "https://i.ibb.co/4xMQqQt/ec0fc1bcf5fa2fa93e93946a7bc05b94918ffbc6-Photoroom.png",
+                    "https://i.ibb.co/hRg9pqRS/7075834569-Photoroom.png"
+                ],
+                ru: { name: "Корпус", desc: "Основной каркас ПК." },
+                en: { name: "PC Case", desc: "Main computer chassis." }
+            },
 
-function moveSlider(){
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
+            {
+                images: [
+                    "https://i.ibb.co/YTdw7NNm/images-Photoroom.png",
+                    "https://i.ibb.co/qLDXCBTJ/ryzen-Photoroom.png",
+                    "https://i.ibb.co/tpFdV6Zf/zeon-Photoroom.png",
+                    "https://i.ibb.co/BHbjf63J/intel-Photoroom.png"
+                ],
+                ru: { name: "Процессор (CPU)", desc: "Центральный процессор." },
+                en: { name: "CPU", desc: "Central processing unit." }
+            },
 
-document.getElementById("nextBtn").onclick = ()=>{
-    currentIndex = (currentIndex + 1) % components.length;
-    moveSlider();
-};
+            {
+                images: [
+                    "https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png",
+                    "https://i.ibb.co/1GyK4q7x/asrock-z690-taichi-Photoroom-1.png"
+                ],
+                ru: { name: "Материнская плата", desc: "Соединяет все компоненты." },
+                en: { name: "Motherboard", desc: "Connects all components." }
+            },
 
-document.getElementById("prevBtn").onclick = ()=>{
-    currentIndex = (currentIndex - 1 + components.length) % components.length;
-    moveSlider();
-};
+            {
+                images: [
+                    "https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png",
+                    "https://i.ibb.co/gMxqrsVd/2-Photoroom.png"
+                ],
+                ru: { name: "ОЗУ (RAM)", desc: "Временная память." },
+                en: { name: "RAM", desc: "Temporary memory." }
+            },
 
-/* ================== МОДАЛКА ================== */
+            {
+                images: [
+                    "https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png",
+                    "https://i.ibb.co/hJ8kDsTX/1235855-Photoroom.png"
+                ],
+                ru: { name: "Жесткий диск (HDD)", desc: "Хранение данных." },
+                en: { name: "HDD", desc: "Data storage." }
+            },
 
-let currentGallery = [];
-let currentImgIndex = 0;
+            {
+                images: [
+                    "https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png",
+                    "https://i.ibb.co/F4X1jtVY/1599747675-1576657-Photoroom.png"
+                ],
+                ru: { name: "SSD M.2", desc: "Быстрый накопитель." },
+                en: { name: "SSD M.2", desc: "Fast storage." }
+            },
 
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modalImg");
+            {
+                images: [
+                    "https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png",
+                    "https://i.ibb.co/TBLJNdzr/100064046389b3-Photoroom.png",
+                    "https://i.ibb.co/JwXsz8Nc/video2-Photoroom.png"
+                ],
+                ru: { name: "Видеокарта (GPU)", desc: "Графика и игры." },
+                en: { name: "GPU", desc: "Graphics processing." }
+            },
 
-function openModal(images){
-    currentGallery = images;
-    currentImgIndex = 0;
-    modal.style.display = "flex";
-    updateModal();
-}
+            {
+                images: [
+                    "https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png",
+                    "https://i.ibb.co/V0T8yqPC/block-Photoroom.png"
+                ],
+                ru: { name: "Блок питания", desc: "Питание ПК." },
+                en: { name: "PSU", desc: "Power supply." }
+            }
 
-function updateModal(){
-    modalImg.src = currentGallery[currentImgIndex];
-}
+        ];
 
-document.getElementById("modalNext").onclick = ()=>{
-    currentImgIndex = (currentImgIndex + 1) % currentGallery.length;
-    updateModal();
-};
+        /* ссылки на страницы */
+        const componentLinks = {
+            "Корпус": "case.html",
+            "PC Case": "case.html",
 
-document.getElementById("modalPrev").onclick = ()=>{
-    currentImgIndex = (currentImgIndex - 1 + currentGallery.length) % currentGallery.length;
-    updateModal();
-};
+            "Процессор (CPU)": "cpu.html",
+            "CPU": "cpu.html",
 
-document.getElementById("closeModal").onclick = ()=>{
-    modal.style.display = "none";
-};
+            "Материнская плата": "motherboard.html",
+            "Motherboard": "motherboard.html",
 
-// закрытие по клику вне картинки
-modal.onclick = (e)=>{
-    if(e.target === modal){
-        modal.style.display = "none";
-    }
-};
+            "ОЗУ (RAM)": "ram.html",
+            "RAM": "ram.html",
 
-applyLang();
+            "Жесткий диск (HDD)": "hdd.html",
+            "HDD": "hdd.html",
+
+            "SSD M.2": "ssd.html",
+
+            "Видеокарта (GPU)": "gpu.html",
+            "GPU": "gpu.html",
+
+            "Блок питания": "psu.html",
+            "PSU": "psu.html"
+        };
+
+        /* слайдер */
+        const track = document.getElementById("sliderTrack");
+        let currentIndex = 0;
+
+        function buildSlides() {
+            track.innerHTML = "";
+
+            components.forEach(comp => {
+                const slide = document.createElement("div");
+                slide.className = "slide";
+
+                slide.innerHTML = `
+                <img src="${comp.images[0]}">
+                <h3>${comp[lang].name}</h3>
+                <p>${comp[lang].desc}</p>
+            `;
+
+                slide.querySelector("img").onclick = () => {
+                    const name = comp[lang].name;
+                    const link = componentLinks[name];
+                    if (link) {
+                        window.location.href = link;
+                    }
+                };
+
+                track.appendChild(slide);
+            });
+
+            moveSlider();
+        }
+
+        function moveSlider() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        document.getElementById("nextBtn").onclick = () => {
+            currentIndex = (currentIndex + 1) % components.length;
+            moveSlider();
+        };
+
+        document.getElementById("prevBtn").onclick = () => {
+            currentIndex = (currentIndex - 1 + components.length) % components.length;
+            moveSlider();
+        };
+
+        applyLang();
     </script>
 
 </body>
