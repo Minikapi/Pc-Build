@@ -116,8 +116,6 @@ body {
         transform: translateY(-2px) scale(1.05);
     }
 
-/* CONTAINER */
-
 .container {
     width: 85%;
     margin: 20px auto 40px;
@@ -139,7 +137,6 @@ body {
     }
 }
 
-/* LAYOUT */
 
 .main-layout {
     display: grid;
@@ -147,7 +144,6 @@ body {
     gap: 30px;
 }
 
-/* INPUTS */
 
 input {
     width: 220px;
@@ -164,8 +160,6 @@ input {
         box-shadow: 0 0 12px rgba(180,80,255,.9);
         outline: none;
     }
-
-/* BUTTONS */
 
 button {
     padding: 12px 26px;
@@ -184,8 +178,6 @@ button {
         transform: scale(1.04);
     }
 
-/* RESULT BOX */
-
 .result-box {
     padding: 25px;
     background: rgba(10,5,20,.9);
@@ -196,7 +188,6 @@ button {
     overflow-y: auto;
 }
 
-/* NAVIGATION */
 
 .nav-buttons {
     display: flex;
@@ -221,7 +212,6 @@ button {
         transform: translateY(-1px);
     }
 
-/* FOOTER */
 
 .footer {
     text-align: center;
@@ -246,7 +236,6 @@ button {
     transition: .3s;
 }
 
-/* СПИСОК */
 
 .select-list {
     position: absolute;
@@ -264,7 +253,6 @@ button {
     overflow: hidden;
 }
 
-/* АКТИВНОЕ СОСТОЯНИЕ */
 
 .select.open .select-list {
     opacity: 1;
@@ -281,7 +269,6 @@ button {
     .select-list div:hover {
         background: rgba(180,80,255,.2);
     }
-/* ================= HOW SECTION ================= */
 
 .how-toggle {
     width: 100%;
@@ -311,7 +298,6 @@ button {
     line-height: 1.6;
 }
 
-/* ================= SUBHEADING ================= */
 
 .subheading {
     margin-top: 10px;
