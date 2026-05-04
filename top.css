@@ -1,4 +1,3 @@
-/* ================= VARIABLES ================= */
 :root {
     --bg-main: #050008;
     --bg-panel: rgba(30,10,50,.85);
@@ -8,7 +7,6 @@
     --border-violet: rgba(180,80,255,.6);
 }
 
-/* ================= GLOBAL ================= */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -34,7 +32,6 @@ body {
     }
 }
 
-/* ================= HEADER ================= */
 .header {
     text-align: center;
     padding: 50px 20px 10px;
@@ -76,7 +73,6 @@ body {
     opacity: 0.8;
 }
 
-/* ================= SLIDER ================= */
 .pc-slider {
     width: 100%;
     margin-top: 40px;
@@ -141,7 +137,7 @@ body {
         margin-bottom: 20px;
     }
 
-/* ================= SLIDER BUTTONS ================= */
+
 .slide-btn {
     position: absolute;
     top: 50%;
@@ -169,7 +165,6 @@ body {
     transform: translateY(-50%) scale(1.2);
 }
 
-/* ================= NAVIGATION ================= */
 .nav-buttons {
     text-align: center;
     margin-top: 20px;
