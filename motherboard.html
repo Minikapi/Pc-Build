@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Материнская плата</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">МАТЕРИНСКАЯ ПЛАТА</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/gL7LK86L/7179106317-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Материнская плата — это основа компьютера, к которой подключаются все остальные компоненты. Она объединяет процессор, оперативную память, видеокарту, накопители и блок питания в одну систему.
+
+Именно через материнскую плату происходит обмен данными между всеми устройствами. От её качества и возможностей зависит совместимость комплектующих и возможности апгрейда.
+
+При выборе важно учитывать сокет процессора, поддержку оперативной памяти, количество слотов и разъёмов. Это один из ключевых компонентов, от которого зависит стабильность и функциональность всего ПК."
+             data-en="The motherboard is the main circuit board that connects all components of a computer. It links the CPU, RAM, GPU, storage devices and power supply into a single system.
+
+All data exchange between components happens through the motherboard. Its features determine compatibility and upgrade options.
+
+When choosing one, it is important to consider the CPU socket, RAM support and available slots. It is a key component that affects stability and functionality.">
+
+            Материнская плата — это основа компьютера...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'МАТЕРИНСКАЯ ПЛАТА' : 'MOTHERBOARD'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

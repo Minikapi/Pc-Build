@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блок питания</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">БЛОК ПИТАНИЯ (PSU)</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/XrQ5qLx0/289069-1-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Блок питания (PSU) — это устройство, которое обеспечивает все компоненты компьютера электричеством. Он преобразует энергию из розетки в нужные напряжения для работы процессора, видеокарты, материнской платы и других устройств.
+
+От качества блока питания зависит стабильность работы всего компьютера. Плохой или слабый блок питания может вызывать зависания, перезагрузки и даже повреждение комплектующих.
+
+При выборе важно учитывать мощность, сертификацию (например 80 Plus) и надёжность производителя. Это один из самых важных, но часто недооценённых компонентов ПК."
+             data-en="The PSU (power supply unit) provides electricity to all computer components. It converts power from the outlet into the correct voltages for the CPU, GPU, motherboard and other parts.
+
+The quality of the PSU directly affects system stability. A weak or low-quality unit can cause crashes, reboots and even hardware damage.
+
+When choosing one, consider wattage, efficiency certification (such as 80 Plus) and brand reliability. It is one of the most important yet often underestimated PC components.">
+
+            Блок питания — это устройство, которое обеспечивает...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'БЛОК ПИТАНИЯ (PSU)' : 'POWER SUPPLY (PSU)'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

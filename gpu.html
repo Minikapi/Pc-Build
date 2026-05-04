@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видеокарта</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">ВИДЕОКАРТА (GPU)</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/zWC16GN7/1687218622974-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Видеокарта (GPU) — это компонент, который отвечает за обработку графики и вывод изображения на экран. Она особенно важна в играх, 3D-моделировании, монтаже видео и любых задачах, связанных с визуальными вычислениями.
+
+Чем мощнее видеокарта, тем выше качество графики и плавность изображения в играх. Она берёт на себя большую часть нагрузки, связанную с рендерингом.
+
+Современные GPU имеют собственную память (VRAM), что позволяет им работать независимо от оперативной памяти и ускоряет обработку графики."
+             data-en="The GPU is responsible for processing graphics and displaying images on the screen. It is especially important for gaming, 3D modeling, video editing and other visual tasks.
+
+A more powerful GPU means better graphics quality and smoother gameplay. It handles most rendering tasks in modern applications.
+
+Modern GPUs have their own memory (VRAM), allowing them to work independently from system RAM and process graphics faster.">
+
+            Видеокарта — это компонент, который отвечает за графику...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'ВИДЕОКАРТА (GPU)' : 'GPU'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Процессор</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">ПРОЦЕССОР (CPU)</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/YTdw7NNm/images-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Процессор (CPU) — это главный вычислительный элемент компьютера, который выполняет все основные операции и обрабатывает данные. Его часто называют «мозгом» системы.
+
+Он отвечает за запуск программ, обработку команд и работу операционной системы. Чем мощнее процессор, тем быстрее компьютер справляется с задачами — от обычной работы в браузере до игр и сложных вычислений.
+
+Важные характеристики процессора — количество ядер, тактовая частота и архитектура. Это один из самых важных компонентов ПК, который напрямую влияет на производительность всей системы."
+             data-en="The CPU is the main processing unit of a computer, responsible for executing instructions and handling data. It is often called the 'brain' of the system.
+
+It manages programs, system processes and calculations. A more powerful CPU means faster performance in everything from browsing to gaming and heavy workloads.
+
+Key characteristics include core count, clock speed and architecture. It is one of the most important components affecting overall performance.">
+
+            Процессор — это главный вычислительный элемент...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'ПРОЦЕССОР (CPU)' : 'CPU'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

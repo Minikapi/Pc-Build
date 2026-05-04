@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSD M.2</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">SSD M.2</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/hRdt6ph6/yifazcguqx07h0zkprvssutnzm0y94p4-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="SSD M.2 — это современный накопитель для хранения данных, который отличается очень высокой скоростью работы. В отличие от HDD, он не имеет движущихся частей, поэтому работает тише, быстрее и надёжнее.
+
+SSD используется для установки операционной системы, игр и программ, чтобы они запускались максимально быстро. Он значительно ускоряет загрузку компьютера и общую отзывчивость системы.
+
+Это один из самых важных апгрейдов в современном ПК, так как даже слабый процессор с SSD будет работать заметно быстрее, чем мощный ПК с HDD."
+             data-en="An M.2 SSD is a modern storage device with very high speed. Unlike HDDs, it has no moving parts, making it faster, quieter and more reliable.
+
+It is used for installing the operating system, games and applications to make them load quickly. It greatly improves system responsiveness and boot times.
+
+It is one of the most important upgrades in modern PCs, as even a weak CPU with an SSD feels faster than a powerful system with an HDD.">
+
+            SSD M.2 — это современный накопитель...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'SSD M.2' : 'SSD M.2'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оперативная память</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">ОПЕРАТИВНАЯ ПАМЯТЬ (RAM)</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/FbrZJC4K/ram-1-5e3abd.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Оперативная память (RAM) — это временная память компьютера, которая используется для хранения данных, необходимых прямо сейчас. Когда вы открываете программы, игры или вкладки в браузере, они загружаются именно в оперативную память.
+
+Чем больше объём RAM, тем больше задач компьютер может выполнять одновременно без тормозов. Недостаток оперативной памяти приводит к замедлениям и зависаниям системы.
+
+Важными характеристиками являются объём (например 8GB, 16GB, 32GB) и частота. Это очень важный компонент, который напрямую влияет на скорость работы и комфорт использования ПК."
+             data-en="RAM is a type of temporary memory that stores data currently in use. When you open apps, games or browser tabs, they are loaded into RAM.
+
+The more RAM you have, the more tasks your computer can handle smoothly at the same time. Not enough RAM can cause slowdowns and lag.
+
+Important factors include capacity (8GB, 16GB, 32GB) and speed. It is a crucial component that directly affects system performance and responsiveness.">
+
+            Оперативная память — это временная память компьютера...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'ОПЕРАТИВНАЯ ПАМЯТЬ (RAM)' : 'RAM'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>

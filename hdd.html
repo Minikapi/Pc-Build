@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жесткий диск</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">ЖЕСТКИЙ ДИСК (HDD)</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/pjfCg8kH/0000157-WD10-EZEX-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Жесткий диск (HDD) — это устройство для долговременного хранения данных. На нём сохраняются операционная система, программы, игры, фотографии и другие файлы.
+
+В отличие от оперативной памяти, данные на HDD не исчезают после выключения компьютера. Однако он работает медленнее современных накопителей, так как использует вращающиеся механические части.
+
+Главное преимущество HDD — большой объём за сравнительно низкую цену. Это хороший вариант для хранения файлов, но для системы и игр чаще используют более быстрые SSD."
+             data-en="A hard disk drive (HDD) is used for long-term data storage. It holds your operating system, programs, games, photos and other files.
+
+Unlike RAM, data on an HDD remains even when the computer is turned off. However, it is slower than modern storage because it uses mechanical moving parts.
+
+The main advantage of HDD is large storage capacity at a lower cost. It is good for storing files, but SSDs are usually preferred for speed.">
+
+            Жесткий диск — это устройство для хранения данных...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'ЖЕСТКИЙ ДИСК (HDD)' : 'HARD DRIVE (HDD)'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>
