@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корпус ПК</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 id="mainTitle">КОРПУС ПК</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/B52hr3qc/korpus-Photoroom.png" class="component-img">
+
+        <div class="component-text"
+             data-ru="Корпус — это внешний каркас компьютера, в котором размещаются все комплектующие. Он защищает внутренние детали от пыли, повреждений и помогает правильно организовать охлаждение.
+
+Хороший корпус обеспечивает удобную сборку, продуманное размещение кабелей и эффективный поток воздуха. От него зависит, насколько тихо и стабильно будет работать система.
+
+Несмотря на то, что корпус не влияет напрямую на производительность, он играет важную роль в долговечности и охлаждении всех компонентов."
+             data-en="The case is the outer frame of a computer that holds all components. It protects internal parts from dust and damage while helping maintain proper airflow.
+
+A good case makes building easier, improves cable management and ensures effective cooling. It affects how quiet and stable your system runs.
+
+While it does not directly impact performance, it plays a key role in durability and cooling.">
+
+            Корпус — это внешний каркас компьютера...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+let lang = localStorage.getItem('lang') || 'ru'
+const langBtn = document.getElementById('langBtn')
+
+function applyLang() {
+    langBtn.textContent = lang === 'ru' ? 'RU' : 'EN'
+
+    document.getElementById('mainTitle').textContent =
+        lang === 'ru' ? 'КОРПУС ПК' : 'PC CASE'
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang)
+    })
+}
+
+langBtn.onclick = () => {
+    lang = lang === 'ru' ? 'en' : 'ru'
+    localStorage.setItem('lang', lang)
+    applyLang()
+}
+
+applyLang()
+    </script>
+
+</body>
+</html>
