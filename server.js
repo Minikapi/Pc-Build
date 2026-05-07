@@ -40,31 +40,40 @@ app.post("/api/build", async (req, res) => {
     try {
         // Генерация промпта для нейронки
 const prompt = `
-Create a realistic PC build.
+You are a PC building assistant.
 
-Budget: ${budget}
-Preferred GPU brand: ${gpu}
-Preferred CPU brand: ${cpu}
-Purpose: ${tasks}
+Create a concise PC build.
 
-Requirements:
-- Use modern compatible components
-- Avoid bottlenecks
-- Prioritize gaming performance
-- Include approximate prices
-- Keep total within budget
+User:
+- Budget: ${budget} ${lang === "ru" ? "RUB" : "USD"}
+- GPU preference: ${gpu}
+- CPU preference: ${cpu}
+- Purpose: ${tasks}
 
-Format strictly like:
+Rules:
+- Use the exact budget currency
+- No markdown
+- No ** symbols
+- No hashtags
+- No explanations
+- No intro text
+- Only plain text
+- Short response
+- One component per line
 
-CPU:
-GPU:
-Motherboard:
-RAM:
-Storage:
-PSU:
-Case:
-Cooling:
-Total price:
+Format exactly:
+
+CPU - price
+GPU - price
+Motherboard - price
+RAM - price
+Storage - price
+PSU - price
+Case - price
+Total - price
+
+Use realistic modern components.
+Stay within budget.
 
 Language: ${lang === "ru" ? "Russian" : "English"}
 `;
