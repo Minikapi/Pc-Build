@@ -71,7 +71,12 @@ Storage - price
 PSU - price
 Case - price
 Total - price
-Use approximate market prices based on typical 2026 retail values.
+Do not output random or fake precise market fluctuations.
+Use stable approximate prices in RUB based on 2026 average market values.
+Keep prices realistic and consistent.
+If language is English, use USD ($).
+If language is Russian, use RUB (₽).
+Do not mix currencies.
 Use realistic modern components.
 Stay within budget.
 
