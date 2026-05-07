@@ -94,6 +94,7 @@ Language: ${lang === "ru" ? "Russian" : "English"}
 });
 
         const data = await response.json();
+        console.log(data);
         console.log("STATUS:", response.status);
         console.log("DATA:", JSON.stringify(data, null, 2));
         const text = data.choices?.[0]?.message?.content || (lang === "ru" ? "Ошибка генерации" : "Generation error");
