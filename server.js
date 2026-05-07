@@ -70,7 +70,7 @@ Language: ${lang === "ru" ? "Russian" : "English"}
 `;
 
         // Запрос к Deepseek API
-        const response = await fetch("https://api.deepseek.com/chat/completions", {
+        const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
     method: "POST",
     headers: {
         "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
