@@ -70,20 +70,28 @@ Language: ${lang === "ru" ? "Russian" : "English"}
 `;
 
         // Запрос к Deepseek API
-        const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
-                "Content-Type": "application/json"
+        const response = await fetch("https://api.deepseek.com/chat/completions", {
+    method: "POST",
+    headers: {
+        "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+            {
+                role: "system",
+                content: "You are a professional PC builder."
             },
-            body: JSON.stringify({
-                model: "deepseek-chat",
-                messages: [
-                    { role: "user", content: prompt }
-                ],
-                temperature: 0.7
-            })
-        });
+            {
+                role: "user",
+                content: prompt
+            }
+        ],
+        temperature: 0.7,
+        max_tokens: 700
+    })
+});
 
         const data = await response.json();
         const text = data.choices?.[0]?.message?.content || (lang === "ru" ? "Ошибка генерации" : "Generation error");
