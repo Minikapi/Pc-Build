@@ -70,7 +70,7 @@ Language: ${lang === "ru" ? "Russian" : "English"}
 `;
 
         // Запрос к Deepseek API
-        const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
+       const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
     method: "POST",
     headers: {
         "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
@@ -93,13 +93,26 @@ Language: ${lang === "ru" ? "Russian" : "English"}
     })
 });
 
-        const data = await response.json();
-        console.log(data);
-        console.log("STATUS:", response.status);
-        console.log("DATA:", JSON.stringify(data, null, 2));
-        const text = data.choices?.[0]?.message?.content || (lang === "ru" ? "Ошибка генерации" : "Generation error");
+const data = await response.json();
 
-        res.json({ result: text });
+console.log("STATUS:", response.status);
+console.log("DATA:", data);
+
+if (!response.ok) {
+    return res.status(500).json({
+        result: JSON.stringify(data)
+    });
+}
+
+const text = data.choices?.[0]?.message?.content;
+
+if (!text) {
+    return res.status(500).json({
+        result: "DeepSeek returned empty response"
+    });
+}
+
+res.json({ result: text });
 
     } catch (err) {
         console.error(err);
