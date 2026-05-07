@@ -71,7 +71,7 @@ Storage - price
 PSU - price
 Case - price
 Total - price
-
+Use approximate market prices based on typical 2026 retail values.
 Use realistic modern components.
 Stay within budget.
 
