@@ -39,35 +39,35 @@ app.post("/api/build", async (req, res) => {
 
     try {
         // Генерация промпта для нейронки
-        const prompt = `
-You are a professional PC builder.
+const prompt = `
+Create a realistic PC build.
 
-Create a detailed PC build.
+Budget: ${budget}
+Preferred GPU brand: ${gpu}
+Preferred CPU brand: ${cpu}
+Purpose: ${tasks}
 
-User input:
-- Budget: ${budget}
-- GPU: ${gpu}
-- CPU: ${cpu}
-- Purpose: ${tasks}
+Requirements:
+- Use modern compatible components
+- Avoid bottlenecks
+- Prioritize gaming performance
+- Include approximate prices
+- Keep total within budget
 
-Rules:
-- Best price/performance
-- No bottlenecks
-- Realistic modern components
-- Balanced build
+Format strictly like:
 
-Format:
 CPU:
 GPU:
-RAM:
 Motherboard:
+RAM:
 Storage:
 PSU:
 Case:
+Cooling:
 Total price:
 
 Language: ${lang === "ru" ? "Russian" : "English"}
-        `;
+`;
 
         // Запрос к Deepseek API
         const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
