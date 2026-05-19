@@ -70,6 +70,7 @@ RAM - price
 Storage - price
 PSU - price
 Case - price
+Cooler CPU - price
 Total - price
 Do not output random or fake precise market fluctuations.
 Use stable approximate prices in RUB based on 2026 average market values.
