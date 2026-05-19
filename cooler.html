@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кулер для ПК</title>
+    <link rel="stylesheet" href="css/aboutstyle.css">
+</head>
+<body>
 
+    <div class="header">
+        <h1 id="mainTitle">КУЛЕР ДЛЯ ПК</h1>
+        <button class="lang-btn" id="langBtn">RU</button>
+    </div>
+
+    <div class="content">
+
+        <img src="https://i.ibb.co/pBLfd15k/U0616604-big-rs-1200-1200-Photoroom.png" class="component-img" alt="Кулер">
+
+        <div class="component-text"
+             data-ru="Кулер (система охлаждения) необходим для отвода тепла от процессора. Без хорошего охлаждения процессор будет перегреваться, снижать свою производительность (троттлить), а компьютер может внезапно выключаться.
+
+Существуют воздушные кулеры (башенные) и системы жидкостного охлаждения (СЖО). От качества кулера зависит, насколько тихо и стабильно будет работать ваш процессор под нагрузкой.
+
+Правильное охлаждение — залог стабильной и долгой работы всей системы."
+             data-en="A cooler (cooling system) is necessary to dissipate heat from the processor. Without good cooling, the CPU will overheat, reduce its performance (throttle), and the computer may shut down suddenly.
+
+There are air coolers (tower coolers) and liquid cooling systems (AIO). The quality of the cooler determines how quietly and stably your processor will run under load.
+
+Proper cooling is the key to a stable and long-lasting system.">
+            Кулер (система охлаждения) необходим для отвода тепла от процессора...
+        </div>
+
+        <div class="nav-buttons">
+            <a href="about.html" class="nav-btn" data-ru="← Назад" data-en="← Back">← Назад</a>
+        </div>
+
+    </div>
+
+    <script>
+        let lang = localStorage.getItem('lang') || 'ru';
+        const langBtn = document.getElementById('langBtn');
+
+        function applyLang() {
+            langBtn.textContent = lang === 'ru' ? 'RU' : 'EN';
+
+            document.getElementById('mainTitle').textContent =
+                lang === 'ru' ? 'КУЛЕР ДЛЯ ПК' : 'PC COOLER';
+
+            document.querySelectorAll('[data-ru]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+        }
+
+        langBtn.onclick = () => {
+            lang = lang === 'ru' ? 'en' : 'ru';
+            localStorage.setItem('lang', lang);
+            applyLang();
+        }
+
+        applyLang();
+    </script>
+</body>
+</html>
