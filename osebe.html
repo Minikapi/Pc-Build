@@ -4,74 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О себе — ПК Консультант</title>
-    <link rel="stylesheet" href="osebe.css">
-    <style>
-        .lang-btn {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            padding: 6px 12px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="css/osebe.css">
 </head>
-
 <body>
 
-    <!-- Кнопка перевода -->
     <button class="lang-btn" id="langBtn">RU</button>
 
-    <div class="profile-section">
+    <div class="main-layout">
 
-        <div class="avatar">👨‍💻</div>
-
-        <div class="about-text" id="aboutText">
-            <p>Меня зовут <span>Данир Шакиров</span>, мне <span>16 лет</span>.</p>
-            <p>Программированием я начал увлекаться примерно с <span>11 лет</span>.</p>
-            <p>Мне очень нравится тема <span>компьютерных сборок</span>, комплектующих и всего, что связано с ПК.</p>
-            <p>Этот сайт — мой личный проект. Я старался сделать его максимально полезным для людей, которые хотят разобраться в комплектующих и собрать компьютер.</p>
-            <p>Сейчас я студент <span>ЛНТ</span>, <span>1 курс</span>, группа <span>ИС-1-25</span>.</p>
+        <div class="side-column left">
+            <img src="https://i.ibb.co/d4hP8yjL/c2da4eaf-293a-4a68-bd0c-5c0dfd5dabae.jpg" class="side-photo" alt="Данир Шакиров">
+            <img src="https://i.ibb.co/xqYtRss9/a86a9481-d09e-486e-96ab-ba73a9cba6ce.jpg" class="side-photo" alt="Данир Шакиров">
         </div>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number">5+</div>
-                <div class="stat-label" id="stat1">лет интереса к программированию</div>
+        <div class="profile-section">
+
+            <div class="about-text" id="aboutText">
             </div>
-            <div class="stat">
-                <div class="stat-number">1</div>
-                <div class="stat-label" id="stat2">год изучения Python</div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label" id="stat1">лет интереса к программированию</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label" id="stat2">год изучения Python</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label" id="stat3">языка изучаю</div>
+                </div>
             </div>
-            <div class="stat">
-                <div class="stat-number">3</div>
-                <div class="stat-label" id="stat3">языка изучаю</div>
+
+            <div class="skills">
+                <div class="skills-title" id="skillsTitle">Навыки</div>
+                <div class="skill-cards">
+                    <div class="skill-card">
+                        <div class="skill-icon">🐍</div>
+                        <div class="skill-name">Python</div>
+                        <div class="skill-desc" id="skillDesc1">изучал около года, писал программы и изучал основы</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">HTML</div>
+                        <div class="skill-desc" id="skillDesc2">создание структуры сайтов</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">👾</div>
+                        <div class="skill-name">JavaScript</div>
+                        <div class="skill-desc" id="skillDesc3">логика сайта и интерактивность</div>
+                    </div>
+                </div>
             </div>
+
+            <div class="back">
+                <a href="index.html" id="backLink">← Вернуться на главную</a>
+            </div>
+
         </div>
 
-        <div class="skills">
-            <div class="skills-title" id="skillsTitle">Навыки</div>
-            <div class="skill-cards">
-                <div class="skill-card">
-                    <div class="skill-icon">🐍</div>
-                    <div class="skill-name">Python</div>
-                    <div class="skill-desc" id="skillDesc1">изучал около года, писал программы и изучал основы</div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🌐</div>
-                    <div class="skill-name">HTML</div>
-                    <div class="skill-desc" id="skillDesc2">создание структуры сайтов</div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">👾</div>
-                    <div class="skill-name">JavaScript</div>
-                    <div class="skill-desc" id="skillDesc3">логика сайта и интерактивность</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="back">
-            <a href="index.html" id="backLink">← Вернуться на главную</a>
+        <div class="side-column right">
+            <img src="https://i.ibb.co/p6S9M4h1/IMG-0502.jpg" class="side-photo" alt="Данир Шакиров">
         </div>
 
     </div>
@@ -154,6 +148,5 @@
 
         applyLang();
     </script>
-
 </body>
 </html>
