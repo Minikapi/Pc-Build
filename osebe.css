@@ -310,40 +310,6 @@ button {
         transform: scale(1.04);
     }
 
-.result-box {
-    padding: 25px;
-    background: rgba(10,5,20,.9);
-    border: 2px solid var(--border-violet);
-    border-radius: 16px;
-    box-shadow: 0 0 32px rgba(180,80,255,.45), inset 0 0 18px rgba(0,0,0,.7);
-    white-space: pre-wrap;
-    overflow-y: auto;
-}
-
-
-.nav-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.nav-btn {
-    padding: 12px 22px;
-    background: rgba(10,5,20,.9);
-    border: 2px solid var(--border-violet);
-    border-radius: 10px;
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0 0 14px rgba(180,80,255,.35);
-    transition: .25s;
-}
-
-    .nav-btn:hover {
-        box-shadow: 0 0 22px rgba(180,80,255,.65);
-        transform: translateY(-1px);
-    }
-
 
 .footer {
     text-align: center;
@@ -352,72 +318,6 @@ button {
     color: var(--violet-soft);
 }
 
-.select {
-    position: relative;
-    width: 220px;
-    margin-bottom: 18px;
-}
-
-.select-btn {
-    padding: 12px;
-    background: rgba(10,5,20,.9);
-    border: 2px solid var(--border-violet);
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(180,80,255,.3);
-    transition: .3s;
-}
-
-
-.select-list {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    width: 100%;
-    background: rgba(10,5,20,.95);
-    border: 2px solid var(--border-violet);
-    border-radius: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity .25s ease, transform .25s ease;
-    z-index: 10;
-    overflow: hidden;
-}
-
-.select.open .select-list {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.select-list div {
-    padding: 10px;
-    cursor: pointer;
-    transition: background .2s;
-}
-
-    .select-list div:hover {
-        background: rgba(180,80,255,.2);
-    }
-.how-toggle {
-    width: 100%;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg,#ff00ff,#7f5bff);
-    border-radius: 10px;
-    padding: 12px;
-    cursor: pointer;
-}
-
-.how-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .4s ease;
-}
-
-    .how-content.active {
-        max-height: 500px;
-    }
 
 .how-inner {
     padding: 20px;
@@ -471,4 +371,59 @@ button,
         opacity: 1;
         transform: translateY(0);
     }
+}
+/* Кнопка перевода */
+.lang-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+/* Главный контейнер для расположения фото по бокам */
+.main-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Боковые колонки для фото и гифок */
+.side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 260px;
+}
+
+/* Общие стили для боковых фотографий */
+.side-photo {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+    .side-photo:hover {
+        transform: translateY(-5px);
+    }
+
+.side-gif {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.profile-section {
+    flex: 1;
+    max-width: 700px;
+    margin: 0;
 }
